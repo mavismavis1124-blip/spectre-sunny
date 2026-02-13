@@ -304,7 +304,8 @@ const MarketOverviewSection = ({
   const currentSignal = taSignals[taSignalIndex] || taSignals[0]
 
   // Alt season progress
-  const altSeasonProgress = Math.min(100, Math.max(0, (altSeason / 75) * 100))
+  const altSeasonValue = altSeason?.value ?? 50
+  const altSeasonProgress = Math.min(100, Math.max(0, (altSeasonValue / 75) * 100))
 
   // Market stats
   const marketStats = useMemo(() => ({
@@ -382,16 +383,16 @@ const MarketOverviewSection = ({
                 <path
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                   fill="none"
-                  stroke={altSeason >= 50 ? '#00e676' : '#ff9100'}
+                  stroke={altSeason?.value >= 50 ? '#00e676' : '#ff9100'}
                   strokeWidth="3"
                   strokeDasharray={`${altSeasonProgress}, 100`}
                   strokeLinecap="round"
                 />
               </svg>
-              <span className="alt-season-number">{altSeason}</span>
+              <span className="alt-season-number">{altSeason?.value}</span>
             </div>
             <div className="alt-season-text">
-              {altSeason >= 50 
+              {altSeason?.value >= 50 
                 ? 'Alts outperforming BTC — alt season in progress'
                 : 'BTC leading — alt season not yet confirmed'}
             </div>
