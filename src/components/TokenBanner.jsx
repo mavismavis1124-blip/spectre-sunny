@@ -5,7 +5,7 @@
  * Enhanced with: Live metrics, AI sentiment, smart badges, multi-timeframe
  * NOW WITH REAL-TIME DATA FROM CODEX API
  */
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import ReactDOM from 'react-dom'
 import html2canvas from 'html2canvas'
 import { useTranslation } from 'react-i18next'
@@ -39,7 +39,18 @@ const NETWORK_EXPLORERS = {
   1399811149: { name: 'Solscan', url: 'https://solscan.io', logo: 'https://solscan.io/favicon.ico' },
 };
 
-const TokenBanner = ({ token: propToken, isInWatchlist, addToWatchlist, removeFromWatchlist }) => {
+// Custom comparison for TokenBanner
+const areTokenBannerPropsEqual = (prevProps, nextProps) => {
+  // Token identity comparison
+  if (prevProps.token?.address !== nextProps.token?.address) return false
+  if (prevProps.token?.networkId !== nextProps.token?.networkId) return false
+  if (prevProps.token?.symbol !== nextProps.token?.symbol) return false
+  if (prevProps.isInWatchlist !== nextProps.isInWatchlist) return false
+  // Callbacks assumed stable from parent
+  return true
+}
+
+const TokenBanner = React.memo(({ token: propToken, isInWatchlist, addToWatchlist, removeFromWatchlist }) => {
   const { t } = useTranslation()
   const { fmtPrice, fmtLarge } = useCurrency()
   // Determine the full token address
@@ -281,7 +292,7 @@ const TokenBanner = ({ token: propToken, isInWatchlist, addToWatchlist, removeFr
     return () => clearInterval(interval)
   }, [])
 
-  const handleWatchlistToggle = () => {
+  const handleWatchlistToggle = useCallback(() => {
     if (isInWatchlist) {
       removeFromWatchlist(token.symbol)
     } else {
@@ -299,12 +310,12 @@ const TokenBanner = ({ token: propToken, isInWatchlist, addToWatchlist, removeFr
         pinned: false
       })
     }
-  }
+  }, [isInWatchlist, token.symbol, token.name, token.price, token.change, token.logo, removeFromWatchlist, addToWatchlist, tokenAddress, networkId, liveData])
 
-  const copyAddress = () => {
+  const copyAddress = useCallback(() => {
     navigator.clipboard.writeText(tokenAddress)
     triggerCopyToast()
-  }
+  }, [tokenAddress, triggerCopyToast])
 
   // Close socials menu when clicking outside (share menu stays open until button click)
   useEffect(() => {
@@ -321,7 +332,7 @@ const TokenBanner = ({ token: propToken, isInWatchlist, addToWatchlist, removeFr
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const handleMoreClick = () => {
+  const handleMoreClick = useCallback(() => {
     if (moreButtonRef.current) {
       const rect = moreButtonRef.current.getBoundingClientRect()
       setMenuPosition({
@@ -329,8 +340,17 @@ const TokenBanner = ({ token: propToken, isInWatchlist, addToWatchlist, removeFr
         left: rect.left
       })
     }
-    setShowSocialsMenu(!showSocialsMenu)
-  }
+    setShowSocialsMenu(prev => !prev)
+  }, [])
+
+  const handleToggleBannerExpand = useCallback(() => setBannerExpanded(prev => !prev), [])
+  const handleCopyAddress = useCallback(() => {
+    navigator.clipboard.writeText(tokenAddress)
+    triggerCopyToast()
+  }, [tokenAddress, triggerCopyToast])
+  const handleToggleDesc = useCallback(() => setDescriptionExpanded(prev => !prev), [])
+  const handleToggleShareMenu = useCallback(() => setShowShareMenu(prev => !prev), [])
+  const handleSelectTimeframe = useCallback((tf) => setSelectedTimeframe(tf), [])
 
   const selectedData = priceData[selectedTimeframe]
 
@@ -661,6 +681,6 @@ const TokenBanner = ({ token: propToken, isInWatchlist, addToWatchlist, removeFr
       </div>
     </div>
   )
-}
+}, areTokenBannerPropsEqual)
 
 export default TokenBanner

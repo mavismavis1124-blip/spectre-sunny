@@ -22,6 +22,8 @@ import {
 import { getTopCoinPrices, getBinanceKlines } from '../services/binanceApi';
 import { getMajorTokenPrices, searchMajorTokens } from '../services/coinGeckoApi';
 import { COINGECKO_LOGOS } from '../constants/majorTokens';
+import { isTabVisible } from './useVisibilityAwarePolling';
+import { deduplicatedRequest } from '../utils/requestThrottling';
 
 /**
  * Singleton WebSocket connection to backend for real-time price streaming.
@@ -207,14 +209,22 @@ export function useRealtimePrice(address, networkId = 1) {
  * Hook for fetching trending/top tokens
  * Returns empty array if API fails - components should use fallback data
  */
-export function useTrendingTokens(refreshInterval = 60 * 1000) {
+export function useTrendingTokens(refreshInterval = 60 * 1000, backgroundInterval = 300000) {
   const [tokens, setTokens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const intervalRef = useRef(null);
 
   const fetchTokens = useCallback(async () => {
+    // Skip fetch if tab is hidden (save battery and API calls)
+    if (!isTabVisible()) {
+      return;
+    }
+    
     try {
-      const data = await getTrendingTokens([1, 56, 137, 42161, 8453], 20);
+      const data = await deduplicatedRequest('trending-tokens', () => 
+        getTrendingTokens([1, 56, 137, 42161, 8453], 20)
+      );
       
       if (data?.filterTokens?.results && data.filterTokens.results.length > 0) {
         const formattedTokens = data.filterTokens.results
@@ -254,9 +264,35 @@ export function useTrendingTokens(refreshInterval = 60 * 1000) {
   useEffect(() => {
     fetchTokens();
     
-    const interval = setInterval(fetchTokens, refreshInterval);
-    return () => clearInterval(interval);
-  }, [fetchTokens, refreshInterval]);
+    // Set up visibility-aware interval
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      const interval = isTabVisible() ? refreshInterval : backgroundInterval;
+      intervalRef.current = setInterval(fetchTokens, interval);
+    };
+    
+    setupInterval();
+    
+    // Listen for visibility changes
+    const handleVisibilityChange = () => {
+      setupInterval();
+      // Fetch immediately when becoming visible again
+      if (isTabVisible()) {
+        fetchTokens();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [fetchTokens, refreshInterval, backgroundInterval]);
 
   return { tokens, loading, error, refresh: fetchTokens };
 }
@@ -1103,21 +1139,29 @@ export function useTokenDetails(address, networkId = 1, refreshInterval = 60 * 1
 
 /**
  * Real-time top coin prices from Binance only (no rate limit, no key).
- * Used by Discover for cross-chain top coins. Refreshes every 5s by default.
+ * Used by Discover for cross-chain top coins. Refreshes every 60s by default.
  */
-export function useBinanceTopCoinPrices(symbols, refreshInterval = 3000) {
+export function useBinanceTopCoinPrices(symbols, refreshInterval = 60000, backgroundInterval = 300000) {
   const [prices, setPrices] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const intervalRef = useRef(null);
 
   // Use symbols?.join(',') as dependency to avoid recreating callback when array reference changes
   // but contents remain the same
   const symbolsKey = symbols?.join(',') || ''
   const fetchPrices = useCallback(async () => {
+    // Skip fetch if tab is hidden to save battery and API calls
+    if (!isTabVisible()) {
+      return;
+    }
+    
     if (!symbols || symbols.length === 0) return;
     let priceMap = {};
     try {
-      const raw = await getTopCoinPrices(symbols);
+      const raw = await deduplicatedRequest(`binance-prices-${symbolsKey}`, () => 
+        getTopCoinPrices(symbols)
+      );
       Object.entries(raw).forEach(([symbol, data]) => {
         priceMap[symbol] = {
           price: data.price,
@@ -1159,9 +1203,36 @@ export function useBinanceTopCoinPrices(symbols, refreshInterval = 3000) {
 
   useEffect(() => {
     fetchPrices();
-    const interval = setInterval(fetchPrices, refreshInterval);
-    return () => clearInterval(interval);
-  }, [fetchPrices, refreshInterval]);
+    
+    // Set up visibility-aware interval
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      const interval = isTabVisible() ? refreshInterval : backgroundInterval;
+      intervalRef.current = setInterval(fetchPrices, interval);
+    };
+    
+    setupInterval();
+    
+    // Listen for visibility changes
+    const handleVisibilityChange = () => {
+      setupInterval();
+      // Fetch immediately when becoming visible again
+      if (isTabVisible()) {
+        fetchPrices();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [fetchPrices, refreshInterval, backgroundInterval]);
 
   return { prices, loading, error, refresh: fetchPrices };
 }

@@ -15,8 +15,8 @@
   top: 0;
   z-index: 100;
   background: rgba(14, 14, 26, 0.95);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
   border-bottom: none;
   padding-top: env(safe-area-inset-top, 0);
 }

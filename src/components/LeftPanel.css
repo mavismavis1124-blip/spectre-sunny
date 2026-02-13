@@ -130,8 +130,8 @@
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .filter-chip:hover {
@@ -169,8 +169,8 @@
   color: var(--text-muted);
   cursor: pointer;
   transition: all 0.2s ease;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .view-mode-btn svg {
@@ -209,8 +209,8 @@
   height: 100vh;
   z-index: 2000; /* fullscreen overlay */
   background: rgba(8, 8, 12, 0.92);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   flex-direction: column;
   animation: fullViewFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -225,8 +225,8 @@
   }
   to { 
     opacity: 1;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 }
 
@@ -237,8 +237,8 @@
   right: 0;
   height: 60px;
   background: rgba(12, 12, 16, 0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -289,8 +289,8 @@
   margin: 0 auto;
   width: 100%;
   background: rgba(12, 12, 16, 0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   padding: 18px;
@@ -380,8 +380,8 @@
   width: 38px;
   height: 38px;
   background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   display: flex;
@@ -429,8 +429,8 @@
   margin: 0 auto 24px;
   width: 100%;
   background: rgba(12, 12, 16, 0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 20px;
   position: relative;
@@ -813,8 +813,8 @@
   width: 48px;
   height: 48px;
   background: rgba(12, 12, 16, 0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 14px;
   display: flex;
@@ -868,8 +868,8 @@
   width: 48px;
   height: 48px;
   background: rgba(12, 12, 16, 0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 14px;
   display: flex;
@@ -1221,8 +1221,8 @@
   transform: translateY(10px);
   border: 1px solid var(--lp-glass-border);
   background: var(--lp-glass-bg-light);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   position: relative;
 }
 
@@ -1611,8 +1611,8 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1624,8 +1624,8 @@
   width: 100%;
   max-width: 500px;
   background: rgba(12, 12, 16, 0.55);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 16px;
   box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -2020,8 +2020,8 @@
   padding: var(--sp-2) var(--sp-3);
   border-bottom: 1px solid var(--lp-glass-border);
   background: var(--lp-glass-bg-light);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .watchlist-add-search {
@@ -2217,8 +2217,8 @@
   padding: var(--sp-2) var(--sp-3);
   border-bottom: 1px solid var(--lp-glass-border);
   background: var(--lp-glass-bg-light);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .watchlist-sort-dropdown {
@@ -2238,8 +2238,8 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .sort-btn:hover,
@@ -2381,8 +2381,8 @@
   transform: translateY(8px);
   position: relative;
   min-height: 56px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .watchlist-item:active {
@@ -2403,8 +2403,8 @@
 .watchlist-item.pinned {
   background: rgba(139, 92, 246, 0.12);
   border-color: var(--border-accent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .watchlist-item.pinned::before {
@@ -2619,8 +2619,8 @@
 .bottom-tab.active {
   color: var(--text-primary);
   background: rgba(139, 92, 246, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .bottom-tab.active::after {
@@ -2745,8 +2745,8 @@
 .log-item {
   padding: var(--sp-3);
   background: var(--lp-glass-bg-light);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border: 1px solid var(--lp-glass-border);
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--accent);

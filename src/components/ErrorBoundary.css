@@ -1,0 +1,113 @@
+/* Error Boundary - Glass UI */
+.error-boundary-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+}
+
+.error-boundary-glass {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 40px 48px;
+  background: rgba(30, 41, 59, 0.9);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  max-width: 400px;
+  margin: 20px;
+}
+
+.error-boundary-icon {
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.error-boundary-title {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.error-boundary-message {
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.error-boundary-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.error-boundary-btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.error-boundary-btn-retry {
+  background: linear-gradient(135deg, #00f0ff 0%, #00a8b5 100%);
+  color: #0f172a;
+}
+
+.error-boundary-btn-retry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 240, 255, 0.4);
+}
+
+.error-boundary-btn-close {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.error-boundary-btn-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Day mode adjustments */
+.welcome-day-mode .error-boundary-container {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.welcome-day-mode .error-boundary-glass {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+}
+
+.welcome-day-mode .error-boundary-title {
+  color: #1e293b;
+}
+
+.welcome-day-mode .error-boundary-message {
+  color: #64748b;
+}
+
+.welcome-day-mode .error-boundary-btn-close {
+  background: rgba(0, 0, 0, 0.05);
+  color: #1e293b;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.welcome-day-mode .error-boundary-btn-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+}

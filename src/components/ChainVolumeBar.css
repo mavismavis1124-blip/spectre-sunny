@@ -11,7 +11,7 @@
   padding: 32px 36px;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
   box-shadow: 
     0 1px 0 rgba(255, 255, 255, 0.05) inset,
     0 8px 32px rgba(0, 0, 0, 0.12),
@@ -365,7 +365,7 @@
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.4),
     0 2px 8px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
   animation: tooltipIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
 }

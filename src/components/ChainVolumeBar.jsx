@@ -259,7 +259,8 @@ const generateTraderInsight = (hourlyData, chainTotals, dominantChain) => {
   }
 }
 
-const ChainVolumeBar = () => {
+// ChainVolumeBar doesn't need custom comparison - it has no props that change frequently
+const ChainVolumeBar = React.memo(() => {
   const { t } = useTranslation()
   const { fmtLarge } = useCurrency()
   const [timeframe, setTimeframe] = useState(24)
@@ -319,7 +320,7 @@ const ChainVolumeBar = () => {
     return calculateNarrativeRankings(chainTotals, hourlyData)
   }, [chainTotals, hourlyData])
   
-  // Handle hover
+  // Handle hover with useCallback
   const handleHover = useCallback((hourData, event) => {
     setHoveredHour(hourData)
     const rect = event.currentTarget.getBoundingClientRect()
@@ -329,6 +330,10 @@ const ChainVolumeBar = () => {
       y: rect.top - containerRect.top
     })
   }, [])
+  
+  // Memoized handlers
+  const handleSetTimeframe = useCallback((tf) => setTimeframe(tf), [])
+  const handleToggleRankings = useCallback(() => setShowRankings(prev => !prev), [])
   
   // Get intensity (0-1) based on volume relative to chain average
   const getIntensity = (chainId, volume) => {
@@ -363,7 +368,7 @@ const ChainVolumeBar = () => {
             <button
               key={tf.value}
               className={`cvb-tf-btn ${timeframe === tf.value ? 'active' : ''}`}
-              onClick={() => setTimeframe(tf.value)}
+              onClick={() => handleSetTimeframe(tf.value)}
             >
               {tf.label}
             </button>
@@ -476,7 +481,7 @@ const ChainVolumeBar = () => {
       <div className={`cvb-narrative-rankings ${showRankings ? 'expanded' : 'collapsed'}`}>
         <button 
           className="rankings-toggle"
-          onClick={() => setShowRankings(!showRankings)}
+          onClick={handleToggleRankings}
         >
           <span className="rankings-toggle-icon">🤖</span>
           <span className="rankings-toggle-label">{t('chainVolume.aiAnalysis')}</span>
@@ -531,6 +536,6 @@ const ChainVolumeBar = () => {
       </div>
     </div>
   )
-}
+})
 
 export default ChainVolumeBar

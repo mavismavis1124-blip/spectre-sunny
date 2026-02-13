@@ -41,7 +41,7 @@
   pointer-events: none;
   z-index: 0;
   animation: glowDrift 5s ease-in-out infinite alternate;
-  filter: blur(20px);
+  filter: blur(8px);
 }
 
 .token-banner-glow-secondary {
@@ -54,7 +54,8 @@
   pointer-events: none;
   z-index: 0;
   animation: glowDrift 7s ease-in-out infinite alternate-reverse;
-  filter: blur(25px);
+  /* PERFORMANCE: Reduced from 25px to 12px for glow effect */
+  filter: blur(12px);
 }
 
 @keyframes glowDrift {
@@ -477,8 +478,9 @@
 .share-dropdown {
   width: 260px;
   background: linear-gradient(165deg, rgba(22, 22, 30, 0.98), rgba(12, 12, 16, 0.99));
-  backdrop-filter: blur(32px);
-  -webkit-backdrop-filter: blur(32px);
+  /* PERFORMANCE: Reduced from 32px to 12px */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   box-shadow: 
@@ -710,7 +712,7 @@
   position: fixed;
   min-width: 200px;
   background: rgba(12, 12, 16, 0.98);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
   border: 1px solid rgba(var(--token-rgb), 0.15);
   border-radius: var(--radius-lg);
   padding: var(--sp-2);

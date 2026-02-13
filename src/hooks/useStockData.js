@@ -13,21 +13,30 @@ import {
   getMarketStatus,
   getMarketIndices,
 } from '../services/stockApi'
+import { isTabVisible } from './useVisibilityAwarePolling'
+import { deduplicatedRequest } from '../utils/requestThrottling'
 
 /**
  * Hook for fetching real-time stock prices
  * @param {string[]} symbols - Array of stock symbols
- * @param {number} refreshInterval - Refresh interval in ms (default 10s)
+ * @param {number} refreshInterval - Refresh interval in ms (default 60s)
+ * @param {number} backgroundInterval - Interval when tab is hidden (default 5min)
  */
-export function useStockPrices(symbols, refreshInterval = 10000) {
+export function useStockPrices(symbols, refreshInterval = 60000, backgroundInterval = 300000) {
   const [prices, setPrices] = useState({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const intervalRef = useRef(null)
 
   // Stable key for dependency tracking
   const symbolsKey = Array.isArray(symbols) && symbols.length > 0 ? symbols.join(',') : ''
 
   const fetchPrices = useCallback(async () => {
+    // Skip if tab is hidden
+    if (!isTabVisible()) {
+      return
+    }
+    
     if (!symbolsKey) {
       setLoading(false)
       return
@@ -35,7 +44,7 @@ export function useStockPrices(symbols, refreshInterval = 10000) {
 
     try {
       const syms = symbolsKey.split(',')
-      const data = await getStockQuotes(syms)
+      const data = await deduplicatedRequest(`stock-prices-${symbolsKey}`, () => getStockQuotes(syms))
       if (data && Object.keys(data).length > 0) {
         setPrices(prev => ({ ...prev, ...data }))
         setError(null)
@@ -51,9 +60,35 @@ export function useStockPrices(symbols, refreshInterval = 10000) {
   useEffect(() => {
     fetchPrices()
     if (!symbolsKey) return
-    const interval = setInterval(fetchPrices, refreshInterval)
-    return () => clearInterval(interval)
-  }, [fetchPrices, refreshInterval, symbolsKey])
+    
+    // Set up visibility-aware interval
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+      const interval = isTabVisible() ? refreshInterval : backgroundInterval
+      intervalRef.current = setInterval(fetchPrices, interval)
+    }
+    
+    setupInterval()
+    
+    // Listen for visibility changes
+    const handleVisibilityChange = () => {
+      setupInterval()
+      if (isTabVisible()) {
+        fetchPrices()
+      }
+    }
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [fetchPrices, refreshInterval, backgroundInterval, symbolsKey])
 
   return { prices, loading, error, refresh: fetchPrices }
 }
@@ -164,17 +199,24 @@ export function useStockChartData(symbol, resolution = '1h', periodHours = 168) 
 /**
  * Hook for market movers (top gainers/losers)
  * @param {number} refreshInterval - Refresh interval in ms
+ * @param {number} backgroundInterval - Interval when tab is hidden (default 5min)
  */
-export function useStockTrending(refreshInterval = 60000) {
+export function useStockTrending(refreshInterval = 60000, backgroundInterval = 300000) {
   const [gainers, setGainers] = useState([])
   const [losers, setLosers] = useState([])
   const [mostActive, setMostActive] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const intervalRef = useRef(null)
 
   const fetchMovers = useCallback(async () => {
+    // Skip if tab is hidden
+    if (!isTabVisible()) {
+      return
+    }
+    
     try {
-      const data = await getMarketMovers()
+      const data = await deduplicatedRequest('market-movers', () => getMarketMovers())
       setGainers(data.gainers || [])
       setLosers(data.losers || [])
       setMostActive(data.mostActive || [])
@@ -193,10 +235,37 @@ export function useStockTrending(refreshInterval = 60000) {
       setLoading(false)
       return
     }
+    
     fetchMovers()
-    const interval = setInterval(fetchMovers, refreshInterval)
-    return () => clearInterval(interval)
-  }, [fetchMovers, refreshInterval])
+    
+    // Set up visibility-aware interval
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+      const interval = isTabVisible() ? refreshInterval : backgroundInterval
+      intervalRef.current = setInterval(fetchMovers, interval)
+    }
+    
+    setupInterval()
+    
+    // Listen for visibility changes
+    const handleVisibilityChange = () => {
+      setupInterval()
+      if (isTabVisible()) {
+        fetchMovers()
+      }
+    }
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [fetchMovers, refreshInterval, backgroundInterval])
 
   return { gainers, losers, mostActive, loading, error, refresh: fetchMovers }
 }
@@ -220,15 +289,23 @@ export function useMarketStatus(refreshInterval = 60000) {
 
 /**
  * Hook for market indices (S&P 500, Dow, Nasdaq, etc.)
+ * @param {number} refreshInterval - Refresh interval in ms
+ * @param {number} backgroundInterval - Interval when tab is hidden (default 5min)
  */
-export function useMarketIndices(refreshInterval = 30000) {
+export function useMarketIndices(refreshInterval = 60000, backgroundInterval = 300000) {
   const [indices, setIndices] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const intervalRef = useRef(null)
 
   const fetchIndices = useCallback(async () => {
+    // Skip if tab is hidden
+    if (!isTabVisible()) {
+      return
+    }
+    
     try {
-      const data = await getMarketIndices()
+      const data = await deduplicatedRequest('market-indices', () => getMarketIndices())
       setIndices(data)
       setError(null)
     } catch (err) {
@@ -245,30 +322,65 @@ export function useMarketIndices(refreshInterval = 30000) {
       setLoading(false)
       return
     }
+    
     fetchIndices()
-    const interval = setInterval(fetchIndices, refreshInterval)
-    return () => clearInterval(interval)
-  }, [fetchIndices, refreshInterval])
+    
+    // Set up visibility-aware interval
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+      const interval = isTabVisible() ? refreshInterval : backgroundInterval
+      intervalRef.current = setInterval(fetchIndices, interval)
+    }
+    
+    setupInterval()
+    
+    // Listen for visibility changes
+    const handleVisibilityChange = () => {
+      setupInterval()
+      if (isTabVisible()) {
+        fetchIndices()
+      }
+    }
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [fetchIndices, refreshInterval, backgroundInterval])
 
   return { indices, loading, error, refresh: fetchIndices }
 }
 
 /**
  * Hook for single stock details
+ * @param {number} refreshInterval - Refresh interval in ms
+ * @param {number} backgroundInterval - Interval when tab is hidden (default 5min)
  */
-export function useStockDetails(symbol, refreshInterval = 30000) {
+export function useStockDetails(symbol, refreshInterval = 60000, backgroundInterval = 300000) {
   const [stock, setStock] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const intervalRef = useRef(null)
 
   const fetchDetails = useCallback(async () => {
+    // Skip if tab is hidden
+    if (!isTabVisible()) {
+      return
+    }
+    
     if (!symbol) {
       setLoading(false)
       return
     }
 
     try {
-      const data = await getStockQuote(symbol)
+      const data = await deduplicatedRequest(`stock-details-${symbol}`, () => getStockQuote(symbol))
       setStock(data)
       setError(null)
     } catch (err) {
@@ -281,9 +393,35 @@ export function useStockDetails(symbol, refreshInterval = 30000) {
 
   useEffect(() => {
     fetchDetails()
-    const interval = setInterval(fetchDetails, refreshInterval)
-    return () => clearInterval(interval)
-  }, [fetchDetails, refreshInterval])
+    
+    // Set up visibility-aware interval
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+      const interval = isTabVisible() ? refreshInterval : backgroundInterval
+      intervalRef.current = setInterval(fetchDetails, interval)
+    }
+    
+    setupInterval()
+    
+    // Listen for visibility changes
+    const handleVisibilityChange = () => {
+      setupInterval()
+      if (isTabVisible()) {
+        fetchDetails()
+      }
+    }
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [fetchDetails, refreshInterval, backgroundInterval])
 
   return { stock, loading, error, refresh: fetchDetails }
 }

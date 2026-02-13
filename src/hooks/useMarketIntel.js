@@ -11,6 +11,8 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { useCurrency } from './useCurrency'
 import { getCryptoNews } from '../services/cryptoNewsApi'
+import { isTabVisible } from './useVisibilityAwarePolling'
+import { deduplicatedRequest } from '../utils/requestThrottling'
 
 // ── Sector groupings by narrative ──────────────────────────────────────
 const SECTOR_TAGS = {
@@ -364,13 +366,25 @@ export function useMarketIntel(refreshInterval = 60000) {
 
   // ── Main fetch loop ────────────────────────────────────────────────
   const fetchAll = useCallback(async () => {
+    // Skip fetch if tab is hidden to save battery and API calls
+    if (!isTabVisible()) {
+      return
+    }
+    
     try {
+      // Use deduplication for market data requests
+      const fetchFunding = () => deduplicatedRequest('market-funding', () => fetchJSON('/api/market/funding'))
+      const fetchOI = () => deduplicatedRequest('market-oi', () => fetchJSON('/api/market/oi'))
+      const fetchLS = () => deduplicatedRequest('market-ls-ratio', () => fetchJSON('/api/market/ls-ratio'))
+      const fetchGlobal = () => deduplicatedRequest('market-global', () => fetchJSON('/api/market/global'))
+      const fetchTickers = () => deduplicatedRequest('market-tickers', () => fetchJSON('/api/market/tickers'))
+      
       const [fundingData, oiData, lsData, globalRes, tickerRes] = await Promise.allSettled([
-        fetchJSON('/api/market/funding'),
-        fetchJSON('/api/market/oi'),
-        fetchJSON('/api/market/ls-ratio'),
-        fetchJSON('/api/market/global'),
-        fetchJSON('/api/market/tickers'),
+        fetchFunding(),
+        fetchOI(),
+        fetchLS(),
+        fetchGlobal(),
+        fetchTickers(),
       ])
 
       const d = dataRef.current
@@ -395,16 +409,72 @@ export function useMarketIntel(refreshInterval = 60000) {
   }, [computeDerived])
 
   // ── Effects ────────────────────────────────────────────────────────
+  // Main data polling with visibility awareness
   useEffect(() => {
+    const intervalRef = { current: null }
+    const backgroundInterval = 300000 // 5 minutes when hidden
+    
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+      const interval = isTabVisible() ? refreshInterval : backgroundInterval
+      intervalRef.current = setInterval(fetchAll, interval)
+    }
+    
     fetchAll()
-    const interval = setInterval(fetchAll, refreshInterval)
-    return () => clearInterval(interval)
+    setupInterval()
+    
+    const handleVisibilityChange = () => {
+      setupInterval()
+      if (isTabVisible()) {
+        fetchAll()
+      }
+    }
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
   }, [fetchAll, refreshInterval])
-
+  
+  // Alpha feed polling with visibility awareness (less frequent when hidden)
   useEffect(() => {
+    const intervalRef = { current: null }
+    const backgroundInterval = 600000 // 10 minutes when hidden
+    
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+      // Pause alpha feed entirely when tab is hidden (news gets stale anyway)
+      if (isTabVisible()) {
+        intervalRef.current = setInterval(fetchAlpha, 180000)
+      }
+    }
+    
     fetchAlpha()
-    const interval = setInterval(fetchAlpha, 180000)
-    return () => clearInterval(interval)
+    setupInterval()
+    
+    const handleVisibilityChange = () => {
+      setupInterval()
+      if (isTabVisible()) {
+        fetchAlpha()
+      }
+    }
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
   }, [fetchAlpha])
 
   // ── Memoized return (only changes when tick bumps) ─────────────────

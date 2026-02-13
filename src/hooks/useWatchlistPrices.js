@@ -13,9 +13,12 @@ import { getDetailedTokenInfo, searchTokens, getTokenPriceBySymbol } from '../se
 import { getMajorTokenPrices } from '../services/coinGeckoApi';
 import { getBinancePrices } from '../services/binanceApi';
 import { isMajorToken, getMajorTokenAddress, usesCoinGecko, COINGECKO_LOGOS, MAJOR_TOKEN_INFO, SYMBOL_TO_COINGECKO_ID } from '../constants/majorTokens';
+import { isTabVisible } from './useVisibilityAwarePolling';
+import { batchRequests } from '../utils/requestThrottling';
 
 const REFRESH_INTERVAL = 60 * 1000; // 60 seconds for full data
 const REALTIME_INTERVAL = 5 * 1000; // 5 seconds for real-time prices
+const BACKGROUND_REFRESH_INTERVAL = 300 * 1000; // 5 minutes when tab is hidden
 
 // Get logo for a token
 const getLogoForToken = (symbol, apiLogo) => {
@@ -279,17 +282,73 @@ export default function useWatchlistPrices(watchlist = []) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchlistSymbolsKey]);
 
+  // Main watchlist data polling with visibility awareness
   useEffect(() => {
+    const intervalRef = { current: null };
+    
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      // Use longer interval when tab is hidden
+      const interval = isTabVisible() ? REFRESH_INTERVAL : BACKGROUND_REFRESH_INTERVAL;
+      intervalRef.current = setInterval(fetchWatchlistData, interval);
+    };
+    
     fetchWatchlistData();
-    const interval = setInterval(fetchWatchlistData, REFRESH_INTERVAL);
-    return () => clearInterval(interval);
+    setupInterval();
+    
+    // Listen for visibility changes
+    const handleVisibilityChange = () => {
+      setupInterval();
+      // Fetch immediately when becoming visible
+      if (isTabVisible()) {
+        fetchWatchlistData();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, [fetchWatchlistData]);
 
-  // Real-time price updates (every 5s for major tokens)
+  // Real-time price updates with visibility awareness (pause when hidden)
   useEffect(() => {
+    const intervalRef = { current: null };
+    
+    const setupInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      // Only poll real-time prices when tab is visible
+      if (isTabVisible()) {
+        intervalRef.current = setInterval(fetchRealtimePrices, REALTIME_INTERVAL);
+      }
+    };
+    
     fetchRealtimePrices();
-    const realtimeInterval = setInterval(fetchRealtimePrices, REALTIME_INTERVAL);
-    return () => clearInterval(realtimeInterval);
+    setupInterval();
+    
+    const handleVisibilityChange = () => {
+      setupInterval();
+      if (isTabVisible()) {
+        fetchRealtimePrices();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, [fetchRealtimePrices]);
 
   // Merge live data with watchlist tokens (including real-time prices)

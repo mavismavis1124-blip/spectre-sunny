@@ -58,7 +58,7 @@
     rgba(var(--rz-token-rgb-accent, var(--rz-token-rgb)), 0.01) 70%,
     transparent 85%
   );
-  filter: blur(40px);
+  filter: blur(12px);
 }
 
 /* Secondary glow — subtle center wash below banner */
@@ -74,7 +74,7 @@
     rgba(var(--rz-token-rgb-accent, var(--rz-token-rgb)), 0.01) 55%,
     transparent 75%
   );
-  filter: blur(55px);
+  filter: blur(12px);
 }
 
 /* ─── Sentiment-Aware Ambient Overlay ─── */
@@ -127,7 +127,7 @@
     rgba(var(--rz-token-rgb), 0.03) 50%,
     transparent 80%
   );
-  filter: blur(45px);
+  filter: blur(10px);
 }
 
 .research-zone-lite.day-mode::after {
@@ -141,7 +141,7 @@
     rgba(var(--rz-token-rgb), 0.03) 30%,
     transparent 65%
   );
-  filter: blur(60px);
+  filter: blur(12px);
 }
 
 /* Day mode sentiment overlay — gentler for light backgrounds */
@@ -154,7 +154,7 @@
     radial-gradient(ellipse 50% 35% at 80% 50%,
       rgba(var(--rz-sentiment-rgb, 139, 92, 246), calc(var(--rz-sentiment-opacity, 0) * 0.2)) 0%,
       transparent 50%);
-  filter: blur(50px);
+  filter: blur(12px);
 }
 
 /* Day mode – Element 1: Root (clean light theme) */
@@ -2475,8 +2475,8 @@
   border: 1px solid rgba(var(--token-rgb), 0.12);
   border-radius: 14px;
   overflow: hidden;
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 4px 20px rgba(0, 0, 0, 0.4);
@@ -2492,7 +2492,7 @@
   background: radial-gradient(ellipse at center, rgba(var(--token-rgb), 0.1) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
-  filter: blur(24px);
+  filter: blur(8px);
 }
 
 .rz-lite-hero-accent {
