@@ -1,0 +1,3391 @@
+/**
+ * WatchlistsPage Styles – Spectre Glass
+ * Table-based watchlist with glass card, white edge, Outfit font
+ */
+
+/* Hide mobile cards on desktop */
+.watchlists-mobile-cards {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .watchlists-mobile-cards {
+    display: flex;
+  }
+}
+
+.watchlists-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 100px 40px 40px;
+  background: #060508;
+  color: #fff;
+  font-family: var(--font-glass);
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  margin-left: 0;
+}
+
+.app.nav-sidebar-open .watchlists-page {
+  margin-left: 280px;
+  width: calc(100% - 280px);
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.app.nav-sidebar-open.nav-sidebar-collapsed .watchlists-page {
+  margin-left: 64px;
+  width: calc(100% - 64px);
+  padding-left: 24px;
+}
+
+.watchlists-page-header {
+  margin-bottom: 24px;
+}
+
+/* ========================================
+   NAME WATCHLIST + ADD/REMOVE BAR (above table)
+   ======================================== */
+.watchlists-name-bar {
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  background: linear-gradient(168deg, #07060a 0%, #09080d 35%, #040306 70%, #020103 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.3);
+  font-family: var(--font-glass);
+}
+
+.watchlists-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.watchlists-name-cell {
+  flex: 1;
+  min-width: 140px;
+}
+
+.watchlists-name-input {
+  width: 100%;
+  max-width: 280px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: var(--text-primary, #fff);
+  font-family: var(--font-glass);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.watchlists-name-input:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.watchlists-name-input::placeholder {
+  color: var(--text-muted, rgba(255, 255, 255, 0.4));
+}
+
+.watchlists-name-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  background: none;
+  border: none;
+  color: var(--text-primary, #fff);
+  font-family: var(--font-glass);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.watchlists-name-label:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.watchlists-name-label:hover .watchlists-name-edit-icon {
+  opacity: 1;
+}
+
+.watchlists-name-edit-icon {
+  width: 14px;
+  height: 14px;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.watchlists-name-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.watchlists-manage-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-glass);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.watchlists-manage-btn:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.watchlists-manage-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.watchlists-switch-wrap {
+  position: relative;
+}
+
+.watchlists-switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-glass);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.watchlists-switch-btn:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.watchlists-switch-btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.watchlists-switch-btn svg.open {
+  transform: rotate(180deg);
+}
+
+.watchlists-switch-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 180px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: linear-gradient(168deg, #0a090d 0%, #08070a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+.watchlists-switch-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  font-family: var(--font-glass);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.watchlists-switch-dropdown button:hover,
+.watchlists-switch-dropdown button.active {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.watchlists-import-btn,
+.watchlists-add-list-btn,
+.watchlists-remove-list-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-family: var(--font-glass);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.watchlists-import-btn {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.08) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #60a5fa;
+}
+
+.watchlists-import-btn:hover {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.28) 0%, rgba(59, 130, 246, 0.12) 100%);
+  border-color: rgba(59, 130, 246, 0.5);
+  color: #93c5fd;
+}
+
+.watchlists-import-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.watchlists-add-list-btn {
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.08) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #4ade80;
+}
+
+.watchlists-add-list-btn:hover {
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.28) 0%, rgba(34, 197, 94, 0.12) 100%);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #86efac;
+}
+
+.watchlists-add-list-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.watchlists-remove-list-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.watchlists-remove-list-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.08) 100%);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+.watchlists-remove-list-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.watchlists-remove-list-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ========================================
+   DEXSCREENER IMPORT MODAL – Spectre Glass
+   ======================================== */
+.watchlists-import-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 24px;
+  animation: watchlists-import-fadeIn 0.2s ease;
+}
+
+@keyframes watchlists-import-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.watchlists-import-modal {
+  width: 100%;
+  max-width: 440px;
+  padding: 24px;
+  background: linear-gradient(168deg, #07060a 0%, #09080d 35%, #040306 70%, #020103 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 24px 48px rgba(0, 0, 0, 0.35);
+  font-family: var(--font-glass);
+  animation: watchlists-import-modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes watchlists-import-modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.watchlists-import-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.watchlists-import-modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  letter-spacing: -0.02em;
+}
+
+.watchlists-import-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.watchlists-import-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.watchlists-import-modal-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.watchlists-import-modal-hint {
+  margin: 0 0 16px 0;
+  font-size: 0.875rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  line-height: 1.4;
+}
+
+.watchlists-import-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: var(--text-primary, #fff);
+  font-family: var(--font-glass);
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.watchlists-import-input:focus {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.watchlists-import-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.watchlists-import-input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.watchlists-import-message {
+  margin: 0 0 12px 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.watchlists-import-error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #f87171;
+}
+
+.watchlists-import-done {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #4ade80;
+}
+
+.watchlists-import-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.watchlists-import-cancel-btn,
+.watchlists-import-submit-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-family: var(--font-glass);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.watchlists-import-cancel-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.watchlists-import-cancel-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.watchlists-import-cancel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.watchlists-import-submit-btn {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.12) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #60a5fa;
+}
+
+.watchlists-import-submit-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.35) 0%, rgba(59, 130, 246, 0.18) 100%);
+  border-color: rgba(59, 130, 246, 0.55);
+  color: #93c5fd;
+}
+
+.watchlists-import-submit-btn:disabled {
+  opacity: 0.8;
+  cursor: wait;
+}
+
+.watchlists-import-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: watchlists-import-spin 0.7s linear infinite;
+}
+
+@keyframes watchlists-import-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   MANAGE LIST MODAL
+   ======================================== */
+.manage-list-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 24px;
+  animation: watchlists-import-fadeIn 0.2s ease;
+}
+
+.manage-list-modal {
+  width: 100%;
+  max-width: 440px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: linear-gradient(168deg, #07060a 0%, #09080d 35%, #040306 70%, #020103 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 24px 48px rgba(0, 0, 0, 0.35);
+  font-family: var(--font-glass);
+  animation: watchlists-import-modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.manage-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.manage-list-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  letter-spacing: -0.02em;
+}
+
+.manage-list-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.manage-list-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.manage-list-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.manage-list-new-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.manage-list-new-input {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: var(--text-primary, #fff);
+  font-family: var(--font-glass);
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.manage-list-new-input:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.manage-list-new-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.manage-list-create-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.08) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: 12px;
+  color: #4ade80;
+  font-family: var(--font-glass);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.manage-list-create-btn:hover {
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.28) 0%, rgba(34, 197, 94, 0.12) 100%);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #86efac;
+}
+
+.manage-list-create-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.manage-list-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.manage-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.manage-list-item:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.manage-list-item-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.manage-list-item-drag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.manage-list-item-drag svg {
+  width: 16px;
+  height: 16px;
+}
+
+.manage-list-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.manage-list-item-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #fff);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.manage-list-item-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+}
+
+.manage-list-item-rename-input {
+  width: 100%;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: var(--text-primary, #fff);
+  font-family: var(--font-glass);
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+}
+
+.manage-list-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.manage-list-item-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.manage-list-item-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.manage-list-item-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.manage-list-item-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.manage-list-delete-btn:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+/* Delete watchlist confirmation */
+.delete-confirm-overlay {
+  z-index: 10001;
+}
+
+.delete-confirm-modal {
+  width: 100%;
+  max-width: 400px;
+  padding: 24px;
+  background: linear-gradient(168deg, #07060a 0%, #09080d 35%, #040306 70%, #020103 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 24px 48px rgba(0, 0, 0, 0.35);
+  font-family: var(--font-glass);
+  animation: watchlists-import-modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.delete-confirm-title {
+  margin: 0 0 12px 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  letter-spacing: -0.02em;
+}
+
+.delete-confirm-message {
+  margin: 0 0 24px 0;
+  font-size: 0.9375rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.7));
+  line-height: 1.5;
+}
+
+.delete-confirm-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.delete-confirm-cancel,
+.delete-confirm-delete {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: var(--font-glass);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-confirm-cancel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.delete-confirm-cancel:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.delete-confirm-delete {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.25) 0%, rgba(239, 68, 68, 0.12) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+.delete-confirm-delete:hover {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.35) 0%, rgba(239, 68, 68, 0.18) 100%);
+  border-color: rgba(239, 68, 68, 0.55);
+  color: #fca5a5;
+}
+
+/* Wrapper for shared watchlist widget (same UI as landing) */
+.watchlists-page-widget-wrap {
+  max-width: 480px;
+  width: 100%;
+}
+
+.watchlists-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.watchlists-page-title {
+  font-family: var(--font-glass);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.watchlists-page-subtitle {
+  font-family: var(--font-glass);
+  font-size: 0.9375rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  margin: 0;
+}
+
+/* Live status indicator */
+.watchlists-live-status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  font-family: var(--font-glass);
+  font-size: 0.75rem;
+}
+
+.watchlists-live-status .status-live,
+.watchlists-live-status .status-loading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.watchlists-live-status .live-dot {
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.watchlists-live-status .loading-dot {
+  width: 6px;
+  height: 6px;
+  background: #f59e0b;
+  border-radius: 50%;
+  animation: pulse 0.8s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.watchlists-live-status .last-updated {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.watchlists-live-status .refresh-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.watchlists-live-status .refresh-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.watchlists-live-status .refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.watchlists-live-status .refresh-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.watchlists-live-status .refresh-btn svg.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Search and Add Token */
+.watchlists-search-container {
+  position: relative;
+  min-width: 280px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.watchlists-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 4px;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.watchlists-search-wrapper:focus-within {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.watchlists-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 10px 14px;
+  color: var(--text-primary, #fff);
+  font-size: 0.875rem;
+  font-family: var(--font-glass);
+}
+
+.watchlists-search-input::placeholder {
+  color: var(--text-muted, rgba(255, 255, 255, 0.4));
+}
+
+.watchlists-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.watchlists-add-btn:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.06) 100%);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+}
+
+.watchlists-add-btn:active {
+  transform: scale(0.95);
+}
+
+.watchlists-add-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.watchlists-search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: auto;
+  width: 100%;
+  min-width: 320px;
+  max-width: 480px;
+  background: linear-gradient(168deg, #0a090d 0%, #08070a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.5);
+  max-height: 480px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+}
+
+.watchlists-search-loading,
+.watchlists-search-empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  font-size: 0.875rem;
+}
+
+.watchlists-search-result {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  padding: 14px 18px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-primary, #fff);
+  font-family: var(--font-glass);
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.watchlists-search-result:last-child {
+  border-bottom: none;
+}
+
+.watchlists-search-result:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.watchlists-search-result .search-result-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.watchlists-search-result-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.watchlists-search-result .search-result-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.watchlists-search-result .search-result-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.watchlists-search-result-symbol {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary, #fff);
+}
+
+.watchlists-search-result .search-result-chain {
+  padding: 3px 8px;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 5px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #a78bfa;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.watchlists-search-result-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  font-size: 0.8125rem;
+}
+
+.watchlists-search-result .search-result-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  min-width: 100px;
+}
+
+.watchlists-search-result .search-result-price {
+  font-family: var(--font-mono, 'SF Mono', monospace);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary, #fff);
+}
+
+.watchlists-search-result .search-result-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.watchlists-search-result .search-result-change.positive {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+.watchlists-search-result .search-result-change.negative {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.watchlists-search-result .search-result-stats {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  padding-top: 8px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.watchlists-search-result .search-result-stat {
+  font-size: 0.75rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+}
+
+.watchlists-search-result .search-result-stat::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+/* ========================================
+   MAJOR / ON-CHAIN TOGGLE
+   ======================================== */
+.watchlists-view-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 4px;
+  background: linear-gradient(168deg, rgba(10, 10, 14, 0.9) 0%, rgba(8, 8, 12, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  width: fit-content;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.watchlists-view-mode-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-glass);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.watchlists-view-mode-btn:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.watchlists-view-mode-btn.active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.06) 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+   TABLE CONTAINER – Spectre Glass, make it pop
+   ======================================== */
+.watchlists-table-container {
+  width: 100%;
+  background: linear-gradient(168deg, #07060a 0%, #09080d 30%, #040306 70%, #020103 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 24px;
+  overflow: hidden;
+  overflow-x: auto;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 0 32px -12px rgba(255, 255, 255, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 24px 48px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(20px);
+}
+
+.watchlists-table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.watchlists-table-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 24px 24px;
+}
+
+.watchlists-table-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+}
+
+.watchlists-table-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* When empty: no table; single centered block in the middle of the card */
+.watchlists-table-container--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+}
+
+.watchlists-table-container--empty .watchlists-empty-state-wrap {
+  flex: 1;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================
+   TABLE BASE
+   ======================================== */
+.watchlists-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-family: var(--font-glass);
+}
+
+/* ========================================
+   TABLE HEADER – glass strip
+   ======================================== */
+.watchlists-table thead {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.watchlists-table th {
+  padding: 16px 14px;
+  font-family: var(--font-glass);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.watchlists-table th:hover {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Sort arrow indicator */
+.watchlists-table th .sort-arrow {
+  margin-left: 4px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+}
+
+/* Actions column (left) – no sort, purple tint */
+.watchlists-th-actions {
+  width: 40px;
+  min-width: 40px;
+  padding: 8px 6px !important;
+  cursor: default;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(30, 25, 50, 0.55) 0%, rgba(20, 18, 45, 0.45) 100%);
+}
+
+/* First data column (rank) - center */
+.watchlists-table th:nth-child(2) {
+  text-align: center;
+}
+
+/* Token column - left */
+.watchlists-table th:nth-child(3) {
+  text-align: left;
+}
+
+/* All other columns - right aligned */
+.watchlists-table th:nth-child(n+4) {
+  text-align: right;
+}
+
+/* First body row – subtle top edge under header */
+.watchlists-table tbody tr:first-child td {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ========================================
+   TABLE ROWS
+   ======================================== */
+.watchlists-row td {
+  padding: 14px;
+  font-family: var(--font-glass);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.92);
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Chain cell with logo and pair quote */
+.watchlists-row .chain-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.watchlists-row .chain-logo {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.watchlists-row .pair-quote {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: -0.02em;
+}
+
+.watchlists-page.day-mode .watchlists-row .pair-quote {
+  color: #475569;
+}
+
+/* ========================================
+   LEFT ACTIONS COLUMN – delete, drag, pin (Spectre Glass)
+   ======================================== */
+.watchlists-td-actions {
+  padding: 6px 6px !important;
+  vertical-align: middle;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(30, 25, 50, 0.65) 0%, rgba(20, 18, 45, 0.55) 100%);
+  border-radius: 0;
+  width: 40px;
+  min-width: 40px;
+}
+
+.watchlists-row-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 2px 0;
+}
+
+.watchlists-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: linear-gradient(180deg, rgba(30, 30, 35, 0.98) 0%, rgba(18, 18, 22, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.watchlists-action-btn svg {
+  width: 10px;
+  height: 10px;
+}
+
+.watchlists-action-remove {
+  color: #f87171;
+}
+
+.watchlists-action-remove:hover {
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: scale(1.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 2px 6px rgba(239, 68, 68, 0.35);
+}
+
+.watchlists-action-drag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 0;
+  cursor: grab;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.watchlists-action-drag svg {
+  width: 10px;
+  height: 10px;
+}
+
+.watchlists-row[draggable="true"] .watchlists-action-drag {
+  cursor: grab;
+}
+
+.watchlists-action-pin {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.watchlists-action-pin:hover {
+  color: #a78bfa;
+  border-color: rgba(167, 139, 250, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 10px rgba(139, 92, 246, 0.25);
+}
+
+.watchlists-action-pin.active,
+.watchlists-action-pin.active:hover {
+  color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.watchlists-action-pin.active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+}
+
+/* Row drag state */
+.watchlists-row.watchlists-row-dragging {
+  opacity: 0.5;
+}
+
+.watchlists-row.watchlists-row-drag-over td:first-child {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* First data column (rank) - center */
+.watchlists-row td:nth-child(2) {
+  text-align: center;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Token column - left */
+.watchlists-row td:nth-child(3) {
+  text-align: left;
+}
+
+/* All other columns - right aligned */
+.watchlists-row td:nth-child(n+4) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Positive/Negative colors */
+.watchlists-row td.positive {
+  color: #22c55e;
+}
+
+.watchlists-row td.negative {
+  color: #ef4444;
+}
+
+/* Empty state */
+/* Empty state: no table, just centered message + button in the middle */
+.watchlists-empty-state-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+  padding: 48px 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.watchlists-empty-state-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  text-align: center;
+  max-width: 360px;
+}
+
+.watchlists-empty-state-text {
+  margin: 0;
+  font-family: var(--font-glass);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+}
+
+.watchlists-empty-state-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.08) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: 12px;
+  color: #4ade80;
+  font-family: var(--font-glass);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.watchlists-empty-state-add-btn:hover {
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.28) 0%, rgba(34, 197, 94, 0.12) 100%);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #86efac;
+  transform: scale(1.03);
+}
+
+.watchlists-empty-state-add-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================
+   ROW HOVER – one fluid gradient across whole row (no column seams)
+   ======================================== */
+.watchlists-row {
+  position: relative;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Gradient on row hover – fluid across whole row (cells transparent) */
+.watchlists-row:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--row-bg-rgb, 59, 130, 246), 0.06) 0%,
+    rgba(var(--row-bg-rgb, 59, 130, 246), 0.14) 50%,
+    rgba(var(--row-bg-rgb, 59, 130, 246), 0.22) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.watchlists-row:hover td {
+  border-color: transparent;
+  background: transparent !important;
+}
+
+.watchlists-row td {
+  position: relative;
+}
+
+/* No per-cell overlay – row background alone makes it fluid */
+.watchlists-row:hover td::before {
+  display: none;
+}
+
+.watchlists-row .token-info,
+.watchlists-row td > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Clickable rows - cursor pointer and active state */
+.watchlists-row-clickable {
+  cursor: pointer;
+}
+
+.watchlists-row-clickable:active {
+  transform: scale(0.995);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--row-bg-rgb, 59, 130, 246), 0.1) 0%,
+    rgba(var(--row-bg-rgb, 59, 130, 246), 0.2) 50%,
+    rgba(var(--row-bg-rgb, 59, 130, 246), 0.3) 100%
+  );
+}
+
+/* Pinned row: same gradient as hover, fluid across row */
+.watchlists-row.pinned {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--row-bg-rgb, 59, 130, 246), 0.06) 0%,
+    rgba(var(--row-bg-rgb, 59, 130, 246), 0.14) 50%,
+    rgba(var(--row-bg-rgb, 59, 130, 246), 0.22) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.watchlists-row.pinned td {
+  border-color: transparent;
+  background: transparent !important;
+}
+
+.watchlists-row.pinned td::before {
+  display: none;
+}
+
+/* ========================================
+   TOKEN COLUMN – same as landing: smaller ring, gradient + glow on hover matching logo
+   ======================================== */
+.watchlists-table-container .token-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.watchlists-table-container .token-info > .watchlist-avatar-ring {
+  flex-shrink: 0;
+  order: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Avatar ring – logo unchanged; highlight background only, not the logo */
+.watchlists-table-container .watchlist-avatar-ring {
+  position: relative;
+  padding: 1px;
+  border-radius: 50%;
+  background: transparent;
+  transition: box-shadow 0.25s ease;
+  flex-shrink: 0;
+  margin: 0;
+  align-self: flex-start;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.08);
+}
+
+.welcome-watchlist-widget .watchlists-row:hover .watchlist-avatar-ring,
+.watchlists-row:hover .watchlist-avatar-ring {
+  background: transparent;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.12);
+}
+
+/* Token column: shared 36px avatar applies. Table text layout (name above symbol). */
+.watchlists-table-container .token-text-info {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+
+.watchlists-table-container .token-text-info .token-name {
+  font-family: var(--font-glass);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.watchlists-table-container .token-text-info .token-symbol {
+  font-family: var(--font-glass);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Ticker (e.g. BTC) under name – always dark when table is in day/light mode */
+.watchlists-table-container-day .token-text-info .token-symbol,
+.watchlists-table-container .token-text-info .token-symbol.token-symbol-dark,
+[data-day-mode="true"] .token-text-info .token-symbol,
+[data-day-mode="true"] .token-symbol[data-ticker] {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Price cell */
+.col-price {
+  font-family: var(--font-mono, 'SF Mono', 'Monaco', 'Consolas', monospace);
+  font-weight: 500;
+}
+
+/* Change cells */
+.col-change.positive {
+  color: #10b981;
+}
+
+.col-change.negative {
+  color: #ef4444;
+}
+
+.col-change {
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1600px) {
+  .watchlists-page {
+    padding: 100px 24px 24px;
+  }
+
+  .watchlists-table {
+    font-size: 0.8125rem;
+  }
+
+  .watchlists-table th,
+  .watchlists-table td {
+    padding: 12px 8px;
+  }
+}
+
+/* ========================================
+   WATCHLISTS PAGE – DAY MODE
+   Dark text for readability, light cards, icons matching app style
+   ======================================== */
+.watchlists-page.day-mode {
+  background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-page-title {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-page-subtitle {
+  color: #475569;
+}
+
+.watchlists-page.day-mode .watchlists-live-status .status-live,
+.watchlists-page.day-mode .watchlists-live-status .status-loading {
+  color: #475569;
+}
+
+.watchlists-page.day-mode .watchlists-live-status .last-updated {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-live-status .refresh-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, #f1f5f9 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #475569;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.watchlists-page.day-mode .watchlists-live-status .refresh-btn:hover:not(:disabled) {
+  background: #fff;
+  border-color: rgba(15, 23, 42, 0.18);
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-live-status .refresh-btn svg {
+  stroke: currentColor;
+}
+
+/* Name bar */
+.watchlists-page.day-mode .watchlists-name-bar {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.watchlists-page.day-mode .watchlists-name-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-name-input:focus {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.watchlists-page.day-mode .watchlists-name-input::placeholder {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-name-label {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-name-label:hover {
+  color: #1e293b;
+}
+
+.watchlists-page.day-mode .watchlists-name-edit-icon {
+  color: #64748b;
+}
+
+/* Buttons: manage, switch, import, add list, remove list */
+.watchlists-page.day-mode .watchlists-manage-btn,
+.watchlists-page.day-mode .watchlists-switch-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #f1f5f9 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #334155;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.watchlists-page.day-mode .watchlists-manage-btn:hover,
+.watchlists-page.day-mode .watchlists-switch-btn:hover {
+  background: #fff;
+  border-color: rgba(15, 23, 42, 0.18);
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-manage-btn svg,
+.watchlists-page.day-mode .watchlists-switch-btn svg {
+  stroke: currentColor;
+}
+
+.watchlists-page.day-mode .watchlists-switch-dropdown {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.watchlists-page.day-mode .watchlists-switch-dropdown button {
+  color: #475569;
+}
+
+.watchlists-page.day-mode .watchlists-switch-dropdown button:hover,
+.watchlists-page.day-mode .watchlists-switch-dropdown button.active {
+  background: rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-import-btn {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.18) 0%, rgba(59, 130, 246, 0.08) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #2563eb;
+}
+
+.watchlists-page.day-mode .watchlists-import-btn:hover {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.12) 100%);
+  color: #1d4ed8;
+}
+
+.watchlists-page.day-mode .watchlists-import-btn svg {
+  stroke: currentColor;
+}
+
+.watchlists-page.day-mode .watchlists-add-list-btn {
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.18) 0%, rgba(34, 197, 94, 0.08) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #15803d;
+}
+
+.watchlists-page.day-mode .watchlists-add-list-btn:hover {
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.12) 100%);
+  color: #166534;
+}
+
+.watchlists-page.day-mode .watchlists-add-list-btn svg {
+  stroke: currentColor;
+}
+
+.watchlists-page.day-mode .watchlists-remove-list-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, #f1f5f9 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #475569;
+}
+
+.watchlists-page.day-mode .watchlists-remove-list-btn:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #dc2626;
+}
+
+.watchlists-page.day-mode .watchlists-remove-list-btn svg {
+  stroke: currentColor;
+}
+
+/* Search bar and add token */
+.watchlists-page.day-mode .watchlists-search-wrapper {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.watchlists-page.day-mode .watchlists-search-wrapper:focus-within {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+.watchlists-page.day-mode .watchlists-search-input {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-search-input::placeholder {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-add-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #f1f5f9 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #475569;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.watchlists-page.day-mode .watchlists-add-btn:hover {
+  background: #fff;
+  border-color: rgba(15, 23, 42, 0.18);
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-add-btn svg {
+  stroke: currentColor;
+}
+
+.watchlists-page.day-mode .watchlists-search-dropdown {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+.watchlists-page.day-mode .watchlists-search-loading,
+.watchlists-page.day-mode .watchlists-search-empty {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-search-result {
+  color: #0f172a;
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+.watchlists-page.day-mode .watchlists-search-result:hover {
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.watchlists-page.day-mode .watchlists-search-result-symbol {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-search-result .search-result-price {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-search-result .search-result-change.positive {
+  color: #15803d;
+}
+
+.watchlists-page.day-mode .watchlists-search-result .search-result-change.negative {
+  color: #dc2626;
+}
+
+/* Table container and table */
+.watchlists-page.day-mode .watchlists-table-container {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 40%, #f1f5f9 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.watchlists-page.day-mode .watchlists-table thead {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(241, 245, 249, 0.95) 100%);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.12);
+}
+
+.watchlists-page.day-mode .watchlists-table th {
+  color: #334155;
+}
+
+.watchlists-page.day-mode .watchlists-table th:hover {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-table th .sort-arrow {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-table tbody tr {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.watchlists-page.day-mode .watchlists-table tbody tr:first-child td {
+  border-top-color: rgba(15, 23, 42, 0.06);
+}
+
+.watchlists-page.day-mode .watchlists-table tbody tr:hover {
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.watchlists-page.day-mode .watchlists-table td {
+  color: #334155;
+}
+
+.watchlists-page.day-mode .watchlists-table-container .token-text-info .token-name {
+  color: #64748b;
+}
+
+
+.watchlists-page.day-mode .watchlists-table .col-price {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-table .col-change.positive {
+  color: #15803d;
+}
+
+.watchlists-page.day-mode .watchlists-table .col-change.negative {
+  color: #dc2626;
+}
+
+/* Row actions (pin, remove) – icons readable, matching app style */
+.watchlists-page.day-mode .watchlists-row .watchlists-action-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #f1f5f9 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #475569;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.watchlists-page.day-mode .watchlists-row .watchlists-action-btn svg {
+  stroke: currentColor;
+}
+
+.watchlists-page.day-mode .watchlists-row .watchlists-action-remove {
+  color: #dc2626;
+}
+
+.watchlists-page.day-mode .watchlists-row .watchlists-action-remove:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #b91c1c;
+}
+
+.watchlists-page.day-mode .watchlists-row .watchlists-action-pin {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-row .watchlists-action-pin:hover {
+  background: #fff;
+  border-color: rgba(15, 23, 42, 0.18);
+  color: #7c3aed;
+}
+
+.watchlists-page.day-mode .watchlists-row .watchlists-action-pin.active,
+.watchlists-page.day-mode .watchlists-row .watchlists-action-pin.active:hover {
+  color: #6d28d9;
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.watchlists-page.day-mode .watchlists-row .watchlists-action-drag {
+  color: #94a3b8;
+}
+
+.watchlists-page.day-mode .watchlists-row .watchlists-action-drag svg {
+  fill: currentColor;
+}
+
+/* Chain cell */
+.watchlists-page.day-mode .watchlists-table .chain-cell {
+  color: #475569;
+}
+
+/* Import modal */
+.watchlists-page.day-mode .watchlists-import-overlay {
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.watchlists-page.day-mode .watchlists-import-modal {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+}
+
+.watchlists-page.day-mode .watchlists-import-modal-title {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-import-modal-close {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #475569;
+}
+
+.watchlists-page.day-mode .watchlists-import-modal-close:hover {
+  background: #fff;
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-import-modal-close svg {
+  stroke: currentColor;
+}
+
+.watchlists-page.day-mode .watchlists-import-modal-hint {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-import-input {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-import-input:focus {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.watchlists-page.day-mode .watchlists-import-input::placeholder {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-import-cancel-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #f1f5f9 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #334155;
+}
+
+.watchlists-page.day-mode .watchlists-import-cancel-btn:hover:not(:disabled) {
+  background: #fff;
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .watchlists-import-submit-btn {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #2563eb;
+}
+
+.watchlists-page.day-mode .watchlists-import-submit-btn:hover:not(:disabled) {
+  color: #1d4ed8;
+}
+
+/* Manage list modal */
+.watchlists-page.day-mode .manage-list-overlay {
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.watchlists-page.day-mode .manage-list-modal {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+}
+
+.watchlists-page.day-mode .manage-list-title {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .manage-list-close {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #475569;
+}
+
+.watchlists-page.day-mode .manage-list-close:hover {
+  background: #fff;
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .manage-list-close svg {
+  stroke: currentColor;
+}
+
+.watchlists-page.day-mode .manage-list-new-input {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .manage-list-new-input::placeholder {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .manage-list-item {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+.watchlists-page.day-mode .manage-list-item:hover {
+  background: #fff;
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+.watchlists-page.day-mode .manage-list-item-name {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .manage-list-item-meta {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .manage-list-item-rename-input {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .manage-list-item-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  color: #475569;
+}
+
+.watchlists-page.day-mode .manage-list-item-btn:hover:not(:disabled) {
+  background: #fff;
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .manage-list-item-btn svg {
+  stroke: currentColor;
+}
+
+.watchlists-page.day-mode .manage-list-item-drag {
+  color: #94a3b8;
+}
+
+/* Delete confirm modal */
+.watchlists-page.day-mode .delete-confirm-modal {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+}
+
+.watchlists-page.day-mode .delete-confirm-title {
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .delete-confirm-message {
+  color: #475569;
+}
+
+.watchlists-page.day-mode .delete-confirm-cancel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #f1f5f9 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #334155;
+}
+
+.watchlists-page.day-mode .delete-confirm-cancel:hover {
+  background: #fff;
+  color: #0f172a;
+}
+
+.watchlists-page.day-mode .delete-confirm-delete {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #dc2626;
+}
+
+.watchlists-page.day-mode .delete-confirm-delete:hover {
+  color: #b91c1c;
+}
+
+/* View mode toggle (Major / On-Chain) */
+.watchlists-page.day-mode .watchlists-view-mode-toggle {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.watchlists-page.day-mode .watchlists-view-mode-btn {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-view-mode-btn:hover {
+  color: #334155;
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.watchlists-page.day-mode .watchlists-view-mode-btn.active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #f1f5f9 100%);
+  color: #0f172a;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Empty state */
+.watchlists-page.day-mode .watchlists-empty-state-wrap {
+  color: #334155;
+}
+
+.watchlists-page.day-mode .watchlists-empty-state-text {
+  color: #64748b;
+}
+
+.watchlists-page.day-mode .watchlists-empty-state-add-btn {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.18) 0%, rgba(59, 130, 246, 0.08) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #2563eb;
+}
+
+.watchlists-page.day-mode .watchlists-empty-state-add-btn:hover {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.12) 100%);
+  color: #1d4ed8;
+}
+
+.watchlists-page.day-mode .watchlists-empty-state-add-btn svg {
+  stroke: currentColor;
+}
+
+/* ============================================================
+   MOBILE APP STORE READY - Watchlists Page
+   ============================================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .watchlists-page {
+    padding: 90px 24px 24px;
+  }
+
+  .app.nav-sidebar-open .watchlists-page {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* ============================================================
+   MOBILE WATCHLISTS - Complete Redesign
+   Clean, touch-friendly, no clutter
+   ============================================================ */
+@media (max-width: 768px) {
+  .watchlists-page {
+    padding: 12px;
+    padding-top: calc(52px + env(safe-area-inset-top, 0px) + 12px);
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .app.nav-sidebar-open .watchlists-page,
+  .app.nav-sidebar-open.nav-sidebar-collapsed .watchlists-page {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Simplified header */
+  .watchlists-page-header {
+    margin-bottom: 12px;
+  }
+
+  .watchlists-page-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+  }
+
+  .watchlists-page-header p {
+    font-size: 0.8125rem;
+    display: none; /* Hide subtitle on mobile */
+  }
+
+  /* Hide live scanning row on mobile - too much info */
+  .watchlists-live-status {
+    display: none;
+  }
+
+  /* Search bar - full width, prominent */
+  .watchlists-add-wrap,
+  .watchlists-search-wrap {
+    margin-bottom: 16px;
+  }
+
+  .watchlists-add-input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 1rem;
+    min-height: 48px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: none;
+  }
+
+  .watchlists-add-btn {
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 14px;
+  }
+
+  /* Watchlist name bar - simplified */
+  .watchlists-name-bar {
+    padding: 14px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: none;
+  }
+
+  .watchlists-name-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  /* Hide most action buttons on mobile - use overflow menu */
+  .watchlists-name-actions {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  .watchlists-name-actions > button,
+  .watchlists-name-actions > .btn {
+    flex-shrink: 0;
+    min-height: 40px;
+    padding: 8px 14px;
+    font-size: 0.8125rem;
+    border-radius: 10px;
+  }
+
+  /* Hide "Remove watchlist" on mobile */
+  .watchlists-name-actions > button:last-child {
+    display: none;
+  }
+
+  .watchlists-name-cell {
+    min-width: 100%;
+  }
+
+  .watchlists-name-input {
+    max-width: 100%;
+    padding: 12px 14px;
+    font-size: 1rem;
+    min-height: 44px;
+    border-radius: 12px;
+  }
+
+  .watchlists-name-label {
+    min-height: 44px;
+    padding: 10px 0;
+  }
+
+  /* Add token section */
+  .watchlists-add-cell {
+    width: 100%;
+  }
+
+  .watchlists-add-input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 1rem;
+    min-height: 44px;
+    border-radius: 12px;
+  }
+
+  .watchlists-add-btn {
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 12px;
+  }
+
+  .watchlists-add-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Table wrapper - NO horizontal scroll, use card view */
+  .watchlists-table-wrap {
+    margin: 0;
+    padding: 0;
+    overflow-x: visible;
+  }
+
+  .watchlists-table {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* HIDE table header completely on mobile */
+  .watchlists-table-header,
+  .watchlists-th,
+  thead,
+  .watchlists-table thead {
+    display: none !important;
+  }
+
+  /* Hide Major/On-Chain tabs row or simplify */
+  .watchlists-type-toggle {
+    margin-bottom: 12px;
+  }
+
+  .watchlists-type-toggle button {
+    min-height: 40px;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+  }
+
+  /* MOBILE: Token cards - swipe left for actions */
+  .watchlists-row,
+  .watchlists-table-row {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    margin: 0 0 8px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: none;
+    box-shadow: none;
+    min-height: 72px;
+    overflow: hidden;
+  }
+
+  .watchlists-row.pinned::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #fbbf24, #f59e0b);
+    border-radius: 3px 0 0 3px;
+  }
+
+  .watchlists-row:active,
+  .watchlists-table-row:active {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(0.99);
+  }
+
+  /* Long-press hint text */
+  .watchlists-row::after {
+    content: 'Hold for options';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6875rem;
+    color: rgba(255, 255, 255, 0.25);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  .watchlists-row:active::after {
+    opacity: 1;
+  }
+
+  /* Token info on mobile */
+  .watchlists-table-cell.token-cell {
+    flex: 1 1 50%;
+    min-width: 120px;
+  }
+
+  .watchlists-table-cell.price-cell {
+    flex: 0 0 auto;
+    text-align: right;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .watchlists-table-cell.change-cell {
+    flex: 0 0 auto;
+    min-width: 65px;
+    text-align: right;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .watchlists-table-cell.actions-cell {
+    flex: 0 0 auto;
+  }
+
+  /* Hide less important columns on mobile */
+  .watchlists-table-cell.mcap-cell,
+  .watchlists-table-cell.volume-cell {
+    display: none;
+  }
+
+  /* Token avatar */
+  .watchlists-token-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .watchlists-token-name {
+    font-size: 0.95rem;
+  }
+
+  .watchlists-token-symbol {
+    font-size: 0.8rem;
+  }
+
+  /* MOBILE: Hide inline action buttons - use swipe or long-press instead */
+  .watchlists-row-actions,
+  .watchlists-action-btn,
+  .watchlists-action-drag,
+  .watchlists-action-pin,
+  .watchlists-action-remove,
+  .watchlists-td-actions {
+    display: none !important;
+  }
+
+  /* Add visual hint for swipe */
+  .watchlists-row::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    opacity: 0.5;
+  }
+
+  /* View mode toggle - SHOW on mobile, styled for touch */
+  .watchlists-view-mode-toggle {
+    display: flex !important;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 16px 16px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+  }
+
+  .watchlists-view-mode-btn {
+    flex: 1;
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+  }
+
+  .watchlists-view-mode-btn.active {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .watchlists-view-mode-btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Dropdown lists */
+  .watchlists-dropdown {
+    max-height: 60vh;
+    border-radius: 16px;
+  }
+
+  .watchlists-dropdown-item {
+    min-height: 48px;
+    padding: 12px 16px;
+  }
+
+  /* Empty state */
+  .watchlists-empty-state-wrap {
+    padding: 40px 20px;
+  }
+
+  .watchlists-empty-state-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .watchlists-empty-state-text {
+    font-size: 0.9rem;
+  }
+
+  .watchlists-empty-state-add-btn {
+    min-height: 48px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+
+  .watchlists-empty-state-add-btn:active {
+    transform: scale(0.96);
+  }
+
+  /* Delete confirmation modal */
+  .delete-confirm-overlay {
+    padding: 16px;
+  }
+
+  .delete-confirm-modal {
+    max-width: calc(100vw - 32px);
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .delete-confirm-title {
+    font-size: 1.1rem;
+  }
+
+  .delete-confirm-text {
+    font-size: 0.9rem;
+  }
+
+  .delete-confirm-actions {
+    gap: 10px;
+  }
+
+  .delete-confirm-cancel,
+  .delete-confirm-delete {
+    min-height: 48px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    flex: 1;
+  }
+
+  .delete-confirm-cancel:active,
+  .delete-confirm-delete:active {
+    transform: scale(0.96);
+  }
+}
+
+/* Day mode + Mobile combined */
+@media (max-width: 768px) {
+  .watchlists-page.day-mode .watchlists-table-row {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .watchlists-page.day-mode .watchlists-table-row:active {
+    background: rgba(251, 191, 36, 0.15);
+  }
+
+  /* Hide desktop table on mobile */
+  .watchlists-table {
+    display: none !important;
+  }
+
+  /* MOBILE CARD VIEW */
+  .watchlists-mobile-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .watchlists-mobile-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    box-shadow: none;
+    min-height: 72px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .watchlists-mobile-card:active {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(0.99);
+  }
+
+  /* Pinned indicator bar */
+  .watchlists-mobile-card-pin-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #fbbf24, #f59e0b);
+    border-radius: 3px 0 0 3px;
+  }
+
+  .watchlists-mobile-card.pinned {
+    padding-left: 20px;
+  }
+
+  /* Token main info (avatar + name) */
+  .watchlists-mobile-card-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .watchlists-mobile-card-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .watchlists-mobile-card-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .watchlists-mobile-card-avatar span {
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .watchlists-mobile-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .watchlists-mobile-card-symbol {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+
+  .watchlists-mobile-card-name {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+  }
+
+  /* Price & change */
+  .watchlists-mobile-card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+    padding-right: 20px;
+    position: relative;
+  }
+
+  /* Chevron indicator showing the card is clickable */
+  .watchlists-mobile-card-right::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .watchlists-mobile-card:active .watchlists-mobile-card-right::after {
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-50%) translateX(2px) rotate(45deg);
+  }
+
+  .watchlists-mobile-card-price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .watchlists-mobile-card-change {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .watchlists-mobile-card-change.positive {
+    color: #22c55e;
+  }
+
+  .watchlists-mobile-card-change.negative {
+    color: #ef4444;
+  }
+
+  /* Day mode toggle on mobile */
+  .watchlists-page.day-mode .watchlists-view-mode-toggle {
+    background: rgba(15, 23, 42, 0.06);
+  }
+
+  .watchlists-page.day-mode .watchlists-view-mode-btn {
+    color: rgba(15, 23, 42, 0.6);
+    background: transparent;
+  }
+
+  .watchlists-page.day-mode .watchlists-view-mode-btn.active {
+    color: #0f172a;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .watchlists-page.day-mode .watchlists-view-mode-btn:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  .watchlists-page.day-mode .watchlists-view-mode-btn.active:active {
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Day mode mobile cards */
+  .watchlists-page.day-mode .watchlists-mobile-card {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.06) inset;
+  }
+
+  .watchlists-page.day-mode .watchlists-mobile-card:active {
+    background: rgba(251, 191, 36, 0.1);
+  }
+
+  .watchlists-page.day-mode .watchlists-mobile-card-symbol {
+    color: #0f172a;
+  }
+
+  .watchlists-page.day-mode .watchlists-mobile-card-name {
+    color: rgba(15, 23, 42, 0.5);
+  }
+
+  .watchlists-page.day-mode .watchlists-mobile-card-price {
+    color: #0f172a;
+  }
+
+  .watchlists-page.day-mode .watchlists-mobile-card-avatar {
+    background: rgba(15, 23, 42, 0.06);
+  }
+
+  .watchlists-page.day-mode .watchlists-mobile-card-right::after {
+    border-color: rgba(15, 23, 42, 0.25);
+  }
+
+  .watchlists-page.day-mode .watchlists-mobile-card:active .watchlists-mobile-card-right::after {
+    border-color: rgba(15, 23, 42, 0.5);
+  }
+
+  .watchlists-page.day-mode .watchlists-mobile-card-avatar span {
+    color: rgba(15, 23, 42, 0.6);
+  }
+}
+
+/* Bottom Sheet Token Summary */
+.watchlists-sheet-token-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin: -8px -16px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+}
+
+.watchlists-sheet-token-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.watchlists-sheet-token-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.watchlists-sheet-token-avatar span {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.watchlists-sheet-token-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.watchlists-sheet-token-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.watchlists-sheet-token-price {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.watchlists-sheet-token-change {
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.watchlists-sheet-token-change.positive {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.watchlists-sheet-token-change.negative {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+/* =========================================
+   MOBILE SEARCH BAR ENHANCEMENTS
+   ========================================= */
+@media (max-width: 768px) {
+  .watchlists-search-container {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .watchlists-search-wrapper {
+    background: linear-gradient(168deg, rgba(7, 6, 10, 0.92) 0%, rgba(9, 8, 13, 0.95) 35%, rgba(4, 3, 6, 0.98) 70%, rgba(2, 1, 3, 1) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 6px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .watchlists-search-wrapper:focus-within {
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow:
+      inset 0 0 0 1px rgba(139, 92, 246, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 4px 16px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(139, 92, 246, 0.15);
+  }
+
+  .watchlists-search-input {
+    padding: 12px 14px;
+    font-size: 1rem;
+    background: transparent;
+    min-height: 44px;
+  }
+
+  .watchlists-add-btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(7, 6, 10, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 4px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  .watchlists-add-btn:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .watchlists-search-dropdown {
+    border-radius: 16px;
+    margin-top: 8px;
+    max-height: 60vh;
+    background: linear-gradient(168deg, rgba(7, 6, 10, 0.98) 0%, rgba(9, 8, 13, 0.99) 50%, rgba(4, 3, 6, 1) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 16px 48px rgba(0, 0, 0, 0.6);
+  }
+
+  .watchlists-search-result {
+    padding: 14px 16px;
+    min-height: 64px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .watchlists-search-result:active {
+    background: rgba(139, 92, 246, 0.15);
+  }
+
+  .watchlists-search-result-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .watchlists-search-result-symbol {
+    font-size: 1rem;
+  }
+
+  .watchlists-search-result-name {
+    font-size: 0.8125rem;
+  }
+
+  .watchlists-search-result .search-result-price {
+    font-size: 1rem;
+  }
+
+  .watchlists-search-result .search-result-change {
+    font-size: 0.875rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BORDER CLEANUP — Remove all thin/ugly border lines throughout WatchlistsPage
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Main containers / header / sections ── */
+.watchlists-header-glass,
+.watchlists-import-overlay-content,
+.manage-list-modal,
+.delete-confirm-modal {
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ── Search wrapper + input ── */
+.watchlists-search-wrapper {
+  border: none !important;
+  box-shadow: none !important;
+}
+.watchlists-search-wrapper:focus-within {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Name input ── */
+.watchlists-name-input,
+.watchlists-import-input,
+.manage-list-new-input {
+  border: none !important;
+}
+.watchlists-name-input:focus,
+.watchlists-import-input:focus,
+.manage-list-new-input:focus {
+  border: none !important;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* ── Buttons (manage, switch, import, add, remove) ── */
+.watchlists-manage-btn,
+.watchlists-switch-btn,
+.watchlists-import-btn,
+.watchlists-add-list-btn,
+.watchlists-remove-list-btn,
+.watchlists-import-cancel-btn,
+.watchlists-import-submit-btn,
+.manage-list-create-btn,
+.delete-confirm-cancel,
+.delete-confirm-delete,
+.watchlists-import-modal-close,
+.manage-list-close,
+.manage-list-item-btn {
+  border: none !important;
+  box-shadow: none !important;
+}
+.watchlists-manage-btn:hover,
+.watchlists-switch-btn:hover,
+.watchlists-import-btn:hover,
+.watchlists-add-list-btn:hover,
+.watchlists-remove-list-btn:hover:not(:disabled),
+.watchlists-import-cancel-btn:hover:not(:disabled),
+.watchlists-import-submit-btn:hover:not(:disabled),
+.manage-list-create-btn:hover,
+.manage-list-item-btn:hover:not(:disabled) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Switcher dropdown ── */
+.watchlists-switch-dropdown {
+  border: none !important;
+}
+
+/* ── Manage list items ── */
+.manage-list-item {
+  border: none !important;
+}
+.manage-list-item:hover {
+  border: none !important;
+}
+.manage-list-item-count {
+  border: none !important;
+}
+
+/* ── Token table rows ── */
+.watchlists-row td {
+  border-bottom: none !important;
+  border-top: none !important;
+}
+.watchlists-table tbody tr:first-child td {
+  border-top: none !important;
+}
+.watchlists-td-actions {
+  border-right: none !important;
+}
+
+/* ── Tab bar / filter tabs ── */
+.watchlists-tabs {
+  border: none !important;
+  box-shadow: none !important;
+}
+.watchlists-tab {
+  border: none !important;
+  box-shadow: none !important;
+}
+.watchlists-tab.active {
+  border: none !important;
+}
+
+/* ── Sort buttons ── */
+.watchlists-sort-btn {
+  border: none !important;
+  box-shadow: none !important;
+}
+.watchlists-sort-btn.active,
+.watchlists-sort-btn:hover {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Add token button (circle +) ── */
+.watchlists-search-add-btn {
+  border: none !important;
+  box-shadow: none !important;
+}
+.watchlists-search-add-btn:hover {
+  border: none !important;
+}
+
+/* ── Search results ── */
+.watchlists-search-results {
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+}
+.watchlists-search-result {
+  border-bottom: none !important;
+}
+
+/* ── Match indicator ── */
+.watchlists-search-match {
+  border: none !important;
+}
+
+/* ── Import status messages ── */
+.watchlists-import-error,
+.watchlists-import-done {
+  border: none !important;
+}
+
+/* ── Day Mode — same cleanup ── */
+.watchlists-page.day-mode .watchlists-header-glass,
+.watchlists-page.day-mode .watchlists-import-overlay-content,
+.watchlists-page.day-mode .manage-list-modal,
+.watchlists-page.day-mode .delete-confirm-modal {
+  border: none !important;
+}
+.watchlists-page.day-mode .watchlists-search-wrapper {
+  border: none !important;
+  box-shadow: none !important;
+}
+.watchlists-page.day-mode .watchlists-name-input,
+.watchlists-page.day-mode .watchlists-import-input,
+.watchlists-page.day-mode .manage-list-new-input {
+  border: none !important;
+}
+.watchlists-page.day-mode .watchlists-manage-btn,
+.watchlists-page.day-mode .watchlists-switch-btn,
+.watchlists-page.day-mode .watchlists-import-btn,
+.watchlists-page.day-mode .watchlists-add-list-btn,
+.watchlists-page.day-mode .watchlists-remove-list-btn {
+  border: none !important;
+  box-shadow: none !important;
+}
+.watchlists-page.day-mode .watchlists-tabs {
+  border: none !important;
+  box-shadow: none !important;
+}
+.watchlists-page.day-mode .watchlists-tab {
+  border: none !important;
+}
+.watchlists-page.day-mode .watchlists-row td {
+  border-bottom: none !important;
+  border-top: none !important;
+}
+.watchlists-page.day-mode .manage-list-item {
+  border: none !important;
+}
+.watchlists-page.day-mode .watchlists-sort-btn {
+  border: none !important;
+  box-shadow: none !important;
+}

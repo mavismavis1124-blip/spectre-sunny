@@ -1,0 +1,759 @@
+/**
+ * MobileBottomNav – 4K Apple Vision Pro Glass Bar
+ * Floating transparent glass with metallic edges,
+ * neumorphic raised active circles, holographic sheen
+ */
+
+/* ============================================================
+   OUTER WRAPPER — invisible, just positioning + safe area
+   ============================================================ */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 102;
+  padding: 8px 14px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom, 0));
+  pointer-events: none;
+  /* No background, no box, completely invisible */
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ============================================================
+   FLOATING GLASS BAR — the only visible container
+   Premium transparent glass with metallic rim
+   ============================================================ */
+.mobile-bottom-nav-inner {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 2px;
+  height: 62px;
+  padding: 7px 6px;
+  /* Transparent glass — NOT gray, actual translucency */
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.03) 30%,
+      rgba(255, 255, 255, 0.01) 60%,
+      rgba(255, 255, 255, 0.04) 100%
+    ) !important;
+  backdrop-filter: blur(16px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+  border-radius: 999px !important;
+  /* Metallic rim — thin bright edge on top, subtle everywhere */
+  border: none !important;
+  box-shadow:
+    /* Outer metallic rim */
+    0 0 0 0.5px rgba(255, 255, 255, 0.18),
+    /* Top light catch — Apple-style highlight */
+    inset 0 0.5px 0 0 rgba(255, 255, 255, 0.2),
+    /* Inner depth */
+    inset 0 -0.5px 0 0 rgba(0, 0, 0, 0.15),
+    /* Floating shadow */
+    0 6px 24px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    /* Ambient purple underglow */
+    0 4px 30px rgba(139, 92, 246, 0.06) !important;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Top-edge metallic shine */
+.mobile-bottom-nav-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 0.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.0) 10%,
+    rgba(255, 255, 255, 0.25) 35%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.25) 65%,
+    rgba(255, 255, 255, 0.0) 90%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ============================================================
+   NAV ITEMS — circle icon buttons
+   ============================================================ */
+.mobile-bottom-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  padding: 0;
+  border: none !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition:
+    color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border 0.3s ease !important;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+  z-index: 1;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  gap: 0 !important;
+}
+
+/* Hover — faint glass brighten */
+.mobile-bottom-nav-item:hover {
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Press — instant squish */
+.mobile-bottom-nav-item:active {
+  transform: scale(0.82) !important;
+  transition-duration: 0.06s !important;
+}
+
+/* ============================================================
+   ACTIVE STATE — Neumorphic Raised Glass Orb
+   The hero effect — glowing, raised, shiny, metallic
+   ============================================================ */
+.mobile-bottom-nav-item.active {
+  color: #fff;
+  /* Purple-tinted translucent glass */
+  background:
+    radial-gradient(
+      ellipse at 30% 20%,
+      rgba(167, 139, 250, 0.4) 0%,
+      rgba(139, 92, 246, 0.3) 30%,
+      rgba(124, 58, 237, 0.25) 55%,
+      rgba(99, 40, 220, 0.2) 80%,
+      rgba(88, 28, 207, 0.15) 100%
+    ) !important;
+  /* Neumorphic 3D raised orb */
+  box-shadow:
+    /* Inner top-left highlight — metallic sheen */
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.3),
+    inset 0.5px 0.5px 0 0 rgba(255, 255, 255, 0.15),
+    /* Inner bottom-right shadow — depth */
+    inset 0 -1px 3px 0 rgba(0, 0, 0, 0.2),
+    inset -0.5px -0.5px 0 0 rgba(0, 0, 0, 0.1),
+    /* Metallic rim */
+    0 0 0 0.5px rgba(167, 139, 250, 0.3),
+    /* Neumorphic lift shadow */
+    0 4px 12px rgba(139, 92, 246, 0.5),
+    0 2px 6px rgba(139, 92, 246, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    /* Wide ambient glow */
+    0 0 24px rgba(139, 92, 246, 0.25),
+    0 0 48px rgba(139, 92, 246, 0.1) !important;
+  /* Scale up — raised orb effect */
+  transform: scale(1.08);
+  border: 0.5px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Glass sheen — curved highlight across the orb */
+.mobile-bottom-nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 15%;
+  right: 15%;
+  height: 45%;
+  border-radius: 50% 50% 60% 60% / 100% 100% 40% 40%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.12) 40%,
+    rgba(255, 255, 255, 0.02) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Active indicator — subtle inner glow (no external dot that leaks below bar) */
+.mobile-bottom-nav-item.active::after {
+  content: none;
+}
+
+/* Active press */
+.mobile-bottom-nav-item.active:active {
+  transform: scale(0.98) !important;
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25),
+    0 0 0 0.5px rgba(167, 139, 250, 0.25),
+    0 2px 6px rgba(139, 92, 246, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 16px rgba(139, 92, 246, 0.15) !important;
+  transition-duration: 0.06s !important;
+}
+
+/* ============================================================
+   ICON CONTAINER
+   ============================================================ */
+.mobile-bottom-nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px !important;
+  height: 24px !important;
+  flex-shrink: 0;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.35s ease;
+  position: relative;
+  z-index: 3;
+}
+
+.mobile-bottom-nav-icon svg {
+  width: 21px !important;
+  height: 21px !important;
+  transition:
+    stroke-width 0.3s ease,
+    filter 0.3s ease;
+}
+
+/* Active icon — glowing white */
+.mobile-bottom-nav-item.active .mobile-bottom-nav-icon {
+  transform: scale(1.05);
+  filter:
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.5))
+    drop-shadow(0 0 10px rgba(139, 92, 246, 0.4));
+}
+
+.mobile-bottom-nav-item.active .mobile-bottom-nav-icon svg {
+  stroke-width: 2;
+  stroke: #fff;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
+}
+
+/* ============================================================
+   HIDE LABELS — icon only
+   ============================================================ */
+.mobile-bottom-nav-label {
+  display: none !important;
+}
+
+/* ============================================================
+   EXPANDED STATE (dropdown trigger active)
+   ============================================================ */
+.mobile-bottom-nav-item.expanded {
+  color: #fff;
+  background:
+    radial-gradient(
+      ellipse at 30% 20%,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.06) 60%,
+      rgba(255, 255, 255, 0.02) 100%
+    ) !important;
+  box-shadow:
+    inset 0 0.5px 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 0.5px rgba(255, 255, 255, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  border: 0.5px solid rgba(255, 255, 255, 0.1) !important;
+  transform: scale(1.06);
+}
+
+.mobile-bottom-nav-item.expanded::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 15%;
+  right: 15%;
+  height: 40%;
+  border-radius: 50% 50% 60% 60% / 100% 100% 40% 40%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* ============================================================
+   DROPDOWN MENU — Glass panel subpage nav
+   ============================================================ */
+.mobile-bottom-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 101;
+  animation: backdropFadeIn 0.2s ease;
+  pointer-events: auto !important;
+}
+
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mobile-bottom-nav-dropdown {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  right: 6px;
+  z-index: 103;
+  min-width: 200px;
+  animation: dropdownSlideUp 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+  pointer-events: auto !important;
+}
+
+@keyframes dropdownSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.mobile-bottom-nav-dropdown-inner {
+  /* Same transparent glass as the bottom bar */
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.04) 30%,
+      rgba(255, 255, 255, 0.02) 60%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-radius: 22px;
+  padding: 6px !important;
+  /* Metallic rim matching the bar */
+  border: none !important;
+  box-shadow:
+    /* Outer metallic rim */
+    0 0 0 0.5px rgba(255, 255, 255, 0.18),
+    /* Top light catch */
+    inset 0 0.5px 0 0 rgba(255, 255, 255, 0.2),
+    /* Inner depth */
+    inset 0 -0.5px 0 0 rgba(0, 0, 0, 0.15),
+    /* Floating shadow */
+    0 12px 40px rgba(0, 0, 0, 0.45),
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    /* Purple underglow */
+    0 4px 30px rgba(139, 92, 246, 0.06);
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Glass sheen across dropdown top */
+.mobile-bottom-nav-dropdown-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 0.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.0) 10%,
+    rgba(255, 255, 255, 0.25) 35%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.25) 65%,
+    rgba(255, 255, 255, 0.0) 90%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+.mobile-bottom-nav-dropdown-arrow {
+  display: none; /* Arrow doesn't suit glass aesthetic */
+}
+
+.mobile-bottom-nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 18px !important;
+  border: none !important;
+  border-radius: 16px;
+  /* Subtle glass fill — matches the bar's translucency */
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-glass, 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Outfit', sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  /* Thin separator line between items */
+  box-shadow: inset 0 -0.5px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Remove separator on last item */
+.mobile-bottom-nav-dropdown-item:last-child {
+  box-shadow: none;
+}
+
+.mobile-bottom-nav-dropdown-item:active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.97);
+  transition-duration: 0.06s;
+}
+
+/* Active item — mini neumorphic orb matching the active nav icon */
+.mobile-bottom-nav-dropdown-item.active {
+  color: #fff;
+  background:
+    radial-gradient(
+      ellipse at 30% 20%,
+      rgba(167, 139, 250, 0.25) 0%,
+      rgba(139, 92, 246, 0.18) 40%,
+      rgba(124, 58, 237, 0.12) 70%,
+      rgba(99, 40, 220, 0.08) 100%
+    );
+  box-shadow:
+    inset 0 0.5px 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -0.5px 1px 0 rgba(0, 0, 0, 0.1),
+    0 0 0 0.5px rgba(139, 92, 246, 0.2),
+    0 2px 8px rgba(139, 92, 246, 0.15),
+    0 0 16px rgba(139, 92, 246, 0.06);
+}
+
+.mobile-bottom-nav-dropdown-label {
+  flex: none;
+}
+
+.mobile-bottom-nav-dropdown-check {
+  position: absolute;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: #a78bfa;
+}
+
+.mobile-bottom-nav-dropdown-check svg {
+  width: 16px;
+  height: 16px;
+  filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.4));
+}
+
+/* Chevron */
+.mobile-bottom-nav-chevron {
+  width: 10px;
+  height: 10px;
+  margin-left: 2px;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+
+.mobile-bottom-nav-chevron.up {
+  transform: rotate(180deg);
+}
+
+/* Emoji icons in dropdown — hidden */
+.mobile-bottom-nav-dropdown-emoji {
+  display: none;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes orbDotPulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow:
+      0 0 6px 2px rgba(139, 92, 246, 0.7),
+      0 0 14px 4px rgba(139, 92, 246, 0.35),
+      0 0 24px 6px rgba(139, 92, 246, 0.15);
+  }
+  50% {
+    opacity: 0.85;
+    box-shadow:
+      0 0 8px 3px rgba(139, 92, 246, 0.8),
+      0 0 20px 6px rgba(139, 92, 246, 0.4),
+      0 0 32px 10px rgba(139, 92, 246, 0.18);
+  }
+}
+
+/* ============================================================
+   DAY MODE — Frosted white glass bar
+   ============================================================ */
+
+/* Day mode bar */
+.app.app-day-mode .mobile-bottom-nav-inner,
+.app.welcome-day-mode .mobile-bottom-nav-inner,
+[data-day-mode="true"] .mobile-bottom-nav-inner,
+.day-mode .mobile-bottom-nav-inner {
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(248, 248, 255, 0.78) 30%,
+      rgba(255, 255, 255, 0.75) 60%,
+      rgba(250, 250, 255, 0.8) 100%
+    ) !important;
+  backdrop-filter: blur(16px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.06),
+    inset 0 0.5px 0 0 rgba(255, 255, 255, 0.8),
+    inset 0 -0.5px 0 0 rgba(0, 0, 0, 0.04),
+    0 6px 24px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.03),
+    0 4px 30px rgba(124, 58, 237, 0.02) !important;
+}
+
+/* Day mode bar sheen */
+.app.app-day-mode .mobile-bottom-nav-inner::before,
+.app.welcome-day-mode .mobile-bottom-nav-inner::before,
+[data-day-mode="true"] .mobile-bottom-nav-inner::before,
+.day-mode .mobile-bottom-nav-inner::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 30%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.5) 70%,
+    transparent 100%
+  ) !important;
+}
+
+/* Day mode inactive */
+.app.app-day-mode .mobile-bottom-nav-item,
+.app.welcome-day-mode .mobile-bottom-nav-item,
+[data-day-mode="true"] .mobile-bottom-nav-item,
+.day-mode .mobile-bottom-nav-item {
+  color: rgba(15, 23, 42, 0.28) !important;
+}
+
+.app.app-day-mode .mobile-bottom-nav-item:hover,
+.app.welcome-day-mode .mobile-bottom-nav-item:hover,
+[data-day-mode="true"] .mobile-bottom-nav-item:hover,
+.day-mode .mobile-bottom-nav-item:hover {
+  color: rgba(15, 23, 42, 0.5) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Day mode ACTIVE — frosted purple orb */
+.app.app-day-mode .mobile-bottom-nav-item.active,
+.app.welcome-day-mode .mobile-bottom-nav-item.active,
+[data-day-mode="true"] .mobile-bottom-nav-item.active,
+.day-mode .mobile-bottom-nav-item.active {
+  color: #1a1a2e !important;
+  background:
+    radial-gradient(
+      ellipse at 30% 20%,
+      rgba(139, 92, 246, 0.15) 0%,
+      rgba(124, 58, 237, 0.1) 40%,
+      rgba(99, 40, 220, 0.08) 70%,
+      rgba(139, 92, 246, 0.05) 100%
+    ) !important;
+  box-shadow:
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.7),
+    inset 0.5px 0.5px 0 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.06),
+    0 0 0 0.5px rgba(124, 58, 237, 0.15),
+    0 4px 12px rgba(124, 58, 237, 0.18),
+    0 2px 6px rgba(124, 58, 237, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 20px rgba(124, 58, 237, 0.08) !important;
+  border: 0.5px solid rgba(124, 58, 237, 0.15) !important;
+}
+
+/* Day mode active glass sheen */
+.app.app-day-mode .mobile-bottom-nav-item.active::before,
+.app.welcome-day-mode .mobile-bottom-nav-item.active::before,
+[data-day-mode="true"] .mobile-bottom-nav-item.active::before,
+.day-mode .mobile-bottom-nav-item.active::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.3) 35%,
+    rgba(255, 255, 255, 0.05) 65%,
+    transparent 100%
+  ) !important;
+}
+
+/* Day mode active ::after — disabled (dot removed to prevent ghost artifacts) */
+
+/* Day mode icon strokes */
+.app.app-day-mode .mobile-bottom-nav-icon svg,
+.app.welcome-day-mode .mobile-bottom-nav-icon svg,
+[data-day-mode="true"] .mobile-bottom-nav-icon svg,
+.day-mode .mobile-bottom-nav-icon svg {
+  stroke: rgba(15, 23, 42, 0.28) !important;
+}
+
+.app.app-day-mode .mobile-bottom-nav-item.active .mobile-bottom-nav-icon,
+.app.welcome-day-mode .mobile-bottom-nav-item.active .mobile-bottom-nav-icon,
+[data-day-mode="true"] .mobile-bottom-nav-item.active .mobile-bottom-nav-icon,
+.day-mode .mobile-bottom-nav-item.active .mobile-bottom-nav-icon {
+  filter:
+    drop-shadow(0 0 3px rgba(124, 58, 237, 0.25))
+    drop-shadow(0 0 8px rgba(124, 58, 237, 0.12)) !important;
+}
+
+.app.app-day-mode .mobile-bottom-nav-item.active .mobile-bottom-nav-icon svg,
+.app.welcome-day-mode .mobile-bottom-nav-item.active .mobile-bottom-nav-icon svg,
+[data-day-mode="true"] .mobile-bottom-nav-item.active .mobile-bottom-nav-icon svg,
+.day-mode .mobile-bottom-nav-item.active .mobile-bottom-nav-icon svg {
+  stroke: #1a1a2e !important;
+  stroke-width: 2 !important;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.15)) !important;
+}
+
+/* Day mode chevron */
+.app.app-day-mode .mobile-bottom-nav-chevron,
+.app.welcome-day-mode .mobile-bottom-nav-chevron,
+[data-day-mode="true"] .mobile-bottom-nav-chevron,
+.day-mode .mobile-bottom-nav-chevron {
+  stroke: rgba(15, 23, 42, 0.35) !important;
+}
+
+.app.app-day-mode .mobile-bottom-nav-item.active .mobile-bottom-nav-chevron,
+.app.welcome-day-mode .mobile-bottom-nav-item.active .mobile-bottom-nav-chevron,
+[data-day-mode="true"] .mobile-bottom-nav-item.active .mobile-bottom-nav-chevron,
+.day-mode .mobile-bottom-nav-item.active .mobile-bottom-nav-chevron {
+  stroke: #0f172a !important;
+}
+
+/* Day mode expanded */
+.app.app-day-mode .mobile-bottom-nav-item.expanded,
+.app.welcome-day-mode .mobile-bottom-nav-item.expanded,
+[data-day-mode="true"] .mobile-bottom-nav-item.expanded,
+.day-mode .mobile-bottom-nav-item.expanded {
+  color: #0f172a !important;
+  background:
+    radial-gradient(
+      ellipse at 30% 20%,
+      rgba(0, 0, 0, 0.06) 0%,
+      rgba(0, 0, 0, 0.03) 100%
+    ) !important;
+  box-shadow:
+    inset 0 0.5px 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 0 0.5px rgba(0, 0, 0, 0.04),
+    0 2px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Day mode dropdown — frosted white glass matching day bar */
+.app.app-day-mode .mobile-bottom-nav-dropdown-inner,
+.app.welcome-day-mode .mobile-bottom-nav-dropdown-inner,
+[data-day-mode="true"] .mobile-bottom-nav-dropdown-inner,
+.day-mode .mobile-bottom-nav-dropdown-inner {
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(248, 248, 255, 0.82) 30%,
+      rgba(255, 255, 255, 0.78) 60%,
+      rgba(250, 250, 255, 0.83) 100%
+    ) !important;
+  backdrop-filter: blur(16px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.06),
+    inset 0 0.5px 0 0 rgba(255, 255, 255, 0.8),
+    inset 0 -0.5px 0 0 rgba(0, 0, 0, 0.04),
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.04) !important;
+  border: none !important;
+}
+
+/* Day mode sheen */
+.app.app-day-mode .mobile-bottom-nav-dropdown-inner::before,
+.app.welcome-day-mode .mobile-bottom-nav-dropdown-inner::before,
+[data-day-mode="true"] .mobile-bottom-nav-dropdown-inner::before,
+.day-mode .mobile-bottom-nav-dropdown-inner::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 30%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.5) 70%,
+    transparent 100%
+  ) !important;
+}
+
+.app.app-day-mode .mobile-bottom-nav-dropdown-item,
+.app.welcome-day-mode .mobile-bottom-nav-dropdown-item,
+[data-day-mode="true"] .mobile-bottom-nav-dropdown-item,
+.day-mode .mobile-bottom-nav-dropdown-item {
+  color: rgba(15, 23, 42, 0.7) !important;
+  background: rgba(0, 0, 0, 0.02) !important;
+  box-shadow: inset 0 -0.5px 0 0 rgba(0, 0, 0, 0.04) !important;
+}
+
+.day-mode .mobile-bottom-nav-dropdown-item:last-child,
+.app.app-day-mode .mobile-bottom-nav-dropdown-item:last-child {
+  box-shadow: none !important;
+}
+
+.app.app-day-mode .mobile-bottom-nav-dropdown-item:active,
+.app.welcome-day-mode .mobile-bottom-nav-dropdown-item:active,
+[data-day-mode="true"] .mobile-bottom-nav-dropdown-item:active,
+.day-mode .mobile-bottom-nav-dropdown-item:active {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.app.app-day-mode .mobile-bottom-nav-dropdown-item.active,
+.app.welcome-day-mode .mobile-bottom-nav-dropdown-item.active,
+[data-day-mode="true"] .mobile-bottom-nav-dropdown-item.active,
+.day-mode .mobile-bottom-nav-dropdown-item.active {
+  color: #1a1a2e !important;
+  background:
+    radial-gradient(
+      ellipse at 30% 20%,
+      rgba(124, 58, 237, 0.1) 0%,
+      rgba(124, 58, 237, 0.06) 50%,
+      rgba(124, 58, 237, 0.03) 100%
+    ) !important;
+  box-shadow:
+    inset 0 0.5px 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 0 0.5px rgba(124, 58, 237, 0.12),
+    0 2px 8px rgba(124, 58, 237, 0.1) !important;
+}
+
+.app.app-day-mode .mobile-bottom-nav-dropdown-check,
+.app.welcome-day-mode .mobile-bottom-nav-dropdown-check {
+  color: #7c3aed !important;
+}
+
+/* Day mode backdrop */
+.app.app-day-mode .mobile-bottom-nav-backdrop,
+.app.welcome-day-mode .mobile-bottom-nav-backdrop {
+  background: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+}

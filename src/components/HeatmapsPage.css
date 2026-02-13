@@ -1,0 +1,805 @@
+/* ═══════════════════════════════════════════
+   HEATMAPS PAGE — Glassmorphism Design
+   Matching WelcomePage / CategoriesPage system
+   ═══════════════════════════════════════════ */
+
+.heatmaps-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: calc(74px + 44px) 32px 48px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  gap: 20px;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════ */
+
+.heatmaps-hero {
+  margin-bottom: 0;
+  padding: 24px 28px;
+  border-radius: 16px;
+  background: linear-gradient(168deg, rgba(7, 6, 10, 0.92) 0%, rgba(9, 8, 13, 0.95) 35%, rgba(4, 3, 6, 0.98) 70%, rgba(2, 1, 3, 1) 100%);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: visible;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+.heatmaps-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% -30%, rgba(255, 255, 255, 0.02) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 40% at 100% 100%, rgba(0, 0, 0, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+.heatmaps-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 3%;
+  right: 3%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.4) 20%,
+    rgba(239, 68, 68, 0.3) 50%,
+    rgba(16, 185, 129, 0.35) 80%,
+    transparent 100%);
+  pointer-events: none;
+}
+
+.heatmaps-hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  position: relative;
+  z-index: 1;
+}
+.heatmaps-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.heatmaps-title {
+  font-family: var(--font-glass, system-ui);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 35%, #fca5a5 65%, #ffffff 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.2)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.1));
+  animation: heatmaps-title-shimmer 6s ease-in-out infinite;
+}
+@keyframes heatmaps-title-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.heatmaps-subtitle {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+.heatmaps-hero-stats {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.heatmaps-hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  min-width: 72px;
+}
+.heatmaps-hero-stat-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.heatmaps-hero-stat-val.val-green {
+  color: #4ade80;
+  text-shadow: 0 0 16px rgba(34, 197, 94, 0.25);
+}
+.heatmaps-hero-stat-val.val-red {
+  color: #f87171;
+  text-shadow: 0 0 16px rgba(239, 68, 68, 0.25);
+}
+.heatmaps-hero-stat-lbl {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+.heatmaps-hero-stat-divider {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════
+   CONTROLS BAR
+   ═══════════════════════════════════════════ */
+
+.heatmaps-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.heatmaps-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.heatmaps-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.heatmaps-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.heatmaps-pill-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.heatmaps-pills {
+  display: flex;
+  gap: 3px;
+}
+.heatmaps-pill {
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-glass, system-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.heatmaps-pill:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+}
+.heatmaps-pill.active {
+  color: #fff;
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0.12) 100%);
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: inset 0 1px 0 rgba(139, 92, 246, 0.25), 0 2px 8px rgba(139, 92, 246, 0.15);
+}
+
+/* Fullscreen button */
+.heatmap-fullscreen-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.heatmap-fullscreen-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.06);
+}
+
+/* ═══════════════════════════════════════════
+   LOADING / ERROR
+   ═══════════════════════════════════════════ */
+
+.heatmaps-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 120px 0;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.82rem;
+}
+.heatmaps-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.06);
+  border-top-color: #a78bfa;
+  animation: heatmapSpin 0.8s linear infinite;
+}
+@keyframes heatmapSpin { to { transform: rotate(360deg); } }
+.heatmaps-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 120px 0;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.82rem;
+}
+.heatmaps-error button {
+  padding: 8px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(168deg, rgba(7, 6, 10, 0.92) 0%, rgba(9, 8, 13, 0.95) 100%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.heatmaps-error button:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+/* ═══════════════════════════════════════════
+   HEATMAP GRID
+   ═══════════════════════════════════════════ */
+
+.heatmaps-grid-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  border-radius: 16px;
+  background: linear-gradient(168deg, rgba(7, 6, 10, 0.92) 0%, rgba(9, 8, 13, 0.95) 35%, rgba(4, 3, 6, 0.98) 70%, rgba(2, 1, 3, 1) 100%);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.4);
+  padding: 12px;
+  overflow: hidden;
+}
+
+.heatmap-grid {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  min-height: 500px;
+}
+
+/* ── Heatmap tile ── */
+.heatmap-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--tile-bg, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--tile-border, rgba(255, 255, 255, 0.08));
+  cursor: pointer;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  min-height: 0;
+  font-family: var(--font-glass, system-ui);
+}
+
+/* Shimmer overlay */
+.heatmap-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Brand glow on hover */
+.heatmap-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--tile-brand-rgb), 0.22) 0%,
+    rgba(var(--tile-brand-rgb), 0.08) 50%,
+    rgba(var(--tile-brand-rgb), 0.15) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.heatmap-tile:hover::after { opacity: 1; }
+.heatmap-tile:hover {
+  border-color: rgba(var(--tile-brand-rgb), 0.4);
+  box-shadow:
+    0 0 20px rgba(var(--tile-brand-rgb), 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+  z-index: 5;
+}
+
+/* Hero tiles (BTC, ETH) */
+.heatmap-tile--hero {
+  padding: 16px 18px;
+}
+.heatmap-tile--hero .heatmap-tile-logo {
+  width: 40px;
+  height: 40px;
+}
+.heatmap-tile--hero .heatmap-tile-symbol {
+  font-size: 18px;
+  font-weight: 700;
+}
+.heatmap-tile--hero .heatmap-tile-name {
+  font-size: 12px;
+}
+.heatmap-tile--hero .heatmap-tile-price {
+  font-size: 16px;
+}
+.heatmap-tile--hero .heatmap-tile-change {
+  font-size: 13px;
+  padding: 3px 10px;
+}
+
+/* Tile layout sections */
+.heatmap-tile-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+  position: relative;
+}
+.heatmap-tile-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 8px rgba(var(--tile-brand-rgb), 0.3);
+}
+.heatmap-tile-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.heatmap-tile-logo span {
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+}
+.heatmap-tile-symbol {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.heatmap-tile-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 2;
+  position: relative;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.heatmap-tile-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px;
+  z-index: 2;
+  position: relative;
+  margin-top: auto;
+}
+.heatmap-tile-price {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.heatmap-tile-change {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.heatmap-tile-change.positive {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+.heatmap-tile-change.negative {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* ═══════════════════════════════════════════
+   TOP MOVERS STRIP
+   ═══════════════════════════════════════════ */
+
+.heatmaps-movers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: linear-gradient(168deg, rgba(7, 6, 10, 0.92) 0%, rgba(9, 8, 13, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.heatmaps-mover-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.heatmaps-mover-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.heatmaps-mover-token {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+.heatmaps-mover-logo {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.heatmaps-mover-change {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.heatmaps-mover-change.pos { color: #22c55e; }
+.heatmaps-mover-change.neg { color: #ef4444; }
+.heatmaps-mover-val {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+}
+.heatmaps-movers-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ═══════════════════════════════════════════
+   FULLSCREEN OVERLAY
+   ═══════════════════════════════════════════ */
+
+.heatmaps-fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  animation: heatmapsFsIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes heatmapsFsIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.heatmaps-fullscreen-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px;
+  overflow: auto;
+}
+.heatmaps-fullscreen-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  flex-shrink: 0;
+}
+.heatmaps-fullscreen-title {
+  font-family: var(--font-glass, system-ui);
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.heatmaps-fullscreen-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.heatmaps-fullscreen-container .heatmap-grid {
+  flex: 1;
+  min-height: 0;
+}
+.heatmaps-fullscreen-container .heatmap-tile {
+  padding: 14px 16px;
+  border-radius: 12px;
+}
+.heatmaps-fullscreen-container .heatmap-tile-logo {
+  width: 30px;
+  height: 30px;
+}
+.heatmaps-fullscreen-container .heatmap-tile--hero .heatmap-tile-logo {
+  width: 48px;
+  height: 48px;
+}
+.heatmaps-fullscreen-container .heatmap-tile-symbol {
+  font-size: 14px;
+}
+.heatmaps-fullscreen-container .heatmap-tile--hero .heatmap-tile-symbol {
+  font-size: 20px;
+}
+.heatmaps-fullscreen-container .heatmap-tile-price {
+  font-size: 13px;
+}
+.heatmaps-fullscreen-container .heatmap-tile--hero .heatmap-tile-price {
+  font-size: 20px;
+}
+.heatmaps-fullscreen-container .heatmap-tile-change {
+  font-size: 12px;
+  padding: 3px 8px;
+}
+.heatmaps-fullscreen-container .heatmap-tile--hero .heatmap-tile-change {
+  font-size: 14px;
+  padding: 4px 12px;
+}
+
+/* ═══════════════════════════════════════════
+   DAY MODE
+   ═══════════════════════════════════════════ */
+
+.heatmaps-page.day-mode .heatmaps-hero {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: #e2e8f0;
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.heatmaps-page.day-mode .heatmaps-hero::before { display: none; }
+.heatmaps-page.day-mode .heatmaps-hero::after {
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2) 40%, rgba(239, 68, 68, 0.15) 60%, transparent);
+}
+.heatmaps-page.day-mode .heatmaps-title {
+  background: linear-gradient(135deg, #0f172a 0%, #166534 40%, #991b1b 60%, #0f172a 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: none;
+}
+.heatmaps-page.day-mode .heatmaps-subtitle { color: #94a3b8; }
+.heatmaps-page.day-mode .heatmaps-hero-stat {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.01) 100%);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.heatmaps-page.day-mode .heatmaps-hero-stat-val { color: #0f172a; }
+.heatmaps-page.day-mode .heatmaps-hero-stat-val.val-green { color: #16a34a; text-shadow: none; }
+.heatmaps-page.day-mode .heatmaps-hero-stat-val.val-red { color: #dc2626; text-shadow: none; }
+.heatmaps-page.day-mode .heatmaps-hero-stat-lbl { color: #94a3b8; }
+
+.heatmaps-page.day-mode .heatmaps-pill-label { color: #94a3b8; }
+.heatmaps-page.day-mode .heatmaps-pill {
+  border-color: rgba(0, 0, 0, 0.08);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.01) 100%);
+  color: #64748b;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.heatmaps-page.day-mode .heatmaps-pill:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #334155;
+}
+.heatmaps-page.day-mode .heatmaps-pill.active {
+  color: #fff;
+  background: linear-gradient(180deg, #7c3aed 0%, #6d28d9 100%);
+  border-color: #6d28d9;
+  box-shadow: 0 2px 6px rgba(109, 40, 217, 0.2);
+}
+
+.heatmaps-page.day-mode .heatmap-fullscreen-btn {
+  border-color: #e2e8f0;
+  background: rgba(0, 0, 0, 0.02);
+  color: #64748b;
+}
+.heatmaps-page.day-mode .heatmap-fullscreen-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #334155;
+  border-color: #cbd5e1;
+}
+
+.heatmaps-page.day-mode .heatmaps-grid-container {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: #e2e8f0;
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.heatmaps-page.day-mode .heatmap-tile {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.heatmaps-page.day-mode .heatmap-tile::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.15) 100%);
+}
+.heatmaps-page.day-mode .heatmap-tile-symbol {
+  color: #0f172a;
+  text-shadow: none;
+}
+.heatmaps-page.day-mode .heatmap-tile-name { color: #64748b; }
+.heatmaps-page.day-mode .heatmap-tile-price {
+  color: #1e293b;
+  text-shadow: none;
+}
+
+.heatmaps-page.day-mode .heatmaps-movers {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.heatmaps-page.day-mode .heatmaps-mover-label { color: #94a3b8; }
+.heatmaps-page.day-mode .heatmaps-mover-token { color: #1e293b; }
+.heatmaps-page.day-mode .heatmaps-mover-val { color: #1e293b; }
+.heatmaps-page.day-mode .heatmaps-movers-divider { background: rgba(0, 0, 0, 0.08); }
+
+.heatmaps-page.day-mode .heatmaps-loading { color: #94a3b8; }
+.heatmaps-page.day-mode .heatmaps-loading-spinner { border-color: rgba(0, 0, 0, 0.06); border-top-color: #7c3aed; }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .heatmaps-page { padding: calc(74px + 36px) 20px 40px; }
+  .heatmaps-controls-left { gap: 12px; }
+}
+
+@media (max-width: 768px) {
+  .heatmaps-page { padding: calc(74px + 28px) 12px 32px; gap: 14px; }
+  .heatmaps-hero { padding: 20px 18px; border-radius: 18px; }
+  .heatmaps-hero-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .heatmaps-hero-stats { flex-wrap: wrap; gap: 12px; }
+  .heatmaps-title { font-size: 1.3rem; }
+  .heatmaps-controls-left { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .heatmaps-grid-container { padding: 8px; border-radius: 18px; }
+  .heatmap-grid { gap: 3px; }
+  .heatmap-tile { padding: 6px 8px; border-radius: 8px; }
+  .heatmap-tile-logo { width: 18px; height: 18px; }
+  .heatmap-tile-symbol { font-size: 10px; }
+  .heatmap-tile-price { font-size: 9px; }
+  .heatmap-tile-change { font-size: 8px; padding: 1px 4px; }
+  .heatmap-tile-name { display: none; }
+  .heatmap-tile--hero { padding: 8px 10px; }
+  .heatmap-tile--hero .heatmap-tile-logo { width: 24px; height: 24px; }
+  .heatmap-tile--hero .heatmap-tile-symbol { font-size: 13px; }
+  .heatmap-tile--hero .heatmap-tile-price { font-size: 11px; }
+  .heatmap-tile--hero .heatmap-tile-change { font-size: 10px; }
+  .heatmap-tile--hero .heatmap-tile-name { display: block; font-size: 9px; }
+  .heatmaps-movers { flex-wrap: wrap; gap: 14px; padding: 12px 16px; }
+  .heatmaps-movers-divider { display: none; }
+}
+
+@media (max-width: 480px) {
+  .heatmaps-hero-stats { gap: 8px; }
+  .heatmap-tile { padding: 4px 6px; }
+  .heatmap-tile-logo { width: 14px; height: 14px; }
+  .heatmap-tile-symbol { font-size: 8px; }
+  .heatmap-tile-price { display: none; }
+  .heatmap-tile-change { font-size: 7px; padding: 1px 3px; }
+  .heatmaps-fullscreen-container { padding: 12px; }
+}
+
+/* ═══════════════════════════════════════════
+   STOCK MODE OVERRIDES
+   ═══════════════════════════════════════════ */
+
+/* Stock logos need white background for corporate logos */
+.heatmap-tile-logo--stock {
+  background: rgba(255, 255, 255, 0.92);
+  padding: 2px;
+}
+.heatmap-tile-logo--stock img {
+  border-radius: 50%;
+  object-fit: contain;
+  background: #fff;
+}
+
+/* Sector tag on stock tiles */
+.heatmap-tile-sector {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+  margin-left: auto;
+  text-transform: uppercase;
+}
+
+/* Stock mover logos */
+.heatmaps-mover-logo--stock {
+  background: #fff;
+  padding: 2px;
+  object-fit: contain;
+  border-radius: 50%;
+}

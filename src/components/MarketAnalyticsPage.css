@@ -1,0 +1,104 @@
+/**
+ * MarketAnalyticsPage Styles
+ */
+
+.market-analytics-page {
+  min-height: 100vh;
+  padding: 24px;
+  padding-top: 100px;
+  background: linear-gradient(135deg, #0a0a0f 0%, #0f0f1a 50%, #0a0a0f 100%);
+}
+
+.market-analytics-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.market-analytics-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.market-analytics-back-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.market-analytics-back-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.market-analytics-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.market-analytics-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Day mode styles */
+.market-analytics-page.day-mode {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%);
+}
+
+.market-analytics-page.day-mode .market-analytics-title {
+  color: #0f172a;
+}
+
+.market-analytics-page.day-mode .market-analytics-back-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: rgba(15, 23, 42, 0.8);
+}
+
+.market-analytics-page.day-mode .market-analytics-back-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #0f172a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .market-analytics-page {
+    padding: 16px;
+    padding-top: 80px;
+    padding-bottom: 100px;
+  }
+
+  .market-analytics-header {
+    margin-bottom: 16px;
+  }
+
+  .market-analytics-title {
+    font-size: 1.25rem;
+  }
+
+  .market-analytics-back-btn {
+    padding: 6px 12px;
+    font-size: 0.8125rem;
+  }
+
+  .market-analytics-back-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -1,0 +1,1033 @@
+/**
+ * Spectre AI Trading Platform - Premium Apple-Style Design System
+ * Silicon Valley VC-Funded Startup Aesthetic with WOW Effects
+ */
+
+/* =========================================
+   CSS Variables - Premium Dark Theme
+   ========================================= */
+:root {
+  /* Background Hierarchy - Clean dark neutrals */
+  --bg-void: #000000;
+  --bg-base: #0c0c0e;
+  --bg-surface: #131316;
+  --bg-elevated: #1a1a1f;
+  --bg-overlay: #222228;
+  --bg-hover: #2a2a30;
+
+  /* Glass Effects - Clean dark glass */
+  --glass-bg: rgba(19, 19, 22, 0.85);
+  --glass-bg-light: rgba(255, 255, 255, 0.03);
+  --glass-border: transparent;
+  --glass-border-light: transparent;
+  --glass-glow: rgba(255, 255, 255, 0.05);
+  
+  /* Text Hierarchy - Refined opacity */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.72);
+  --text-tertiary: rgba(255, 255, 255, 0.48);
+  --text-muted: rgba(255, 255, 255, 0.32);
+  --text-disabled: rgba(255, 255, 255, 0.16);
+  
+  /* Trading Colors - Vibrant, premium */
+  --bull: #10B981;
+  --bull-bright: #34D399;
+  --bull-muted: rgba(16, 185, 129, 0.15);
+  --bull-glow: rgba(16, 185, 129, 0.4);
+  --bear: #EF4444;
+  --bear-bright: #F87171;
+  --bear-muted: rgba(239, 68, 68, 0.15);
+  --bear-glow: rgba(239, 68, 68, 0.4);
+  
+  /* Brand Accent - Premium Purple Gradient */
+  --accent: #8B5CF6;
+  --accent-secondary: #A78BFA;
+  --accent-hover: #A78BFA;
+  --accent-muted: rgba(139, 92, 246, 0.12);
+  --accent-glow: rgba(139, 92, 246, 0.5);
+  --accent-gradient: linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #4F46E5 100%);
+  
+  /* Secondary Accents */
+  --cyan: #06B6D4;
+  --cyan-glow: rgba(6, 182, 212, 0.4);
+  --amber: #F59E0B;
+  --violet: #A855F7;
+  --pink: #EC4899;
+  --blue: #3B82F6;
+  
+  /* Borders - Refined (cleaned up: subtle borders removed for cleaner look) */
+  --border-subtle: transparent;
+  --border-default: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.10);
+  --border-accent: rgba(139, 92, 246, 0.4);
+  
+  /* Shadows - Layered depth with glow */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7), 0 8px 16px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 40px var(--accent-glow);
+  --shadow-glow-sm: 0 0 20px var(--accent-glow);
+  --shadow-inner: none;
+  
+  /* Typography - Apple SF Pro inspired */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  /* Spectre Glass UI - neumorphic dark glass (Welcome Widget, etc.) */
+  --font-glass: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --glass-charcoal: #1a1a1e;
+  --glass-charcoal-light: #222228;
+  --glass-surface: #16161a;
+  --glass-highlight: rgba(255, 255, 255, 0.06);
+  --glass-shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --glass-shadow-bottom: 0 6px 16px rgba(0, 0, 0, 0.5);
+  --glass-border-neumorphic: transparent;
+  --glass-radius-pill: 9999px;
+  --glass-radius-card: 16px;
+  --glass-radius-circle: 50%;
+  
+  /* Spacing - 4px base */
+  --sp-0: 0;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  
+  /* Radius - Generous rounding */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+  
+  /* Transitions - Smooth Apple-like */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+}
+
+/* =========================================
+   Reset & Base
+   ========================================= */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  min-height: 100vh;
+  height: 100%;
+  margin: 0;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* =========================================
+   Static Gradient Background (performance optimized)
+   Dark neutral with very subtle depth
+   ========================================= */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% -30%, rgba(255, 255, 255, 0.02), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(255, 255, 255, 0.01), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(255, 255, 255, 0.01), transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.005) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.005) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+#root {
+  display: block;
+  min-height: 100vh;
+  height: 100%;
+  position: relative;
+  isolation: isolate;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* =========================================
+   Typography Scale - Premium Apple Style
+   ========================================= */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+}
+
+.display-hero {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.display-xl { font-size: 3rem; font-weight: 700; letter-spacing: -0.035em; }
+.display-lg { font-size: 2.25rem; font-weight: 700; letter-spacing: -0.03em; }
+.display-md { font-size: 1.75rem; font-weight: 600; letter-spacing: -0.025em; }
+.display-sm { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; }
+.heading { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em; }
+.subheading { 
+  font-size: 0.75rem; 
+  font-weight: 600; 
+  text-transform: uppercase; 
+  letter-spacing: 0.08em; 
+  color: var(--text-tertiary); 
+}
+.body-lg { font-size: 1.0625rem; line-height: 1.7; }
+.body { font-size: 0.9375rem; }
+.body-sm { font-size: 0.8125rem; }
+.caption { font-size: 0.75rem; color: var(--text-tertiary); }
+.mono { font-family: var(--font-mono); font-size: 0.875em; }
+
+/* Gradient Text */
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =========================================
+   Premium Scrollbar
+   ========================================= */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background var(--duration-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* =========================================
+   Selection & Focus
+   ========================================= */
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* =========================================
+   Premium Animations - WOW Effects
+   ========================================= */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes fadeInDown {
+  from { 
+    opacity: 0; 
+    transform: translateY(-20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.9); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+@keyframes slideInLeft {
+  from { 
+    opacity: 0; 
+    transform: translateX(-30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+@keyframes slideInRight {
+  from { 
+    opacity: 0; 
+    transform: translateX(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.7; 
+    transform: scale(0.98);
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--accent-glow), 0 0 60px rgba(139, 92, 246, 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes rotateGlow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
+  }
+  50% {
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.2);
+  }
+}
+
+/* Animation Classes */
+.animate-in { animation: fadeIn var(--duration-base) var(--ease-out); }
+.animate-fade-up { animation: fadeInUp var(--duration-slow) var(--ease-out); }
+.animate-fade-down { animation: fadeInDown var(--duration-slow) var(--ease-out); }
+.animate-scale { animation: scaleIn var(--duration-slow) var(--ease-spring); }
+.animate-slide-left { animation: slideInLeft var(--duration-slow) var(--ease-out); }
+.animate-slide-right { animation: slideInRight var(--duration-slow) var(--ease-out); }
+.animate-pulse { animation: pulse 2s var(--ease-in-out) infinite; }
+.animate-breathe { animation: breathe 3s var(--ease-in-out) infinite; }
+.animate-float { animation: float 4s var(--ease-in-out) infinite; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Stagger delays for lists */
+.stagger-1 { animation-delay: 50ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 150ms; }
+.stagger-4 { animation-delay: 200ms; }
+.stagger-5 { animation-delay: 250ms; }
+
+/* =========================================
+   Premium Glass Components
+   ========================================= */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-inner), var(--shadow-lg);
+}
+
+.glass-subtle {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-inner), var(--shadow-md);
+  transition: all var(--duration-base) var(--ease-out);
+}
+
+.glass-card:hover {
+  border-color: var(--glass-border-light);
+  box-shadow: var(--shadow-inner), var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   Premium Glow Effects
+   ========================================= */
+.glow {
+  box-shadow: var(--shadow-glow);
+}
+
+.glow-sm {
+  box-shadow: var(--shadow-glow-sm);
+}
+
+.glow-text {
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.glow-border {
+  border: 1px solid var(--border-accent);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15), inset 0 0 20px rgba(139, 92, 246, 0.05);
+}
+
+.glow-line {
+  position: relative;
+}
+
+.glow-line::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.5;
+}
+
+/* =========================================
+   Premium Button Styles
+   ========================================= */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-5);
+  background: var(--accent-gradient);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  opacity: 1;
+  transition: opacity var(--duration-fast);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-5);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btn-ghost:hover {
+  background: var(--glass-bg-light);
+  color: var(--text-primary);
+}
+
+/* =========================================
+   Premium Input Styles
+   ========================================= */
+.input {
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-muted);
+}
+
+/* =========================================
+   Utility Classes
+   ========================================= */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Status indicators */
+.status-live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.status-live::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--bull);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 8px var(--bull-glow);
+}
+
+/* Dividers */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+}
+
+.divider-vertical {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--border-default), transparent);
+}
+
+/* =========================================
+   X Bubbles Fullscreen Mode - Hide Other Elements
+   ========================================= */
+body.x-bubbles-fullscreen .panel-left,
+body.x-bubbles-fullscreen .panel-right,
+body.x-bubbles-fullscreen .data-tabs,
+body.x-bubbles-fullscreen .token-banner,
+body.x-bubbles-fullscreen .ai-assistant,
+body.x-bubbles-fullscreen .ai-fab,
+body.x-bubbles-fullscreen header {
+  display: none !important;
+}
+
+body.x-bubbles-fullscreen .main-layout {
+  display: block !important;
+  padding: 0 !important;
+}
+
+body.x-bubbles-fullscreen .content-main {
+  grid-column: 1 / -1 !important;
+  padding: 0 !important;
+}
+
+body.x-bubbles-fullscreen {
+  overflow: hidden;
+}
+
+/* =========================================
+   Chart Fullscreen Mode - Hide Other Elements
+   ========================================= */
+body.chart-fullscreen .panel-left,
+body.chart-fullscreen .panel-right,
+body.chart-fullscreen .data-tabs,
+body.chart-fullscreen .token-banner,
+body.chart-fullscreen .ai-assistant,
+body.chart-fullscreen .ai-fab,
+body.chart-fullscreen header {
+  display: none !important;
+}
+
+body.chart-fullscreen .main-layout {
+  display: block !important;
+  padding: 0 !important;
+}
+
+body.chart-fullscreen .content-main {
+  grid-column: 1 / -1 !important;
+  padding: 0 !important;
+}
+
+body.chart-fullscreen {
+  overflow: hidden;
+}
+
+/* =========================================
+   Cursor Styles - Premium Professional
+   ========================================= */
+
+/* Custom cursor - Premium, modern styled */
+:root {
+  /* Default cursor - sleek arrow with gradient accent (28px) */
+  --cursor-default: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><defs><linearGradient id="cursorGrad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" stop-color="%23fbbf24"/><stop offset="100%25" stop-color="%23f59e0b"/></linearGradient><filter id="glow" x="-50%25" y="-50%25" width="200%25" height="200%25"><feGaussianBlur stdDeviation="1" result="blur"/><feComposite in="SourceGraphic" in2="blur" operator="over"/></filter><filter id="shadow" x="-30%25" y="-30%25" width="160%25" height="160%25"><feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-opacity="0.4"/></filter></defs><path d="M4 2L20 14L12 16L9 24Z" fill="%23ffffff" stroke="%23111827" stroke-width="1.5" stroke-linejoin="round" filter="url(%23shadow)"/><path d="M6 5L17 13" stroke="url(%23cursorGrad)" stroke-width="2" stroke-linecap="round" opacity="0.85"/><circle cx="6" cy="5" r="1.5" fill="%23fbbf24" opacity="0.9"/></svg>') 4 2, default;
+  
+  /* Pointer cursor - refined hand with accent (20px) */
+  --cursor-pointer: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 28 28"><defs><linearGradient id="handGrad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" stop-color="%23fbbf24"/><stop offset="100%25" stop-color="%23f59e0b"/></linearGradient><filter id="handShadow" x="-30%25" y="-30%25" width="160%25" height="160%25"><feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-opacity="0.35"/></filter></defs><path d="M10 11V6a2 2 0 014 0v7h1V7.5a2 2 0 014 0v5.5h1V9.5a2 2 0 014 0v5h1V11a2 2 0 014 0v6c0 4.5-2.5 6-7 6h-3c-4.5 0-6-2.5-6-6v-3.5a2 2 0 014 0z" fill="%23ffffff" stroke="%23111827" stroke-width="1.2" filter="url(%23handShadow)"/><path d="M12 7v4" stroke="url(%23handGrad)" stroke-width="2" stroke-linecap="round" opacity="0.8"/><circle cx="12" cy="6" r="1.2" fill="%23fbbf24" opacity="0.9"/></svg>') 9 3, pointer;
+  
+  /* Text cursor - clean I-beam (20px) */
+  --cursor-text: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" viewBox="0 0 16 24"><defs><filter id="textShadow" x="-30%25" y="-30%25" width="160%25" height="160%25"><feDropShadow dx="0.5" dy="1" stdDeviation="0.8" flood-opacity="0.3"/></filter></defs><path d="M8 3v18M5 3h6M5 21h6" fill="none" stroke="%23111827" stroke-width="2.5" stroke-linecap="round" opacity="0.25"/><path d="M8 3v18M5 3h6M5 21h6" fill="none" stroke="%23ffffff" stroke-width="1.8" stroke-linecap="round" filter="url(%23textShadow)"/><circle cx="8" cy="3" r="1" fill="%23fbbf24" opacity="0.8"/><circle cx="8" cy="21" r="1" fill="%23fbbf24" opacity="0.8"/></svg>') 8 12, text;
+}
+
+/* Apply custom default cursor globally */
+html, body {
+  cursor: var(--cursor-default);
+}
+
+/* Pointer for all interactive elements */
+a,
+button,
+[role="button"],
+[tabindex]:not([tabindex="-1"]),
+.clickable,
+.watchlist-btn,
+.social-btn,
+.action-btn,
+.sort-btn,
+.tf-btn,
+.type-btn,
+.tool-btn,
+.tab-btn,
+.dropdown-btn,
+.btn-primary,
+.btn-secondary,
+.btn-ghost,
+.btn-degen,
+.btn-deposit,
+.toggle-btn,
+.badge,
+.smart-badge,
+.search-trigger,
+.close-btn,
+.expand-btn,
+.nav-item,
+.token-item,
+.watchlist-item,
+.search-item,
+.search-item-card,
+.tweet,
+.share-option,
+.social-menu-item,
+.notification-item,
+.stat-card,
+.card-ca,
+.sort-option,
+.clear-history-btn,
+.search-clear-btn,
+.copy-btn,
+.icon-btn,
+label[for],
+select,
+[onclick],
+input[type="button"],
+input[type="submit"],
+input[type="checkbox"],
+input[type="radio"],
+.ca-btn,
+.description-toggle,
+.logo-icon,
+.profile-btn,
+.header-right > *,
+.chart-controls button,
+.chart-controls .type-btn,
+.chart-controls .tf-btn,
+.chart-controls .tool-btn,
+.stat-item.has-dropdown,
+.stat-item.has-dropdown *,
+.vol-tf-btn,
+.comparison-bar,
+.lock-item,
+.data-tab,
+.panel-tab,
+.watchlist-add-btn {
+  cursor: var(--cursor-pointer) !important;
+}
+
+/* Text cursor for inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+textarea,
+[contenteditable="true"] {
+  cursor: var(--cursor-text);
+}
+
+/* Chart - no cursor */
+.trading-chart canvas,
+.chart-canvas {
+  cursor: none;
+}
+
+/* Resize cursors */
+.resize-handle,
+.chart-resize-handle {
+  cursor: ns-resize;
+}
+
+/* Price axis - vertical resize */
+.price-axis-area,
+.axis-drag-handle.price {
+  cursor: ns-resize;
+}
+
+/* Time axis - horizontal resize */
+.time-axis-area,
+.axis-drag-handle.time {
+  cursor: ew-resize;
+}
+
+/* Not allowed cursor */
+.disabled,
+[disabled],
+.btn-disabled,
+.unavailable {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}
+
+/* Wait/loading cursor */
+.loading,
+.processing {
+  cursor: wait;
+}
+
+/* Link hover effect */
+a:not(.social-btn):not(.btn-primary):not(.btn-secondary):not(.btn-degen):not(.btn-ghost) {
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+a:not(.social-btn):not(.btn-primary):not(.btn-secondary):not(.btn-degen):not(.btn-ghost):hover {
+  color: var(--accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   GLOBAL BORDER CLEANUP — Remove ugly thin separator lines throughout the app
+   Affects: night mode, day mode, terminal mode, cinema mode
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Name input: remove double-border (border + inset box-shadow) ── */
+.welcome-widget-input {
+  box-shadow: none !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ── Row separator borders — kill thin border-bottom/border-top on list items ── */
+.mp-card-header,
+.mp-scenario-header,
+.mp-intel-row,
+.welcome-horizontal-market,
+.welcome-chart-overlay-header,
+.cwb-stat-card,
+.narrative-lifecycle-timeline,
+.welcome-section-header-collapsible,
+.welcome-section-header,
+.cab-metric-chip + .cab-metric-chip,
+.token-list-row,
+.token-list-item,
+.watchlist-item,
+.watchlist-token-row,
+.watchlist-header,
+.onchain-row,
+.prediction-row,
+.discovery-section-header {
+  border-bottom-color: transparent !important;
+  border-top-color: transparent !important;
+}
+
+/* ── Tab bars / filter bars — remove bottom separator lines ── */
+.welcome-tabs-bar,
+.welcome-tabs-inner,
+.discovery-tabs-bar,
+.filter-tabs,
+.market-ai-tabs {
+  border-bottom-color: transparent !important;
+}
+
+/* ── Intel/Activity rows — remove ultra-faint borders ── */
+.mp-intel-row,
+.mp-flows-row,
+.mp-correlation-row,
+.cc-news-card,
+.cc-activity-item,
+.cc-alpha-card {
+  border: none !important;
+}
+
+/* ── Subtle inset box-shadows that create hairlines ── */
+.glass-card,
+.glass-subtle,
+.token-card,
+.watchlist-card,
+.cwb-stat-card {
+  --shadow-inner: none;
+}
+
+/* ── Divider elements — make invisible ── */
+.divider,
+.divider-vertical {
+  opacity: 0 !important;
+}
+
+/* ── Day Mode — same cleanup with dark borders ── */
+.app-day-mode .welcome-widget-input {
+  box-shadow: none !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.app-day-mode .mp-card-header,
+.app-day-mode .mp-scenario-header,
+.app-day-mode .mp-intel-row,
+.app-day-mode .welcome-horizontal-market,
+.app-day-mode .welcome-chart-overlay-header,
+.app-day-mode .narrative-lifecycle-timeline,
+.app-day-mode .welcome-section-header-collapsible,
+.app-day-mode .welcome-section-header,
+.app-day-mode .token-list-row,
+.app-day-mode .token-list-item,
+.app-day-mode .watchlist-item,
+.app-day-mode .watchlist-token-row,
+.app-day-mode .watchlist-header,
+.app-day-mode .onchain-row,
+.app-day-mode .prediction-row,
+.app-day-mode .discovery-section-header {
+  border-bottom-color: transparent !important;
+  border-top-color: transparent !important;
+}
+
+.app-day-mode .welcome-tabs-bar,
+.app-day-mode .welcome-tabs-inner,
+.app-day-mode .discovery-tabs-bar,
+.app-day-mode .filter-tabs,
+.app-day-mode .market-ai-tabs {
+  border-bottom-color: transparent !important;
+}
+
+.app-day-mode .mp-intel-row,
+.app-day-mode .mp-flows-row,
+.app-day-mode .mp-correlation-row {
+  border: none !important;
+}
+
+.app-day-mode .divider,
+.app-day-mode .divider-vertical {
+  opacity: 0 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   RTL SUPPORT (Arabic)
+   Most flexbox/grid layouts auto-flip with dir="rtl".
+   Only fixed-position elements need manual overrides.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+[dir="rtl"] .navigation-sidebar {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .app.nav-sidebar-open {
+  padding-left: 0;
+  padding-right: 240px;
+}
+
+[dir="rtl"] .app.nav-sidebar-open.nav-sidebar-collapsed {
+  padding-left: 0;
+  padding-right: 60px;
+}
+
+[dir="rtl"] .profile-dropdown-panel {
+  right: auto;
+  left: 24px;
+}
+
+[dir="rtl"] .profile-dropdown-backdrop {
+  direction: rtl;
+}
+
+[dir="rtl"] .settings-panel {
+  right: auto;
+  left: 24px;
+}
+
+[dir="rtl"] .settings-panel-backdrop {
+  direction: rtl;
+}
+
+[dir="rtl"] .cinema-watchlist-sidebar {
+  right: auto;
+  left: 0;
+}
+
+[dir="rtl"] .cinema-welcome-content {
+  margin-right: 0;
+  margin-left: 300px;
+}
+
+[dir="rtl"] .header {
+  padding-left: 0;
+  padding-right: 240px;
+}
+
+[dir="rtl"] .nav-sidebar-collapsed .header {
+  padding-right: 60px;
+}
+
+[dir="rtl"] .copy-toast {
+  right: auto;
+  left: 24px;
+}
+
+[dir="rtl"] .token-ticker-wrapper {
+  direction: ltr; /* Keep ticker scrolling left-to-right */
+}
+
+[dir="rtl"] .mobile-bottom-nav {
+  direction: rtl;
+}

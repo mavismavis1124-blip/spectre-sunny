@@ -1,0 +1,510 @@
+/**
+ * App Store Ready - Global Mobile Optimizations
+ * iOS & Android compatibility layer
+ * 
+ * Import this in main.jsx or App.jsx:
+ * import './styles/app-store-ready.css'
+ */
+
+/* ============================================================
+   GLOBAL MOBILE FOUNDATION
+   ============================================================ */
+
+/* Disable iOS tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Allow text selection where needed */
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Smooth scrolling with momentum */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent body scroll bounce (iOS) */
+html, body {
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
+}
+
+/* Safe area CSS custom properties */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  
+  /* Touch target minimums */
+  --touch-min: 44px;
+  --touch-min-android: 48px;
+  
+  /* Mobile spacing */
+  --mobile-padding: 16px;
+  --mobile-gap: 12px;
+  --mobile-radius: 12px;
+  --mobile-radius-lg: 16px;
+}
+
+/* ============================================================
+   TYPOGRAPHY - Prevent iOS Zoom on Inputs
+   ============================================================ */
+
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important; /* Prevents iOS zoom */
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    font-size: 16px;
+  }
+}
+
+/* ============================================================
+   TOUCH TARGETS - Minimum 44px (iOS HIG)
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Ensure all interactive elements meet touch target requirements */
+  button,
+  a,
+  [role="button"],
+  [role="link"],
+  [tabindex]:not([tabindex="-1"]) {
+    min-height: var(--touch-min);
+    min-width: var(--touch-min);
+  }
+  
+  /* Icon-only buttons need explicit sizing */
+  .icon-btn,
+  .btn-icon,
+  [class*="icon-btn"],
+  [class*="-icon-btn"] {
+    min-width: var(--touch-min);
+    min-height: var(--touch-min);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   SCROLL CONTAINERS - Native Feel
+   ============================================================ */
+
+/* Horizontal scroll containers */
+[class*="scroll-x"],
+[class*="horizontal-scroll"],
+[style*="overflow-x: auto"],
+[style*="overflow-x:auto"] {
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+[class*="scroll-x"]::-webkit-scrollbar,
+[class*="horizontal-scroll"]::-webkit-scrollbar {
+  display: none;
+}
+
+/* Vertical scroll containers */
+[class*="scroll-y"],
+[class*="vertical-scroll"] {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* ============================================================
+   ANIMATIONS - 60fps Performance
+   ============================================================ */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* GPU acceleration for smooth animations */
+.animate,
+[class*="animate-"],
+[class*="transition-"] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ============================================================
+   SAFE AREAS - iOS Notch & Home Indicator
+   ============================================================ */
+
+@supports (padding: env(safe-area-inset-top)) {
+  /* Fixed headers */
+  .header,
+  [class*="header"],
+  [class*="top-bar"],
+  [class*="navbar"] {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  
+  /* Fixed bottom navigation — only target direct nav containers, NOT children */
+  .bottom-nav,
+  .mobile-bottom-nav,
+  [class*="tab-bar"],
+  [class*="footer-nav"] {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  
+  /* Full-screen modals and overlays */
+  .modal,
+  .overlay,
+  [class*="modal"],
+  [class*="overlay"],
+  [class*="fullscreen"] {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+}
+
+/* ============================================================
+   MOBILE UTILITIES
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Hide on mobile */
+  .hide-mobile,
+  .desktop-only,
+  [class*="hide-mobile"],
+  [class*="desktop-only"] {
+    display: none !important;
+  }
+  
+  /* Show only on mobile */
+  .mobile-only {
+    display: block !important;
+  }
+  
+  /* Full width on mobile */
+  .mobile-full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Stack on mobile */
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+  
+  /* Center on mobile */
+  .mobile-center {
+    text-align: center !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+/* Desktop utilities */
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   ACTIVE STATES - Tactile Feedback
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Subtle press feedback for buttons — exclude bottom nav (has own states) */
+  button:active:not(:disabled):not(.mobile-bottom-nav-item),
+  [role="button"]:active:not(.mobile-bottom-nav-item),
+  .btn:active:not(:disabled),
+  [class*="btn"]:active:not(:disabled) {
+    transform: scale(0.97);
+    opacity: 0.9;
+  }
+  
+  /* Card press feedback — exclude bottom nav items */
+  .card:active,
+  [class*="card"]:active:not([class*="bottom-nav"]),
+  [class*="-row"]:active:not([class*="bottom-nav"]),
+  [class*="-item"]:active:not([class*="bottom-nav"]) {
+    transform: scale(0.99);
+  }
+}
+
+/* ============================================================
+   FORM ELEMENTS - Mobile Optimized
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Larger touch targets for form elements */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  textarea,
+  select {
+    min-height: var(--touch-min);
+    padding: 12px 14px;
+    border-radius: var(--mobile-radius);
+  }
+  
+  /* Checkbox and radio - larger touch targets */
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 22px;
+    height: 22px;
+  }
+  
+  /* Labels */
+  label {
+    min-height: var(--touch-min);
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+  }
+}
+
+/* ============================================================
+   Z-INDEX HIERARCHY - Prevent Overlap Issues
+   ============================================================ */
+
+:root {
+  /* Proper z-index hierarchy for mobile */
+  --z-base: 0;
+  --z-content: 1;
+  --z-elevated: 10;
+  --z-sticky: 50;
+  --z-header: 100;
+  --z-sidebar: 101;
+  --z-bottom-nav: 102;
+  --z-overlay: 200;
+  --z-dropdown: 500;
+  --z-modal: 1000;
+  --z-modal-content: 1001;
+  --z-fullscreen: 2000;
+  --z-toast: 9000;
+  --z-critical: 9999;
+}
+
+/* ============================================================
+   BORDERLESS DESIGN SYSTEM - More Space on Mobile
+   Removes borders, uses shadows and spacing for separation
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Reset borders on common elements */
+  .card,
+  .panel,
+  .widget,
+  .box,
+  [class*="-card"],
+  [class*="-panel"],
+  [class*="-widget"],
+  [class*="-box"],
+  [class*="-container"] {
+    border: none !important;
+  }
+
+  /* Use subtle shadows instead of borders */
+  .card,
+  [class*="-card"] {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Remove table borders */
+  table,
+  th,
+  td,
+  tr {
+    border: none !important;
+  }
+
+  /* Use background alternation instead of borders for rows */
+  tr:nth-child(even),
+  [class*="-row"]:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  /* Remove list item borders — exclude bottom nav items */
+  li,
+  [class*="-item"]:not([class*="bottom-nav"]) {
+    border-bottom: none !important;
+  }
+
+  /* Use gap instead of borders for separation */
+  .list,
+  ul,
+  [class*="-list"] {
+    gap: 8px;
+  }
+
+  /* Remove input borders, use background */
+  input,
+  textarea,
+  select {
+    border: none !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    box-shadow: none;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3) !important;
+    outline: none !important;
+  }
+
+  /* Dividers - hidden for clean look */
+  hr,
+  .divider,
+  [class*="divider"] {
+    border: none !important;
+    height: 0;
+    background: transparent;
+    margin: 12px 0;
+  }
+
+  /* Button borders removed — exclude bottom nav (has own border system) */
+  button:not(.mobile-bottom-nav-item),
+  .btn,
+  [class*="btn-"] {
+    border: none !important;
+    box-shadow: none;
+  }
+
+  button:not(.mobile-bottom-nav-item):hover,
+  .btn:hover {
+    box-shadow: none;
+  }
+}
+
+/* Day mode borderless */
+@media (max-width: 768px) {
+  .app.app-day-mode .card,
+  .app.app-day-mode [class*="-card"],
+  .app.welcome-day-mode .card,
+  .app.welcome-day-mode [class*="-card"] {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .app.app-day-mode tr:nth-child(even),
+  .app.app-day-mode [class*="-row"]:nth-child(even),
+  .app.welcome-day-mode tr:nth-child(even),
+  .app.welcome-day-mode [class*="-row"]:nth-child(even) {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .app.app-day-mode input,
+  .app.app-day-mode textarea,
+  .app.app-day-mode select,
+  .app.welcome-day-mode input,
+  .app.welcome-day-mode textarea,
+  .app.welcome-day-mode select {
+    background: rgba(0, 0, 0, 0.03) !important;
+    box-shadow: none;
+  }
+
+  .app.app-day-mode input:focus,
+  .app.app-day-mode textarea:focus,
+  .app.app-day-mode select:focus,
+  .app.welcome-day-mode input:focus,
+  .app.welcome-day-mode textarea:focus,
+  .app.welcome-day-mode select:focus {
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25) !important;
+  }
+
+  .app.app-day-mode hr,
+  .app.app-day-mode .divider,
+  .app.welcome-day-mode hr,
+  .app.welcome-day-mode .divider {
+    background: transparent;
+  }
+
+  .app.app-day-mode button,
+  .app.app-day-mode .btn,
+  .app.welcome-day-mode button,
+  .app.welcome-day-mode .btn {
+    box-shadow: none;
+  }
+}
+
+/* ============================================================
+   GLASS MORPHISM UTILITIES
+   ============================================================ */
+
+.glass,
+.glass-card,
+[class*="glass-"] {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.glass-dark {
+  background: rgba(28, 28, 32, 0.75);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06) inset,
+    0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Day mode glass */
+.app.app-day-mode .glass,
+.app.app-day-mode .glass-card,
+.app.welcome-day-mode .glass,
+.app.welcome-day-mode .glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.05) inset,
+    0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================
+   PRINT STYLES - Hide UI Elements
+   ============================================================ */
+
+@media print {
+  .header,
+  .bottom-nav,
+  .sidebar,
+  .modal,
+  .overlay,
+  button,
+  [class*="nav"],
+  [class*="menu"] {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}

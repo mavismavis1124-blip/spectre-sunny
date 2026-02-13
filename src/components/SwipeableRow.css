@@ -1,0 +1,99 @@
+/**
+ * SwipeableRow - iOS-style swipe-to-reveal actions
+ */
+
+.swipeable-row {
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.swipeable-row-content {
+  position: relative;
+  z-index: 1;
+  background: inherit;
+  will-change: transform;
+}
+
+.swipeable-row.dragging .swipeable-row-content {
+  cursor: grabbing;
+}
+
+/* Action buttons container */
+.swipeable-row-actions {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.swipeable-row-actions-left {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.swipeable-row-actions-right {
+  right: 0;
+  transform: translateX(100%);
+  flex-direction: row-reverse;
+}
+
+/* Individual action button */
+.swipeable-row-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 72px;
+  padding: 12px 16px;
+  border: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.swipeable-row-action:active {
+  opacity: 0.8;
+}
+
+.swipeable-row-action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.swipeable-row-action-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.swipeable-row-action-label {
+  white-space: nowrap;
+}
+
+/* When revealed, show hint overlay */
+.swipeable-row.revealed .swipeable-row-content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.02);
+  pointer-events: none;
+}
+
+/* Desktop: hide swipe, show hover actions instead */
+@media (min-width: 769px) {
+  .swipeable-row-actions {
+    display: none;
+  }
+
+  .swipeable-row-content {
+    transform: none !important;
+  }
+}

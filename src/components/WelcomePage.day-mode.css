@@ -1,0 +1,4492 @@
+/* ========== Day mode – Landing (Clean Light) ========== */
+.welcome-page.day-mode {
+  --wp-day-bg: #f5f5f7;
+  --wp-day-surface: #ffffff;
+  --wp-day-border: transparent;
+  --wp-day-text: #1e293b;
+  --wp-day-muted: #64748b;
+  background: var(--wp-day-bg);
+
+  /* Living Sentiment Wall — day mode: visible pastel tints across the full page */
+  --sentiment-glow: 0.12;
+}
+.welcome-page.day-mode.sentiment-bearish {
+  --sentiment-primary: 235, 70, 70;     /* warm red — visible on white */
+  --sentiment-secondary: 250, 90, 90;
+  --sentiment-tertiary: 210, 55, 55;
+  --sentiment-glow: 0.14;
+  --sentiment-orb1: 250, 90, 90;
+  --sentiment-orb2: 235, 70, 70;
+}
+.welcome-page.day-mode.sentiment-bullish {
+  --sentiment-primary: 30, 190, 120;    /* fresh green — vibrant on white */
+  --sentiment-secondary: 40, 210, 145;
+  --sentiment-tertiary: 20, 220, 160;
+  --sentiment-glow: 0.14;
+  --sentiment-orb1: 40, 210, 145;
+  --sentiment-orb2: 30, 190, 120;
+}
+.welcome-page.day-mode.sentiment-neutral {
+  --sentiment-primary: 110, 100, 240;   /* indigo — soft but visible */
+  --sentiment-secondary: 90, 80, 230;
+  --sentiment-tertiary: 140, 130, 250;
+  --sentiment-glow: 0.12;
+  --sentiment-orb1: 110, 100, 240;
+  --sentiment-orb2: 90, 80, 230;
+}
+
+.welcome-page.day-mode .welcome-bg {
+  background: #f5f5f7;
+}
+
+.welcome-page.day-mode .bg-gradient {
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 22%, rgba(var(--sentiment-primary), 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 85% 18%, rgba(var(--sentiment-secondary), 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 85% 55% at 25% 55%, rgba(var(--sentiment-tertiary), 0.13) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 50% at 80% 62%, rgba(var(--sentiment-primary), 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 55% at 50% 82%, rgba(var(--sentiment-secondary), 0.08) 0%, transparent 50%);
+  transition: background 4s ease;
+}
+
+.welcome-page.day-mode .bg-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 45%, black 15%, transparent 75%);
+  opacity: 0.4;
+}
+
+.welcome-page.day-mode .welcome-bg::before {
+  width: 650px;
+  height: 650px;
+  background: rgba(var(--sentiment-orb1), 0.10);
+  filter: blur(120px);
+  transition: background 4s ease;
+}
+
+.welcome-page.day-mode .welcome-bg::after {
+  width: 650px;
+  height: 650px;
+  background: rgba(var(--sentiment-orb2), 0.08);
+  filter: blur(120px);
+  transition: background 4s ease;
+}
+
+/* Day mode sentiment wall — visible pastel washes across full page */
+.welcome-page.day-mode .sentiment-wall {
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 22%, rgba(var(--sentiment-primary), 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 95% 55% at 30% 55%, rgba(var(--sentiment-secondary), 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 72% 72%, rgba(var(--sentiment-tertiary), 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 45% at 50% 90%, rgba(var(--sentiment-primary), 0.05) 0%, transparent 50%);
+  transition: background 4s ease;
+}
+
+/* Day mode – Element 2: Trending + section title */
+.welcome-page.day-mode .welcome-section-trending .welcome-section-title {
+  color: var(--wp-day-text);
+}
+
+/* Day mode – sidebar open/close toggles (readable on light) */
+.welcome-page.day-mode .welcome-sidebar-toggle {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border-color: rgba(15, 23, 42, 0.15);
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .welcome-sidebar-toggle:hover {
+  background: #ffffff;
+  border-color: rgba(139, 92, 246, 0.4);
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}
+.welcome-page.day-mode .welcome-sidebar-toggle-label {
+  color: #0f172a !important;
+}
+.welcome-page.day-mode .welcome-sidebar-toggle.is-closed-panel {
+  background: linear-gradient(168deg, #f1f5f9 0%, #e2e8f0 100%);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* Day mode – Trending bar (pronounced colors) */
+.welcome-page.day-mode .welcome-section-trending {
+  padding: 4px 0 2px;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .token-ticker-embedded .token-ticker,
+.welcome-page.day-mode .welcome-ticker-wrap .token-ticker {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .welcome-ticker-wrap .token-ticker .ticker-sentiment-bg {
+  opacity: 0.6;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .token-ticker.sentiment-bullish .ticker-sentiment-bg {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(5, 150, 105, 0.18) 25%,
+    rgba(5, 150, 105, 0.28) 50%,
+    rgba(5, 150, 105, 0.18) 75%,
+    transparent 100%
+  ) !important;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .token-ticker.sentiment-bearish .ticker-sentiment-bg {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(220, 38, 38, 0.18) 25%,
+    rgba(220, 38, 38, 0.28) 50%,
+    rgba(220, 38, 38, 0.18) 75%,
+    transparent 100%
+  ) !important;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .token-ticker.sentiment-neutral .ticker-sentiment-bg {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(99, 102, 241, 0.12) 25%,
+    rgba(99, 102, 241, 0.22) 50%,
+    rgba(99, 102, 241, 0.12) 75%,
+    transparent 100%
+  ) !important;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-glow-left {
+  background: linear-gradient(
+    90deg,
+    rgba(248, 250, 252, 1) 0%,
+    rgba(248, 250, 252, 0.85) 30%,
+    transparent 100%
+  );
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-glow-right {
+  background: linear-gradient(
+    270deg,
+    rgba(248, 250, 252, 1) 0%,
+    rgba(248, 250, 252, 0.85) 30%,
+    transparent 100%
+  );
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-item-inner {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-item-inner:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(99, 102, 241, 0.2);
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-item.top-gainer .ticker-item-inner {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%);
+  border-color: rgba(5, 150, 105, 0.35);
+  box-shadow: 0 2px 12px rgba(5, 150, 105, 0.15);
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-item.top-gainer .ticker-item-inner:hover {
+  border-color: rgba(5, 150, 105, 0.5);
+  box-shadow: 0 8px 24px rgba(5, 150, 105, 0.2);
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-item.featured .ticker-item-inner {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.14) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.12);
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-item.selected .ticker-item-inner {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.15) 100%);
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-symbol {
+  color: #0f172a;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-name {
+  color: #64748b;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-price {
+  color: #0f172a;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-rank {
+  color: #64748b;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-rank.top-three {
+  color: #b45309;
+  text-shadow: 0 0 8px rgba(180, 83, 9, 0.35);
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-change.positive {
+  color: #047857;
+  background: rgba(5, 150, 105, 0.2);
+  font-weight: 700;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-change.negative {
+  color: #b91c1c;
+  background: rgba(220, 38, 38, 0.18);
+  font-weight: 700;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .trending-icon {
+  color: #6366f1;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .market-pulse.left .pulse-dot {
+  background: #059669;
+  box-shadow: 0 0 10px rgba(5, 150, 105, 0.6);
+}
+.welcome-page.day-mode .welcome-ticker-wrap .market-pulse.left .pulse-label {
+  color: #047857;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-item.selected .ticker-symbol {
+  color: #4f46e5;
+}
+.welcome-page.day-mode .welcome-ticker-wrap .ticker-divider {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    transparent 100%
+  );
+}
+
+/* Day mode – Element 3: Sidebar + widgets + price cards (Neumorphic) */
+.welcome-page.day-mode .welcome-widget,
+.welcome-page.day-mode .welcome-sidebar-row .welcome-widget,
+.welcome-page.day-mode .welcome-widget.welcome-widget-glass {
+  background: linear-gradient(145deg, #f5f9fc, #e8ecf0);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    5px 5px 12px rgba(163, 177, 198, 0.4),
+    -4px -4px 10px rgba(255, 255, 255, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .welcome-widget.welcome-widget-glass {
+  background: linear-gradient(145deg, #f5f9fc, #e8ecf0) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow:
+    5px 5px 12px rgba(163, 177, 198, 0.4),
+    -4px -4px 10px rgba(255, 255, 255, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled {
+  background: linear-gradient(145deg, #f5f9fc, #e8ecf0) !important;
+  border: none !important;
+  box-shadow:
+    5px 5px 12px rgba(163, 177, 198, 0.4),
+    -4px -4px 10px rgba(255, 255, 255, 0.8) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-avatar-ring {
+  background: #e2e8f0 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-avatar {
+  background: #f1f5f9 !important;
+  border-color: transparent !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-label {
+  color: var(--wp-day-muted) !important;
+  text-shadow: none !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-price-card {
+  background: linear-gradient(145deg, #ffffff, #f5f9fc) !important;
+  border: none !important;
+  box-shadow:
+    3px 3px 8px rgba(163, 177, 198, 0.3),
+    -2px -2px 6px rgba(255, 255, 255, 0.7) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-price-card:hover {
+  background: linear-gradient(145deg, #ffffff, #f8fbfd) !important;
+  border: none !important;
+  box-shadow:
+    4px 4px 10px rgba(163, 177, 198, 0.35),
+    -2px -2px 8px rgba(255, 255, 255, 0.8),
+    0 0 8px rgba(139, 92, 246, 0.1) !important;
+}
+/* Top coins day mode: pronounced hover gradient + logo color per coin (BTC, ETH, SOL) */
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-prices-row .welcome-widget-price-card:nth-child(1):hover {
+  background: linear-gradient(145deg, #fff8f0 0%, #ffedd5 35%, #fed7aa 70%, #fdba74 100%) !important;
+  border: none !important;
+  box-shadow: 0 6px 24px rgba(251, 146, 60, 0.25), 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-prices-row .welcome-widget-price-card:nth-child(1):hover .welcome-widget-price-logo {
+  box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.6);
+  filter: none;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-prices-row .welcome-widget-price-card:nth-child(2):hover {
+  background: linear-gradient(145deg, #eef2ff 0%, #e0e7ff 35%, #c7d2fe 70%, #a5b4fc 100%) !important;
+  border: none !important;
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.25), 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-prices-row .welcome-widget-price-card:nth-child(2):hover .welcome-widget-price-logo {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.6);
+  filter: none;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-prices-row .welcome-widget-price-card:nth-child(3):hover {
+  background: linear-gradient(145deg, #f5f3ff 0%, #ede9fe 35%, #ddd6fe 70%, #c4b5fd 100%) !important;
+  border: none !important;
+  box-shadow: 0 6px 24px rgba(139, 92, 246, 0.25), 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-prices-row .welcome-widget-price-card:nth-child(3):hover .welcome-widget-price-logo {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.6);
+  filter: none;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-prices-row .welcome-widget-price-card.welcome-widget-mcap-card:hover {
+  background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%) !important;
+  border: none !important;
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-price-symbol {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-price-value {
+  color: var(--wp-day-text) !important;
+  text-shadow: none !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-index-card {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: none !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-index-title {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-index-value {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-spotify {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border: none !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-spotify-label {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-input {
+  background: var(--wp-day-surface) !important;
+  border: none !important;
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-widget-restyled .welcome-widget-check {
+  border: none !important;
+  background: var(--wp-day-surface) !important;
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-widget:hover {
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .welcome-widget-title,
+.welcome-page.day-mode .welcome-widget-label {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-page .welcome-widget-price-card {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-page .welcome-widget-price-card:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .welcome-widget-price-symbol,
+.welcome-page.day-mode .welcome-widget-text .welcome-widget-title {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-widget-avatar-ring {
+  background: #e2e8f0;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-widget-avatar {
+  background: #f1f5f9;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-widget-avatar:hover {
+  background: #e2e8f0;
+}
+.welcome-page.day-mode .welcome-widget-avatar-icon {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-avatar:hover .welcome-widget-avatar-icon {
+  color: var(--wp-day-text);
+}
+
+/* Day mode – welcome widget: price value, change, mcap card */
+.welcome-page.day-mode .welcome-widget-price-value {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-widget-price-change.positive {
+  color: #059669;
+}
+.welcome-page.day-mode .welcome-widget-price-change.negative {
+  color: #dc2626;
+}
+.welcome-page.day-mode .welcome-widget-mcap-icon {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-mcap-sublabel {
+  color: var(--wp-day-muted);
+  opacity: 0.9;
+}
+
+/* Day mode – welcome widget: index cards (indices row) */
+.welcome-page.day-mode .welcome-widget-index-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--wp-day-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Day mode – welcome widget: Fear & Greed compact */
+.welcome-page.day-mode .welcome-widget-fear-greed-compact {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 70%, #e2e8f0 100%);
+  border: 1px solid var(--wp-day-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.welcome-page.day-mode .welcome-widget-fear-greed-compact:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .welcome-widget-fear-greed-compact::before {
+  opacity: 0.28;
+  filter: blur(28px);
+}
+.welcome-page.day-mode .welcome-widget-fng-compact-label {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-fng-compact-value {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-widget-fear-greed-compact[data-sentiment="greed"] .welcome-widget-fng-compact-classification {
+  color: #059669;
+}
+.welcome-page.day-mode .welcome-widget-fear-greed-compact[data-sentiment="fear"] .welcome-widget-fng-compact-classification {
+  color: #dc2626;
+}
+.welcome-page.day-mode .welcome-widget-fear-greed-compact[data-sentiment="fear"]::before {
+  opacity: 0.55;
+  background: radial-gradient(circle at 30% 30%, rgba(239, 68, 68, 0.65) 0%, rgba(239, 68, 68, 0.25) 40%, transparent 72%);
+}
+.welcome-page.day-mode .welcome-widget-fear-greed-compact[data-sentiment="neutral"] .welcome-widget-fng-compact-classification {
+  color: #b45309;
+}
+.welcome-page.day-mode .welcome-widget-fng-compact-bar {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Day mode – welcome widget: Alt Season compact */
+.welcome-page.day-mode .welcome-widget-alt-season-compact {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 70%, #e2e8f0 100%);
+  border: 1px solid var(--wp-day-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.welcome-page.day-mode .welcome-widget-alt-season-compact:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .welcome-widget-alt-season-compact::before {
+  opacity: 0.2;
+}
+.welcome-page.day-mode .welcome-widget-alt-compact-label {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-alt-compact-value {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-widget-alt-compact-classification {
+  color: #6d28d9;
+}
+.welcome-page.day-mode .welcome-widget-alt-compact-share {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-alt-compact-bar {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Day mode – welcome widget: Dominance */
+.welcome-page.day-mode .welcome-widget-dominance-compact {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 70%, #e2e8f0 100%);
+  border: 1px solid var(--wp-day-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.welcome-page.day-mode .welcome-widget-dominance-compact:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .welcome-widget-dominance-label {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-dominance-bar-stacked {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: var(--wp-day-border);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .welcome-widget-dominance-legend-item {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-dominance-legend-text strong {
+  color: var(--wp-day-text);
+}
+
+/* Day mode – welcome widget: Index bars (inside index cards) */
+.welcome-page.day-mode .welcome-widget-index-title {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-index-value {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-widget-index-bar,
+.welcome-page.day-mode .welcome-widget-index-bar-fng,
+.welcome-page.day-mode .welcome-widget-index-bar-alt {
+  background: rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .welcome-widget-index-label {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-index-label.alt-label {
+  color: var(--wp-day-muted);
+}
+
+/* Day mode – US Market Widget */
+.welcome-page.day-mode .welcome-widget-us-market {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--wp-day-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(24px) saturate(140%);
+}
+.welcome-page.day-mode .welcome-widget-us-market:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+.welcome-page.day-mode .welcome-widget-us-market::before {
+  opacity: 0.15;
+}
+.welcome-page.day-mode .welcome-widget-us-market.is-open::before {
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.5) 0%, transparent 65%);
+}
+.welcome-page.day-mode .welcome-widget-us-market.is-closed::before {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.4) 0%, transparent 65%);
+}
+.welcome-page.day-mode .welcome-widget-us-market-title,
+.welcome-page.day-mode .welcome-widget-us-market-badge-label {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-us-market.is-open .welcome-widget-us-market-badge-label {
+  color: #059669;
+}
+.welcome-page.day-mode .welcome-widget-us-market-indicator.is-open {
+  background: #059669;
+  box-shadow: 0 0 8px rgba(5, 150, 105, 0.5), 0 0 2px rgba(5, 150, 105, 0.8);
+}
+.welcome-page.day-mode .welcome-widget-us-market-indicator.is-closed {
+  background: var(--wp-day-dim, #94a3b8);
+}
+.welcome-page.day-mode .welcome-widget-us-market-icon-wrap {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-widget-us-market-icon-wrap svg {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-us-market.is-open .welcome-widget-us-market-icon-wrap {
+  background: rgba(5, 150, 105, 0.08);
+  border-color: rgba(5, 150, 105, 0.2);
+}
+.welcome-page.day-mode .welcome-widget-us-market.is-open .welcome-widget-us-market-icon-wrap svg {
+  color: #059669;
+}
+.welcome-page.day-mode .welcome-widget-us-market-time {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-widget-us-market.is-open .welcome-widget-us-market-time {
+  color: #059669;
+}
+.welcome-page.day-mode .welcome-widget-us-market-countdown {
+  color: var(--wp-day-muted);
+  border-top-color: var(--wp-day-border);
+}
+
+/* Day mode – CME Gap Widget */
+.welcome-page.day-mode .welcome-widget-cme-gap {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--wp-day-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(24px) saturate(140%);
+}
+.welcome-page.day-mode .welcome-widget-cme-gap:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+.welcome-page.day-mode .welcome-widget-cme-gap-title {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-cme-gap-icon-wrap {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-cme-gap-item {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-widget-cme-gap-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+.welcome-page.day-mode .welcome-widget-cme-gap-symbol {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-widget-cme-gap-range {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-cme-gap-tag.unfilled {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+  border-color: rgba(245, 158, 11, 0.2);
+}
+.welcome-page.day-mode .welcome-widget-cme-gap-tag.filled {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--wp-day-dim);
+  border-color: var(--wp-day-border);
+}
+
+/* Day mode – welcome widget: Spotify + input + check */
+.welcome-page.day-mode .welcome-widget-spotify {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--wp-day-border);
+  border-radius: 12px;
+}
+.welcome-page.day-mode .welcome-widget-spotify-label {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-input {
+  background: var(--wp-day-surface) !important;
+  border: 1px solid var(--wp-day-border) !important;
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-widget-input::placeholder {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-widget-check {
+  border-color: var(--wp-day-border);
+  background: var(--wp-day-surface);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-widget-check:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-widget-name-display {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-widget-name-display.is-placeholder {
+  color: var(--wp-day-muted);
+}
+
+/* Day mode – Element 4: Main content + tabs (topcoins header, discovery) */
+.welcome-page.day-mode .welcome-topcoins-header {
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-topcoins-header-tab {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-topcoins-header-tab:hover,
+.welcome-page.day-mode .welcome-topcoins-header-tab.active {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-topcoins-header-right {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-discovery-block {
+  color: var(--wp-day-text);
+}
+
+/* Day mode – Element 5: Chart overlay, lists, close btn */
+.welcome-page.day-mode .welcome-chart-overlay-backdrop {
+  background: rgba(0, 0, 0, 0.35);
+}
+.welcome-page.day-mode .welcome-chart-overlay-panel-right {
+  background: rgba(248, 250, 252, 0.98);
+  border-left: 1px solid var(--wp-day-border);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-chart-overlay-close {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-chart-overlay-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-chart-overlay-token-info .welcome-chart-panel-token,
+.welcome-page.day-mode .welcome-chart-overlay-token-info .welcome-chart-panel-name {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-chart-overlay-tab {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-chart-overlay-tab.active {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-chart-overlay-tool-btn {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-chart-overlay-tool-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+.welcome-page.day-mode .welcome-chart-overlay-bottom-tabs {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.welcome-page.day-mode .welcome-chart-overlay-bottom-tab {
+  color: #64748b;
+}
+
+.welcome-page.day-mode .welcome-chart-overlay-bottom-tab:hover {
+  color: #334155;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.welcome-page.day-mode .welcome-chart-overlay-bottom-tab.active {
+  color: #0f172a;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%);
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 2px 8px rgba(139, 92, 246, 0.15);
+}
+.welcome-page.day-mode .welcome-chart-overlay-project-desc {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-chart-overlay-link {
+  color: #2563eb;
+}
+.welcome-page.day-mode .welcome-chart-overlay-link:hover {
+  color: #1d4ed8;
+}
+.welcome-page.day-mode .welcome-chart-overlay-view-details {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-chart-overlay-view-details:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+/* Day mode – "i" info button in welcome widget + top coins */
+.welcome-page.day-mode .welcome-topcoin-info-btn,
+.welcome-page.day-mode .token-list-info-btn.welcome-topcoin-info-btn {
+  color: #0f172a !important;
+  background: rgba(15, 23, 42, 0.06) !important;
+  border-color: rgba(15, 23, 42, 0.18) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+.welcome-page.day-mode .welcome-topcoin-info-btn:hover,
+.welcome-page.day-mode .token-list-info-btn.welcome-topcoin-info-btn:hover {
+  color: #0b1220 !important;
+  background: rgba(15, 23, 42, 0.12) !important;
+  border-color: rgba(15, 23, 42, 0.25) !important;
+}
+
+/* Day mode – Top Coins favorite (watchlist) button */
+.welcome-page.day-mode .topcoin-favorite-btn {
+  color: rgba(15, 23, 42, 0.5) !important;
+}
+.welcome-page.day-mode .topcoin-favorite-btn:hover {
+  color: rgba(15, 23, 42, 0.85) !important;
+}
+.welcome-page.day-mode .topcoin-favorite-btn.in-watchlist {
+  color: #db2777 !important;
+}
+.welcome-page.day-mode .topcoin-favorite-btn.in-watchlist:hover {
+  color: #be185d !important;
+}
+
+/* Day mode – info popover (white UI style) */
+/* Note: popover is rendered via portal to body, so we target it directly with .day-mode class */
+.welcome-page.day-mode .welcome-topcoin-info-popover,
+.welcome-topcoin-info-popover.day-mode {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 
+    0 12px 32px rgba(15, 23, 42, 0.12),
+    0 4px 12px rgba(15, 23, 42, 0.08),
+    0 0 0 1px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  color: #0f172a !important;
+}
+.welcome-page.day-mode .welcome-topcoin-info-arrow,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-arrow {
+  border-bottom-color: rgba(15, 23, 42, 0.12) !important;
+}
+.welcome-page.day-mode .welcome-topcoin-info-arrow::after,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-arrow::after {
+  border-bottom-color: #ffffff !important;
+}
+.welcome-page.day-mode .welcome-topcoin-info-name,
+.welcome-page.day-mode .welcome-topcoin-info-symbol,
+.welcome-page.day-mode .welcome-topcoin-info-desc,
+.welcome-page.day-mode .welcome-topcoin-info-metric-label,
+.welcome-page.day-mode .welcome-topcoin-info-perf-label,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-name,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-symbol,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-desc,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-metric-label,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-perf-label {
+  color: #475569 !important;
+}
+.welcome-page.day-mode .welcome-topcoin-info-symbol-only,
+.welcome-page.day-mode .welcome-topcoin-info-metric-value,
+.welcome-page.day-mode .welcome-topcoin-info-perf-value,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-symbol-only,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-metric-value,
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-perf-value {
+  color: #0f172a !important;
+}
+/* Day mode – info popover header styling */
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-header {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+/* Day mode – info popover metrics styling */
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-metrics {
+  background: rgba(15, 23, 42, 0.03);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-metric {
+  border-right-color: rgba(15, 23, 42, 0.08);
+}
+/* Day mode – info popover performance styling */
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-performance {
+  background: rgba(15, 23, 42, 0.03);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.welcome-topcoin-info-popover.day-mode .welcome-topcoin-info-perf {
+  border-right-color: rgba(15, 23, 42, 0.08);
+}
+
+/* Command Center tabs: News / Flows / Calendar text */
+.welcome-page.day-mode .news-feed-panel,
+.welcome-page.day-mode .market-flows-panel,
+.welcome-page.day-mode .economic-calendar-panel {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .news-feed-source-name,
+.welcome-page.day-mode .news-feed-time,
+.welcome-page.day-mode .news-feed-title,
+.welcome-page.day-mode .news-feed-summary,
+.welcome-page.day-mode .news-feed-category,
+.welcome-page.day-mode .news-feed-x-label,
+.welcome-page.day-mode .news-feed-x-handle,
+.welcome-page.day-mode .news-feed-x-text,
+.welcome-page.day-mode .news-feed-x-time {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .news-feed-summary,
+.welcome-page.day-mode .news-feed-time,
+.welcome-page.day-mode .news-feed-category,
+.welcome-page.day-mode .news-feed-x-time {
+  color: var(--wp-day-muted) !important;
+}
+
+.welcome-page.day-mode .narrative-lifecycle-title,
+.welcome-page.day-mode .narrative-lifecycle-tagline,
+.welcome-page.day-mode .narrative-lifecycle-timeline-label,
+.welcome-page.day-mode .narrative-lifecycle-stage {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .narrative-lifecycle-name {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .market-flows-trio-title,
+.welcome-page.day-mode .market-flows-trio-card-label,
+.welcome-page.day-mode .market-flows-trio-hint,
+.welcome-page.day-mode .market-flows-stat-label,
+.welcome-page.day-mode .market-flows-period,
+.welcome-page.day-mode .market-flows-by-product-title,
+.welcome-page.day-mode .market-flows-by-product-label,
+.welcome-page.day-mode .market-flows-etf-title,
+.welcome-page.day-mode .market-flows-etf-name,
+.welcome-page.day-mode .market-flows-etf-ticker {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .market-flows-trio-symbol {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .market-flows-stat-value {
+  color: var(--wp-day-text) !important;
+}
+
+.welcome-page.day-mode .economic-calendar-filter-label,
+.welcome-page.day-mode .economic-calendar-month-title,
+.welcome-page.day-mode .economic-calendar-weekday,
+.welcome-page.day-mode .economic-calendar-day-num,
+.welcome-page.day-mode .economic-calendar-upcoming-title,
+.welcome-page.day-mode .economic-calendar-event-title,
+.welcome-page.day-mode .economic-calendar-event-meta,
+.welcome-page.day-mode .economic-calendar-event-impact {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .economic-calendar-event-meta {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Calendar borders for visibility */
+.welcome-page.day-mode .economic-calendar-panel {
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+}
+.welcome-page.day-mode .economic-calendar-month,
+.welcome-page.day-mode .economic-calendar-upcoming {
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+}
+.welcome-page.day-mode .economic-calendar-weekdays,
+.welcome-page.day-mode .economic-calendar-days {
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+.welcome-page.day-mode .economic-calendar-day {
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Day mode – Watchlist widget styling (light background with visible dark border) */
+/* Main styling is in the Critical Fixes section below */
+
+/* Watchlist dropdowns should appear above the widget */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-dropdown,
+.welcome-page.day-mode .welcome-watchlist-widget .sort-dropdown-menu,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-menu {
+  z-index: 50 !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-row,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-controls {
+  position: relative;
+  z-index: 2;
+}
+.welcome-page.day-mode .welcome-chart-inline-panel {
+  background: var(--wp-day-surface);
+  border: 1px solid var(--wp-day-border);
+}
+
+/* Day mode – Hero + token list polish */
+.welcome-page.day-mode .hero-eyebrow {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .hero-title {
+  background: linear-gradient(135deg, var(--wp-day-text) 0%, #334155 50%, var(--wp-day-text) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.welcome-page.day-mode .hero-subtitle {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .token-list-wrap {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 30%, #f1f5f9 70%, #e2e8f0 100%);
+  border: 1px solid var(--wp-day-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.welcome-page.day-mode .token-list-header,
+.welcome-page.day-mode .token-list-row {
+  color: var(--wp-day-text);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-chart-panel {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-chart-panel-token {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-chart-panel-name {
+  color: var(--wp-day-muted);
+}
+
+/* Day mode – Tabs row + tabs bar */
+.welcome-page.day-mode .welcome-tabs-row {
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-tabs-bar {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-tab {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-tab-wrap:hover:not(.active) .welcome-tab {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-tab-wrap.active .welcome-tab {
+  color: #0c4a6e;
+}
+.welcome-page.day-mode .welcome-tab-wrap.active {
+  border-color: rgba(14, 165, 233, 0.35);
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, rgba(14, 165, 233, 0.04) 100%);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.12);
+}
+.welcome-page.day-mode .welcome-tab-close {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-tab-close:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--wp-day-text);
+}
+
+/* Day mode – Token overlay (50% panel) */
+.welcome-page.day-mode .welcome-token-overlay-panel {
+  background: rgba(248, 250, 252, 0.98);
+  border-left: 1px solid var(--wp-day-border);
+  box-shadow: -12px 0 32px rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-token-overlay-close {
+  border-color: var(--wp-day-border);
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-token-overlay-close:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-token-overlay-title {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-token-overlay-name {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-token-overlay-chart {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-muted);
+}
+
+/* Day mode – On-chain table + token cards */
+.welcome-page.day-mode .onchain-table {
+  border-color: var(--wp-day-border);
+  background: var(--wp-day-surface);
+}
+.welcome-page.day-mode .onchain-table-header,
+.welcome-page.day-mode .onchain-table .list-row {
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .onchain-table-header .list-col {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .onchain-token-card {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+  border: 1px solid var(--wp-day-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .onchain-token-card:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .onchain-card-token-meta .onchain-token-ticker,
+.welcome-page.day-mode .onchain-card-token-meta .onchain-token-name {
+  color: var(--wp-day-text);
+}
+
+/* Day mode – Discovery filters + network/category tabs */
+.welcome-page.day-mode .discovery-filters {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-network-tab {
+  border-color: var(--wp-day-border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+  color: var(--wp-day-muted);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.welcome-page.day-mode .welcome-network-tab:hover {
+  color: var(--wp-day-text);
+  border-color: rgba(0, 0, 0, 0.12);
+  background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+}
+.welcome-page.day-mode .welcome-network-tab.active {
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.12) 0%, rgba(14, 165, 233, 0.06) 100%);
+  border-color: rgba(14, 165, 233, 0.3);
+  color: #0c4a6e;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
+}
+.welcome-page.day-mode .welcome-category-tab {
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-category-tab:hover,
+.welcome-page.day-mode .welcome-category-tab.active {
+  color: var(--wp-day-text);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .discovery-filters-onchain-inline .onchain-inline-btn,
+.welcome-page.day-mode .discovery-filters-onchain-inline .onchain-trending-btn.onchain-inline-btn {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .discovery-filters-onchain-inline .onchain-inline-select {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .discovery-filters-onchain-inline .filter-label-inline {
+  color: var(--wp-day-muted);
+}
+
+/* Day mode – Discovery filters + network/category tabs */
+.welcome-page.day-mode .discovery-filters {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-network-tab {
+  border-color: var(--wp-day-border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+  color: var(--wp-day-muted);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.welcome-page.day-mode .welcome-network-tab:hover {
+  color: var(--wp-day-text);
+  border-color: rgba(0, 0, 0, 0.15);
+  background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+}
+.welcome-page.day-mode .welcome-network-tab.active {
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.12) 0%, rgba(14, 165, 233, 0.06) 100%);
+  border-color: rgba(14, 165, 233, 0.35);
+  color: #0c4a6e;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
+}
+.welcome-page.day-mode .welcome-category-tab {
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-category-tab:hover,
+.welcome-page.day-mode .welcome-category-tab.active {
+  color: var(--wp-day-text);
+  border-color: rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.95);
+}
+.welcome-page.day-mode .discovery-filters-onchain-inline .onchain-inline-btn,
+.welcome-page.day-mode .discovery-filters-onchain-inline .onchain-trending-btn.onchain-inline-btn,
+.welcome-page.day-mode .discovery-filters-onchain-inline .onchain-inline-select {
+  color: var(--wp-day-text);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .discovery-filters-onchain-inline .filter-label-inline {
+  color: var(--wp-day-muted);
+}
+
+/* ========== Day mode – Command Center (Premium Glass) ========== */
+
+/* Container + header */
+.welcome-page.day-mode .welcome-market-ai-widget {
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .welcome-market-ai-widget::before {
+  background: radial-gradient(ellipse 60% 100px at 50% -20px,
+    rgba(139, 92, 246, 0.08) 0%,
+    rgba(139, 92, 246, 0.03) 40%,
+    transparent 70%);
+}
+.welcome-page.day-mode .welcome-market-ai-section-title {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-market-ai-title-icon {
+  color: rgba(139, 92, 246, 0.85);
+  filter: none;
+}
+
+/* Tabs container */
+.welcome-page.day-mode .welcome-market-ai-tabs {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Tabs */
+.welcome-page.day-mode .welcome-market-ai-tab {
+  border-color: transparent;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.5);
+}
+.welcome-page.day-mode .welcome-market-ai-tab:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.75);
+}
+.welcome-page.day-mode .welcome-market-ai-tab.active {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #5b21b6;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.12);
+}
+.welcome-page.day-mode .welcome-market-ai-tab-icon {
+  opacity: 0.6;
+}
+.welcome-page.day-mode .welcome-market-ai-tab.active .welcome-market-ai-tab-icon {
+  opacity: 1;
+  color: #7c3aed;
+  filter: none;
+}
+
+/* Toolbar + LIVE badge */
+.welcome-page.day-mode .welcome-market-ai-toolbar {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-market-ai-live {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #047857;
+}
+.welcome-page.day-mode .welcome-market-ai-live::before {
+  background: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+.welcome-page.day-mode .welcome-market-ai-title {
+  color: var(--wp-day-text);
+}
+/* Timeframe container */
+.welcome-page.day-mode .welcome-market-ai-timeframes {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-market-ai-tf {
+  border-color: transparent;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.45);
+}
+.welcome-page.day-mode .welcome-market-ai-tf:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.7);
+}
+.welcome-page.day-mode .welcome-market-ai-tf.active {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.25);
+  color: #5b21b6;
+}
+
+/* Toggle switch */
+.welcome-page.day-mode .welcome-market-ai-toggle-label {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-market-ai-toggle-slider {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-market-ai-toggle-slider::after {
+  background: var(--wp-day-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.welcome-page.day-mode .welcome-market-ai-toggle input:checked + .welcome-market-ai-toggle-slider {
+  background: rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+/* Content + text */
+.welcome-page.day-mode .welcome-market-ai-text {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-market-ai-placeholder {
+  color: var(--wp-day-muted);
+}
+
+/* Bias badge */
+.welcome-page.day-mode .welcome-market-ai-bias-badge {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-market-ai-bias-badge.bias-bullish {
+  color: #047857;
+  border-color: rgba(16, 185, 129, 0.3);
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.06) 100%);
+}
+.welcome-page.day-mode .welcome-market-ai-bias-badge.bias-bearish {
+  color: #b91c1c;
+  border-color: rgba(239, 68, 68, 0.3);
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.12) 0%, rgba(239, 68, 68, 0.06) 100%);
+}
+.welcome-page.day-mode .welcome-market-ai-bias-badge.bias-neutral {
+  color: #a16207;
+  border-color: rgba(245, 158, 11, 0.3);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0.06) 100%);
+}
+
+/* Table */
+.welcome-page.day-mode .welcome-market-ai-table {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+}
+.welcome-page.day-mode .welcome-market-ai-table th {
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-market-ai-table th,
+.welcome-page.day-mode .welcome-market-ai-table td {
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-market-ai-table td {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-market-ai-table-asset {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-market-ai-table td.positive {
+  color: #047857;
+}
+.welcome-page.day-mode .welcome-market-ai-table td.negative {
+  color: #b91c1c;
+}
+.welcome-page.day-mode .welcome-market-ai-table td.signal-strong-buy {
+  color: #047857;
+}
+.welcome-page.day-mode .welcome-market-ai-table td.signal-buy {
+  color: #059669;
+}
+.welcome-page.day-mode .welcome-market-ai-table td.signal-hold {
+  color: #a16207;
+}
+.welcome-page.day-mode .welcome-market-ai-table td.signal-sell {
+  color: #b91c1c;
+}
+
+/* Positioning highlight */
+.welcome-page.day-mode .welcome-market-ai-positioning {
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.08) 0%, rgba(99, 102, 241, 0.04) 100%);
+  border-left-color: rgba(139, 92, 246, 0.5);
+}
+
+/* Fear & Greed row */
+.welcome-page.day-mode .welcome-market-ai-fng-row {
+  background: rgba(0, 0, 0, 0.03);
+}
+.welcome-page.day-mode .welcome-market-ai-fng-label {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-market-ai-fng-value {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-market-ai-fng-value.fng-greed {
+  color: #047857;
+}
+.welcome-page.day-mode .welcome-market-ai-fng-value.fng-fear {
+  color: #b91c1c;
+}
+.welcome-page.day-mode .welcome-market-ai-fng-value.fng-neutral {
+  color: #a16207;
+}
+
+/* Footer */
+.welcome-page.day-mode .welcome-market-ai-footer {
+  border-top-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-market-ai-updated {
+  color: var(--wp-day-muted);
+}
+
+/* ===== Day mode – Market Pulse Cards ===== */
+.welcome-page.day-mode .mp-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .mp-card:hover {
+  border-color: rgba(139, 92, 246, 0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 6px 24px rgba(0, 0, 0, 0.08),
+    0 0 16px rgba(139, 92, 246, 0.05);
+}
+.welcome-page.day-mode .mp-card-header {
+  color: #5b21b6;
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .mp-card-header svg {
+  color: rgba(139, 92, 246, 0.7);
+}
+.welcome-page.day-mode .mp-bias-pill {
+  backdrop-filter: none;
+}
+.welcome-page.day-mode .mp-bias-pill.bias-bullish {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+.welcome-page.day-mode .mp-bias-pill.bias-bearish {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+.welcome-page.day-mode .mp-bias-pill.bias-neutral {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+.welcome-page.day-mode .mp-bias-text {
+  font-weight: 700;
+}
+.welcome-page.day-mode .mp-bias-pill.bias-bullish .mp-bias-text { color: #047857; }
+.welcome-page.day-mode .mp-bias-pill.bias-bearish .mp-bias-text { color: #b91c1c; }
+.welcome-page.day-mode .mp-bias-pill.bias-neutral .mp-bias-text { color: #a16207; }
+.welcome-page.day-mode .mp-summary {
+  color: rgba(0, 0, 0, 0.55);
+}
+.welcome-page.day-mode .mp-tf-pills {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .mp-tf-btn {
+  color: rgba(0, 0, 0, 0.45);
+}
+.welcome-page.day-mode .mp-tf-btn:hover {
+  color: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.05);
+}
+.welcome-page.day-mode .mp-tf-btn.active {
+  background: rgba(139, 92, 246, 0.12);
+  color: #5b21b6;
+  border-color: rgba(139, 92, 246, 0.25);
+}
+.welcome-page.day-mode .mp-alpha-strip {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .mp-alpha-item {
+  border-right-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .mp-alpha-headline {
+  color: rgba(0, 0, 0, 0.7);
+}
+.welcome-page.day-mode .mp-alpha-time {
+  color: rgba(0, 0, 0, 0.4);
+}
+.welcome-page.day-mode .mp-ta-reversal {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .mp-ta-reversal.oversold {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(0, 0, 0, 0.02) 100%);
+  border-color: rgba(16, 185, 129, 0.15);
+}
+.welcome-page.day-mode .mp-ta-reversal.overbought {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.06) 0%, rgba(0, 0, 0, 0.02) 100%);
+  border-color: rgba(239, 68, 68, 0.15);
+}
+.welcome-page.day-mode .mp-ta-reversal-label {
+  font-weight: 700;
+}
+.welcome-page.day-mode .mp-ta-reversal.oversold .mp-ta-reversal-label { color: #047857; }
+.welcome-page.day-mode .mp-ta-reversal.overbought .mp-ta-reversal-label { color: #b91c1c; }
+.welcome-page.day-mode .mp-ta-reversal.neutral .mp-ta-reversal-label { color: rgba(0, 0, 0, 0.65); }
+.welcome-page.day-mode .mp-ta-reversal-detail {
+  color: rgba(0, 0, 0, 0.55);
+}
+.welcome-page.day-mode .mp-intel-row {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.04);
+}
+.welcome-page.day-mode .mp-intel-row:hover {
+  background: rgba(139, 92, 246, 0.05);
+  border-color: rgba(139, 92, 246, 0.1);
+}
+.welcome-page.day-mode .mp-intel-sym {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .mp-intel-action {
+  color: rgba(0, 0, 0, 0.55);
+}
+.welcome-page.day-mode .mp-intel-amount {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .mp-flows-bar {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .mp-flows-label {
+  color: #5b21b6;
+}
+.welcome-page.day-mode .mp-flows-val {
+  color: rgba(0, 0, 0, 0.7);
+}
+.welcome-page.day-mode .mp-flows-net {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .mp-flows-net.pos {
+  color: #047857;
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+.welcome-page.day-mode .mp-flows-net.neg {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+.welcome-page.day-mode .mp-bottom {
+  border-top-color: rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .mp-sector-pill {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .mp-sector-pill:hover {
+  background: rgba(139, 92, 246, 0.06);
+  border-color: rgba(139, 92, 246, 0.15);
+}
+.welcome-page.day-mode .ai-mkt-pulse-ring-inner {
+  background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .ai-mkt-pulse-label {
+  color: rgba(0, 0, 0, 0.45);
+}
+.welcome-page.day-mode .ai-mkt-trio-center.bias-bullish .ai-mkt-pulse-value { color: #047857; }
+.welcome-page.day-mode .ai-mkt-trio-center.bias-bearish .ai-mkt-pulse-value { color: #b91c1c; }
+.welcome-page.day-mode .ai-mkt-trio-center.bias-neutral .ai-mkt-pulse-value { color: #a16207; }
+.welcome-page.day-mode .ai-mkt-pulse-sig-name {
+  color: rgba(0, 0, 0, 0.5);
+}
+.welcome-page.day-mode .ai-mkt-pulse-sig-val.pos { color: #047857; }
+.welcome-page.day-mode .ai-mkt-pulse-sig-val.neg { color: #b91c1c; }
+
+/* ========== Day mode – Top Coins ========== */
+
+/* Top coins header row */
+.welcome-page.day-mode .welcome-topcoins-header {
+  border-bottom-color: var(--wp-day-border);
+}
+
+/* Segmented tabs container */
+.welcome-page.day-mode .welcome-topcoins-tabs {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border-color: var(--wp-day-border);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Each tab */
+.welcome-page.day-mode .welcome-topcoins-header-tab {
+  color: var(--wp-day-muted);
+  background: transparent;
+}
+.welcome-page.day-mode .welcome-topcoins-header-tab:hover {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.04);
+}
+.welcome-page.day-mode .welcome-topcoins-header-tab.active {
+  color: var(--wp-day-text);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.03) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .welcome-topcoins-header-tab.active:hover {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.04) 100%);
+}
+
+/* Header text areas */
+.welcome-page.day-mode .welcome-topcoins-header-left,
+.welcome-page.day-mode .welcome-topcoins-header-center,
+.welcome-page.day-mode .welcome-topcoins-header-right {
+  color: var(--wp-day-muted);
+}
+
+/* Toolbar elements */
+.welcome-page.day-mode .welcome-topcoins-toolbar {
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.6);
+}
+.welcome-page.day-mode .welcome-topcoins-toolbar-btn {
+  color: var(--wp-day-muted);
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .welcome-topcoins-toolbar-btn:hover {
+  color: var(--wp-day-text);
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-topcoins-toolbar-btn.active {
+  color: #5b21b6;
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.06) 100%);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* Icons in toolbar */
+.welcome-page.day-mode .welcome-topcoins-toolbar-btn svg,
+.welcome-page.day-mode .welcome-topcoins-header-tab svg {
+  opacity: 0.7;
+}
+.welcome-page.day-mode .welcome-topcoins-toolbar-btn:hover svg,
+.welcome-page.day-mode .welcome-topcoins-header-tab:hover svg,
+.welcome-page.day-mode .welcome-topcoins-toolbar-btn.active svg,
+.welcome-page.day-mode .welcome-topcoins-header-tab.active svg {
+  opacity: 1;
+}
+
+.welcome-page.day-mode .welcome-topcoins-glossary-link {
+  color: #64748b;
+}
+.welcome-page.day-mode .welcome-topcoins-glossary-link:hover {
+  color: #0f172a;
+}
+
+/* Discovery top coins bottom sections */
+.welcome-page.day-mode .discovery-topcoins-bottom {
+  border-color: var(--wp-day-border);
+}
+
+/* ========== Day mode – Category Tabs & Filters ========== */
+
+/* Welcome category tabs */
+.welcome-page.day-mode .welcome-category-tab {
+  color: var(--wp-day-muted);
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.8);
+}
+.welcome-page.day-mode .welcome-category-tab:hover {
+  color: var(--wp-day-text);
+  border-color: rgba(0, 0, 0, 0.15);
+  background: #fff;
+}
+.welcome-page.day-mode .welcome-category-tab.active {
+  color: var(--wp-day-text);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.02) 100%);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+/* Generic filter/category tabs */
+.welcome-page.day-mode .filter-tab,
+.welcome-page.day-mode .category-tab {
+  color: var(--wp-day-muted);
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.8);
+}
+.welcome-page.day-mode .filter-tab:hover,
+.welcome-page.day-mode .category-tab:hover {
+  color: var(--wp-day-text);
+  background: rgba(255, 255, 255, 0.95);
+}
+.welcome-page.day-mode .filter-tab.active,
+.welcome-page.day-mode .category-tab.active {
+  color: #5b21b6;
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+/* Predictions category tabs */
+.welcome-page.day-mode .predictions-category-tab {
+  color: var(--wp-day-muted);
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.8);
+}
+.welcome-page.day-mode .predictions-category-tab:hover {
+  color: #a16207;
+  background: rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 191, 36, 0.25);
+}
+.welcome-page.day-mode .predictions-category-tab.active {
+  color: #92400e;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.18) 0%, rgba(245, 158, 11, 0.1) 100%);
+  border-color: rgba(251, 191, 36, 0.35);
+}
+
+/* Filter tabs container */
+.welcome-page.day-mode .filter-tabs,
+.welcome-page.day-mode .category-tabs {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: var(--wp-day-border);
+}
+
+/* ========== Day mode – Token Table ========== */
+
+/* On-chain table wrap scrollbar */
+.welcome-page.day-mode .onchain-table-wrap::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+.welcome-page.day-mode .onchain-table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+.welcome-page.day-mode .onchain-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* On-chain table header */
+.welcome-page.day-mode .onchain-table-header {
+  background: rgba(0, 0, 0, 0.03);
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .onchain-table-header .list-col {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Token names and symbols */
+.welcome-page.day-mode .onchain-token-name,
+.welcome-page.day-mode .token-name,
+.welcome-page.day-mode .token-name-main,
+.welcome-page.day-mode .token-info-sm .token-name,
+.welcome-page.day-mode .token-info-sm .token-name-main {
+  color: var(--wp-day-text) !important;
+}
+
+.welcome-page.day-mode .token-symbol,
+.welcome-page.day-mode .token-info-sm .token-symbol,
+.welcome-page.day-mode .compare-token-symbol {
+  color: var(--wp-day-text) !important;
+}
+
+.welcome-page.day-mode .token-symbol-sub,
+.welcome-page.day-mode .token-info-sm .token-symbol-sub {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Token price */
+.welcome-page.day-mode .token-price {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .token-price .price-value {
+  color: #0f172a !important;
+}
+.welcome-page.day-mode .token-price .price-change.positive {
+  color: #059669 !important;
+}
+.welcome-page.day-mode .token-price .price-change.negative {
+  color: #dc2626 !important;
+}
+
+/* On-chain card price (grid view) */
+.welcome-page.day-mode .onchain-card-price .price-value {
+  color: #0f172a !important;
+}
+
+/* Compare token cards */
+.welcome-page.day-mode .compare-token-card .compare-token-name,
+.welcome-page.day-mode .compare-token-card .compare-token-symbol {
+  color: var(--wp-day-text) !important;
+}
+
+/* On-chain card rows */
+.welcome-page.day-mode .onchain-card,
+.welcome-page.day-mode .onchain-card-row {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .onchain-card:hover,
+.welcome-page.day-mode .onchain-card-row:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* List columns text */
+.welcome-page.day-mode .list-col {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .list-col.positive {
+  color: #047857 !important;
+}
+.welcome-page.day-mode .list-col.negative {
+  color: #b91c1c !important;
+}
+
+/* ========== Day mode – Timeframes ========== */
+
+/* Chart overlay timeframe row */
+.welcome-page.day-mode .welcome-chart-overlay-timeframe-row {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--wp-day-border);
+}
+
+/* Market AI timeframes */
+.welcome-page.day-mode .welcome-market-ai-timeframes {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Generic timeframe buttons */
+.welcome-page.day-mode .tf-btn,
+.welcome-page.day-mode .timeframe-btn,
+.welcome-page.day-mode [class*="tf-"] {
+  color: var(--wp-day-muted);
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .tf-btn:hover,
+.welcome-page.day-mode .timeframe-btn:hover,
+.welcome-page.day-mode [class*="tf-"]:hover {
+  color: var(--wp-day-text);
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .tf-btn.active,
+.welcome-page.day-mode .timeframe-btn.active,
+.welcome-page.day-mode [class*="tf-"].active {
+  color: #5b21b6;
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.06) 100%);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* On-chain filter group buttons */
+.welcome-page.day-mode .filter-group button,
+.welcome-page.day-mode .filter-group select {
+  color: var(--wp-day-muted);
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .filter-group button:hover,
+.welcome-page.day-mode .filter-group select:hover {
+  color: var(--wp-day-text);
+  background: #fff;
+}
+.welcome-page.day-mode .filter-group button.active {
+  color: #5b21b6;
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+/* ========== Day mode – On-Chain Table Columns ========== */
+
+/* Table row container */
+.welcome-page.day-mode .onchain-table-row {
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .onchain-table-row:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* Token info in rows */
+.welcome-page.day-mode .onchain-token-symbol {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .onchain-token-pair {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .onchain-token-name {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .onchain-token-boost {
+  color: #b45309 !important;
+}
+
+/* Price column */
+.welcome-page.day-mode .onchain-table-row .list-col.price-col {
+  color: var(--wp-day-text) !important;
+}
+
+/* Age, txns, makers columns */
+.welcome-page.day-mode .onchain-table-row .list-col.age-col,
+.welcome-page.day-mode .onchain-table-row .list-col.txns-col,
+.welcome-page.day-mode .onchain-table-row .list-col.makers-col {
+  color: var(--wp-day-text) !important;
+}
+
+/* Volume, liquidity, mcap columns */
+.welcome-page.day-mode .onchain-table-row .list-col.volume-col,
+.welcome-page.day-mode .onchain-table-row .list-col.liquidity-col,
+.welcome-page.day-mode .onchain-table-row .list-col.mcap-col {
+  color: var(--wp-day-text) !important;
+}
+
+/* Change columns - keep green/red but adjust for light bg */
+.welcome-page.day-mode .onchain-table-row .list-col.change-col.positive,
+.welcome-page.day-mode .onchain-table-row .list-col.change-5m.positive,
+.welcome-page.day-mode .onchain-table-row .list-col.change-1h.positive,
+.welcome-page.day-mode .onchain-table-row .list-col.change-6h.positive,
+.welcome-page.day-mode .onchain-table-row .list-col.change-24h.positive {
+  color: #047857 !important;
+}
+.welcome-page.day-mode .onchain-table-row .list-col.change-col.negative,
+.welcome-page.day-mode .onchain-table-row .list-col.change-5m.negative,
+.welcome-page.day-mode .onchain-table-row .list-col.change-1h.negative,
+.welcome-page.day-mode .onchain-table-row .list-col.change-6h.negative,
+.welcome-page.day-mode .onchain-table-row .list-col.change-24h.negative {
+  color: #b91c1c !important;
+}
+
+/* Position column */
+.welcome-page.day-mode .onchain-table-row .list-col.position-col {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Chart column icons */
+.welcome-page.day-mode .onchain-table-row .list-col.chart-col svg {
+  color: var(--wp-day-muted);
+  opacity: 0.7;
+}
+.welcome-page.day-mode .onchain-table-row:hover .list-col.chart-col svg {
+  color: var(--wp-day-text);
+  opacity: 1;
+}
+
+/* All list-col fallback */
+.welcome-page.day-mode .onchain-table-row .list-col {
+  color: var(--wp-day-text);
+}
+
+/* Table header columns */
+.welcome-page.day-mode .onchain-table-header .list-col.price-col,
+.welcome-page.day-mode .onchain-table-header .list-col.age-col,
+.welcome-page.day-mode .onchain-table-header .list-col.txns-col,
+.welcome-page.day-mode .onchain-table-header .list-col.volume-col,
+.welcome-page.day-mode .onchain-table-header .list-col.makers-col,
+.welcome-page.day-mode .onchain-table-header .list-col.change-col,
+.welcome-page.day-mode .onchain-table-header .list-col.liquidity-col,
+.welcome-page.day-mode .onchain-table-header .list-col.mcap-col,
+.welcome-page.day-mode .onchain-table-header .list-col.chart-col,
+.welcome-page.day-mode .onchain-table-header .list-col.position-col,
+.welcome-page.day-mode .onchain-table-header .list-col.token-col {
+  color: var(--wp-day-muted) !important;
+}
+
+/* ========== Day mode – Toggles, Tabs, Buttons Fix ========== */
+
+/* ON/OFF View toggle buttons */
+.welcome-page.day-mode .onchain-view-toggle {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .onchain-view-btn {
+  color: var(--wp-day-muted);
+  background: transparent;
+  border-color: transparent;
+}
+.welcome-page.day-mode .onchain-view-btn:hover {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.05);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .onchain-view-btn.active {
+  color: var(--wp-day-text) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+.welcome-page.day-mode .onchain-view-btn svg {
+  color: inherit;
+}
+
+/* Generic view buttons */
+.welcome-page.day-mode .view-btn {
+  color: var(--wp-day-muted);
+  background: transparent;
+  border-color: transparent;
+}
+.welcome-page.day-mode .view-btn:hover {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.05);
+}
+.welcome-page.day-mode .view-btn.active {
+  color: var(--wp-day-text) !important;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.04) 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Discover tabs toggle */
+.welcome-page.day-mode .discover-tabs-toggle {
+  color: var(--wp-day-muted);
+  border-color: var(--wp-day-border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .discover-tabs-toggle:hover {
+  color: var(--wp-day-text);
+  border-color: rgba(0, 0, 0, 0.15);
+  background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+}
+.welcome-page.day-mode .discover-tabs-toggle.active {
+  color: var(--wp-day-text) !important;
+  border-color: rgba(0, 0, 0, 0.18) !important;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.02) 100%) !important;
+}
+.welcome-page.day-mode .discover-tabs-icon {
+  opacity: 0.6;
+}
+.welcome-page.day-mode .discover-tabs-toggle:hover .discover-tabs-icon,
+.welcome-page.day-mode .discover-tabs-toggle.active .discover-tabs-icon {
+  opacity: 1;
+}
+.welcome-page.day-mode .discover-tabs-label {
+  color: inherit;
+}
+.welcome-page.day-mode .discover-tabs-pill {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .discover-tabs-toggle.active .discover-tabs-pill {
+  background: rgba(0, 0, 0, 0.12);
+  color: var(--wp-day-text);
+}
+
+/* On-chain trending buttons */
+.welcome-page.day-mode .onchain-trending-btn {
+  color: var(--wp-day-muted);
+  border-color: var(--wp-day-border);
+  background: rgba(255, 255, 255, 0.9);
+}
+.welcome-page.day-mode .onchain-trending-btn:hover {
+  color: var(--wp-day-text);
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .onchain-trending-btn.active {
+  color: #5b21b6;
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+/* On-chain inline buttons and selects */
+.welcome-page.day-mode .onchain-inline-btn,
+.welcome-page.day-mode .onchain-inline-select {
+  color: var(--wp-day-muted) !important;
+  border-color: var(--wp-day-border) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+.welcome-page.day-mode .onchain-inline-btn:hover,
+.welcome-page.day-mode .onchain-inline-select:hover {
+  color: var(--wp-day-text) !important;
+  background: #fff !important;
+}
+.welcome-page.day-mode .onchain-inline-btn.active {
+  color: #5b21b6 !important;
+  background: rgba(139, 92, 246, 0.1) !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
+}
+
+/* Alpha filter buttons */
+.welcome-page.day-mode .alpha-filter-btn {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .alpha-filter-btn:hover {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .alpha-filter-btn.active {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* Filter labels */
+.welcome-page.day-mode .filter-label,
+.welcome-page.day-mode .filter-label-inline,
+.welcome-page.day-mode .economic-calendar-filter-label {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .filter-label-icon {
+  color: var(--wp-day-muted);
+  opacity: 0.7;
+}
+
+/* Section titles */
+.welcome-page.day-mode .section-title,
+.welcome-page.day-mode .welcome-section-title,
+.welcome-page.day-mode .welcome-widget-title,
+.welcome-page.day-mode .welcome-widget-label,
+.welcome-page.day-mode .predictions-section-title,
+.welcome-page.day-mode .compare-section-title {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .compare-section-title::after {
+  background: var(--wp-day-border);
+}
+
+/* Widget subtitles and labels */
+.welcome-page.day-mode .welcome-widget-subtitle,
+.welcome-page.day-mode .welcome-widget-description {
+  color: var(--wp-day-muted);
+}
+
+/* Any remaining white text elements */
+.welcome-page.day-mode [class*="title"],
+.welcome-page.day-mode [class*="label"]:not(label) {
+  color: var(--wp-day-text);
+}
+
+/* Select dropdowns */
+.welcome-page.day-mode select {
+  color: var(--wp-day-text) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: var(--wp-day-border) !important;
+}
+.welcome-page.day-mode select option {
+  color: var(--wp-day-text);
+  background: #fff;
+}
+
+/* ========== Day mode – Table Headers & Values Fix ========== */
+
+/* Generic table headers */
+.welcome-page.day-mode th,
+.welcome-page.day-mode thead,
+.welcome-page.day-mode .table-header,
+.welcome-page.day-mode .table-head {
+  color: var(--wp-day-muted) !important;
+  background: rgba(0, 0, 0, 0.03);
+  border-color: var(--wp-day-border);
+}
+
+/* Generic table cells/values */
+.welcome-page.day-mode td,
+.welcome-page.day-mode tbody,
+.welcome-page.day-mode .table-cell,
+.welcome-page.day-mode .table-row {
+  color: var(--wp-day-text);
+  border-color: var(--wp-day-border);
+}
+
+/* Onchain card values */
+.welcome-page.day-mode .onchain-card-value,
+.welcome-page.day-mode .onchain-card-label,
+.welcome-page.day-mode .onchain-card-stat {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .onchain-card-meta,
+.welcome-page.day-mode .onchain-card-secondary {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Change percentages in cards */
+.welcome-page.day-mode .onchain-card-change.positive,
+.welcome-page.day-mode .change-positive {
+  color: #047857 !important;
+}
+.welcome-page.day-mode .onchain-card-change.negative,
+.welcome-page.day-mode .change-negative {
+  color: #b91c1c !important;
+}
+
+/* Prediction market values */
+.welcome-page.day-mode .predictions-value,
+.welcome-page.day-mode .predictions-label,
+.welcome-page.day-mode .predictions-stat {
+  color: var(--wp-day-text) !important;
+}
+
+/* Economic calendar values */
+.welcome-page.day-mode .economic-event-value,
+.welcome-page.day-mode .economic-event-label,
+.welcome-page.day-mode .economic-event-time {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .economic-event-impact {
+  color: var(--wp-day-muted);
+}
+
+/* Smart money / chain volume values */
+.welcome-page.day-mode .chain-volume-value,
+.welcome-page.day-mode .chain-volume-label,
+.welcome-page.day-mode .smart-money-value,
+.welcome-page.day-mode .smart-money-label {
+  color: var(--wp-day-text) !important;
+}
+
+/* Stat cards and metrics */
+.welcome-page.day-mode .stat-value,
+.welcome-page.day-mode .stat-label,
+.welcome-page.day-mode .metric-value,
+.welcome-page.day-mode .metric-label {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .stat-change.positive,
+.welcome-page.day-mode .metric-change.positive {
+  color: #047857 !important;
+}
+.welcome-page.day-mode .stat-change.negative,
+.welcome-page.day-mode .metric-change.negative {
+  color: #b91c1c !important;
+}
+
+/* Catch-all for any remaining text */
+.welcome-page.day-mode .value,
+.welcome-page.day-mode .amount,
+.welcome-page.day-mode .price,
+.welcome-page.day-mode .percent,
+.welcome-page.day-mode .number {
+  color: var(--wp-day-text);
+}
+
+/* Span elements inside data cells */
+.welcome-page.day-mode .list-col span,
+.welcome-page.day-mode .onchain-table-row span {
+  color: inherit;
+}
+
+/* ========== Day mode – Token List Table (Top Coins) ========== */
+
+/* Token list header */
+.welcome-page.day-mode .token-list-header {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.02) 100%);
+  border-bottom-color: var(--wp-day-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Token list header columns - # NAME PRICE 24H% etc */
+.welcome-page.day-mode .token-list-header .list-col {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Screener variant header */
+.welcome-page.day-mode .token-list-screener .token-list-header {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.02) 100%);
+  border-bottom-color: var(--wp-day-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.welcome-page.day-mode .token-list-screener .token-list-header .list-col {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Token list rows */
+.welcome-page.day-mode .token-list-row {
+  border-bottom-color: var(--wp-day-border);
+}
+/* Pronounced hover: strong token-color gradient (--row-bg-rgb) so the row and logo stand out */
+.welcome-page.day-mode .token-list-row:hover {
+  background: linear-gradient(
+    120deg,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.12) 0%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.28) 30%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.45) 60%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.32) 100%
+  ) !important;
+  border-left: 4px solid rgba(var(--row-bg-rgb, 99, 102, 241), 0.75);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 6px 24px rgba(var(--row-bg-rgb, 99, 102, 241), 0.25),
+    0 2px 10px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .token-list-screener .token-list-row:hover {
+  background: linear-gradient(
+    120deg,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.12) 0%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.28) 30%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.45) 60%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.32) 100%
+  ) !important;
+  border-left: 4px solid rgba(var(--row-bg-rgb, 99, 102, 241), 0.75);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 6px 24px rgba(var(--row-bg-rgb, 99, 102, 241), 0.25),
+    0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* Token row - all column values */
+.welcome-page.day-mode .token-list-row .list-col {
+  color: var(--wp-day-text) !important;
+}
+
+/* Specific columns - rank */
+.welcome-page.day-mode .token-list-row .list-col.rank {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Price column */
+.welcome-page.day-mode .token-list-row .list-col.price {
+  color: var(--wp-day-text) !important;
+}
+
+/* Change columns (24H%, 1W%, 30D%, 1Y%) */
+.welcome-page.day-mode .token-list-row .list-col.change,
+.welcome-page.day-mode .token-list-row .list-col.change-1h,
+.welcome-page.day-mode .token-list-row .list-col.change-24h,
+.welcome-page.day-mode .token-list-row .list-col.change-7d,
+.welcome-page.day-mode .token-list-row .list-col.change-30d,
+.welcome-page.day-mode .token-list-row .list-col.change-1y {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .token-list-row .list-col.change.positive,
+.welcome-page.day-mode .token-list-row .list-col.change-1h.positive,
+.welcome-page.day-mode .token-list-row .list-col.change-24h.positive,
+.welcome-page.day-mode .token-list-row .list-col.change-7d.positive,
+.welcome-page.day-mode .token-list-row .list-col.change-30d.positive,
+.welcome-page.day-mode .token-list-row .list-col.change-1y.positive {
+  color: #047857 !important;
+}
+.welcome-page.day-mode .token-list-row .list-col.change.negative,
+.welcome-page.day-mode .token-list-row .list-col.change-1h.negative,
+.welcome-page.day-mode .token-list-row .list-col.change-24h.negative,
+.welcome-page.day-mode .token-list-row .list-col.change-7d.negative,
+.welcome-page.day-mode .token-list-row .list-col.change-30d.negative,
+.welcome-page.day-mode .token-list-row .list-col.change-1y.negative {
+  color: #b91c1c !important;
+}
+
+/* Market cap column */
+.welcome-page.day-mode .token-list-row .list-col.mcap {
+  color: var(--wp-day-text) !important;
+}
+
+/* Volume column */
+.welcome-page.day-mode .token-list-row .list-col.volume {
+  color: var(--wp-day-text) !important;
+}
+
+/* Liquidity column */
+.welcome-page.day-mode .token-list-row .list-col.liquidity {
+  color: var(--wp-day-text) !important;
+}
+
+/* Chart column */
+.welcome-page.day-mode .token-list-row .list-col.chart {
+  color: var(--wp-day-muted);
+}
+
+/* Token info inside row */
+.welcome-page.day-mode .token-list-row .token-info-sm .token-symbol,
+.welcome-page.day-mode .token-list-row .token-info-sm .token-name-main {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .token-list-row .token-info-sm .token-symbol-sub,
+.welcome-page.day-mode .token-list-row .token-info-sm .token-name {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Avatar ring in day mode – logo visible; on hover use token color so logo stands out */
+.welcome-page.day-mode .token-list-row .token-avatar-ring {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .token-list-row:hover .token-avatar-ring {
+  box-shadow:
+    0 0 0 4px rgba(var(--row-bg-rgb, 99, 102, 241), 0.6),
+    0 0 16px rgba(var(--row-bg-rgb, 99, 102, 241), 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.welcome-page.day-mode .token-list-screener .token-list-row:hover .token-avatar-ring {
+  box-shadow:
+    0 0 0 4px rgba(var(--row-bg-rgb, 99, 102, 241), 0.6),
+    0 0 16px rgba(var(--row-bg-rgb, 99, 102, 241), 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.welcome-page.day-mode .token-list-row .token-avatar-ring .token-avatar-sm {
+  background: var(--wp-day-surface);
+}
+.welcome-page.day-mode .token-list-row .token-avatar-ring .token-avatar-sm img {
+  filter: none;
+}
+
+/* Selected row */
+.welcome-page.day-mode .token-list-row.selected {
+  background: rgba(139, 92, 246, 0.08);
+}
+
+/* Compressed token list variant */
+.welcome-page.day-mode .token-list-wrap--compressed .token-list-header,
+.welcome-page.day-mode .token-list-wrap--compressed .token-list-header .list-col {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .token-list-wrap--compressed .token-list-row .list-col {
+  color: var(--wp-day-text) !important;
+}
+
+/* Token list screener row values */
+.welcome-page.day-mode .token-list-screener .token-list-row .list-col {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .token-list-screener .token-list-row .list-col.rank {
+  color: var(--wp-day-muted) !important;
+}
+
+/* ========== Day mode – Watchlist Widget (white background, dark text) ========== */
+
+/* Main widget container – force white so it's not dark in day mode (override --dark) */
+.welcome-page.day-mode .welcome-watchlist-widget,
+.welcome-page.day-mode .welcome-watchlist-widget.welcome-watchlist-widget--dark,
+.app.welcome-day-mode .welcome-watchlist-widget,
+.app.welcome-day-mode .welcome-watchlist-widget.welcome-watchlist-widget--dark {
+  background: #ffffff !important;
+  background-image: linear-gradient(168deg, #ffffff 0%, #f8fafc 40%, #f1f5f9 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Inner and header row – white so content is on light */
+.welcome-page.day-mode .welcome-watchlist-widget .welcome-watchlist-inner,
+.app.welcome-day-mode .welcome-watchlist-widget .welcome-watchlist-inner {
+  background: transparent !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row,
+.app.welcome-day-mode .welcome-watchlist-widget .watchlist-header-row {
+  background: #f8fafc !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Day mode: Embedded toggle button in watchlist header */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-panel-toggle,
+.app.welcome-day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-panel-toggle {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  color: #475569 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-panel-toggle:hover,
+.app.welcome-day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-panel-toggle:hover {
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%) !important;
+  border-color: rgba(0, 0, 0, 0.18) !important;
+  color: #1e293b !important;
+}
+
+/* Watchlist name – dark font */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-title,
+.welcome-page.day-mode .welcome-watchlist-widget.welcome-watchlist-widget--dark .watchlist-title,
+.app.welcome-day-mode .welcome-watchlist-widget .watchlist-title,
+.app.welcome-day-mode .welcome-watchlist-widget.welcome-watchlist-widget--dark .watchlist-title {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* See all button */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #0f172a;
+  -webkit-text-fill-color: #0f172a;
+  font-weight: 500;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Search bar row */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-row {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  margin-bottom: 12px;
+  border-bottom: none;
+}
+
+/* Search input */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-search {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-text);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-search::placeholder {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-search:focus {
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.1);
+}
+
+/* Add button */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-btn {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.02) 100%);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-muted);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-btn:hover {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.03) 100%);
+  color: var(--wp-day-text);
+}
+
+/* Search dropdown */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-dropdown {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border-color: var(--wp-day-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-loading,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-empty {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result {
+  color: var(--wp-day-text);
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result-symbol {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result-name {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result .search-result-chain {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.2);
+  color: #7c3aed;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result .search-result-price {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result .search-result-change.positive {
+  background: rgba(34, 197, 94, 0.1);
+  color: #047857;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result .search-result-change.negative {
+  background: rgba(239, 68, 68, 0.1);
+  color: #b91c1c;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result .search-result-stats {
+  border-top-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result .search-result-stat {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-search-result .search-result-stat::before {
+  background: var(--wp-day-muted);
+}
+
+/* Controls row (sort) */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-controls {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  margin-bottom: 12px;
+  border-bottom: none;
+}
+
+/* Sort button */
+.welcome-page.day-mode .welcome-watchlist-widget .sort-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-muted);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .sort-btn:hover,
+.welcome-page.day-mode .welcome-watchlist-widget .sort-btn.active {
+  background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: var(--wp-day-text);
+}
+
+/* Sort dropdown menu */
+.welcome-page.day-mode .welcome-watchlist-widget .sort-dropdown-menu {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border-color: var(--wp-day-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .sort-option {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .sort-option:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .sort-option.active {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .sort-option .check {
+  color: var(--wp-day-text);
+}
+
+/* Watchlist picker row */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-row {
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-btn:hover,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-btn.active {
+  background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-btn svg:first-of-type {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-btn .chevron {
+  color: var(--wp-day-muted);
+}
+
+/* Watchlist picker menu */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-menu {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%);
+  border-color: var(--wp-day-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-option {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-option:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-option.active {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-option-count {
+  color: var(--wp-day-muted);
+}
+
+/* Watchlist count */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-count {
+  color: var(--wp-day-muted);
+}
+
+/* Watchlist items scrollbar */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-items {
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-items::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-items::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Watchlist item row – default light */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.7) 100%) !important;
+  border-color: var(--wp-day-border);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+/* Hover: pronounced token-color gradient (--row-bg-rgb from getTokenRowStyle) */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item:hover {
+  background: linear-gradient(
+    120deg,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.12) 0%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.28) 30%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.45) 60%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.32) 100%
+  ) !important;
+  border-left: 4px solid rgba(var(--row-bg-rgb, 99, 102, 241), 0.75);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 6px 24px rgba(var(--row-bg-rgb, 99, 102, 241), 0.25),
+    0 2px 10px rgba(0, 0, 0, 0.06);
+}
+/* Pinned: perma token color – strong gradient always on (--row-bg-rgb) */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item.pinned {
+  background: linear-gradient(
+    120deg,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.18) 0%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.35) 40%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.48) 70%,
+    rgba(var(--row-bg-rgb, 99, 102, 241), 0.35) 100%
+  ) !important;
+  border-left: 4px solid rgba(var(--row-bg-rgb, 99, 102, 241), 0.8);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 4px 16px rgba(var(--row-bg-rgb, 99, 102, 241), 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item.pinned::before {
+  opacity: 0.22;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item.drag-over {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Drag handle */
+.welcome-page.day-mode .welcome-watchlist-widget .drag-handle {
+  opacity: 0.25;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .drag-handle svg {
+  fill: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item:hover .drag-handle {
+  opacity: 0.5;
+}
+
+/* Token avatar ring */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-avatar-ring .token-avatar {
+  background: var(--wp-day-surface);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-avatar-ring .token-avatar img {
+  filter: none;
+}
+/* Hover: pronounced ring so logo is seen */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item:hover .watchlist-avatar-ring {
+  box-shadow:
+    0 0 0 4px rgba(var(--row-bg-rgb, 99, 102, 241), 0.6),
+    0 0 16px rgba(var(--row-bg-rgb, 99, 102, 241), 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+/* Pinned: perma ring so logo is always visible */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item.pinned .watchlist-avatar-ring {
+  box-shadow:
+    0 0 0 4px rgba(var(--row-bg-rgb, 99, 102, 241), 0.55),
+    0 0 12px rgba(var(--row-bg-rgb, 99, 102, 241), 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Token symbol and name */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-symbol {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-name {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Token stats */
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .price {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .change.positive {
+  color: #047857 !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .change.negative {
+  color: #b91c1c !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .mcap-value {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Action buttons (pin, remove) */
+.welcome-page.day-mode .welcome-watchlist-widget .pin-btn {
+  background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-muted);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .pin-btn:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  color: #7c3aed;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.15);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .pin-btn.active {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #7c3aed;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .remove-watchlist-btn {
+  background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+  border-color: var(--wp-day-border);
+  color: #b91c1c;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .remove-watchlist-btn:hover {
+  background: linear-gradient(180deg, #fecaca 0%, #fca5a5 100%);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #b91c1c;
+}
+
+/* Empty state */
+.welcome-page.day-mode .welcome-watchlist-widget .empty-watchlist {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .empty-watchlist svg {
+  opacity: 0.4;
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .empty-watchlist p {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .welcome-watchlist-widget .empty-watchlist span {
+  color: var(--wp-day-muted);
+}
+
+/* ========== Day mode – Watchlist Text Fix ========== */
+
+/* Watchlist title - force dark text */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-title,
+.welcome-page.day-mode .watchlist-title {
+  color: var(--wp-day-text) !important;
+}
+
+/* See All button text */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn,
+.welcome-page.day-mode .watchlist-see-all-btn {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn svg,
+.welcome-page.day-mode .watchlist-see-all-btn svg {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Token symbol (ETH, NEURAL, etc) - force dark */
+.welcome-page.day-mode .welcome-watchlist-widget .token-symbol,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-symbol,
+.welcome-page.day-mode .welcome-watchlist-widget .token-text-info .token-symbol {
+  color: var(--wp-day-text) !important;
+}
+
+/* Token name - force visible */
+.welcome-page.day-mode .welcome-watchlist-widget .token-name,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-name,
+.welcome-page.day-mode .welcome-watchlist-widget .token-text-info .token-name {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Token info container text */
+.welcome-page.day-mode .welcome-watchlist-widget .token-info,
+.welcome-page.day-mode .welcome-watchlist-widget .token-text-info {
+  color: var(--wp-day-text);
+}
+
+/* All text inside watchlist items */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item * {
+  color: inherit;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-symbol {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-name {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .price {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .change.positive {
+  color: #047857 !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .change.negative {
+  color: #b91c1c !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .mcap-value {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Picker button name */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-name {
+  color: var(--wp-day-text) !important;
+}
+
+/* ========== Day mode – Watchlist CSS Variables Override ========== */
+
+/* Override text CSS variables for watchlist in day mode */
+.welcome-page.day-mode .welcome-watchlist-widget {
+  --text-primary: #0f172a !important;
+  --text-secondary: #334155 !important;
+  --text-muted: #64748b !important;
+}
+
+/* Force all text in watchlist to use day colors */
+.welcome-page.day-mode .welcome-watchlist-widget,
+.welcome-page.day-mode .welcome-watchlist-widget * {
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+}
+
+/* Direct color overrides for stubborn elements */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-title {
+  color: #0f172a !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn {
+  color: #0f172a !important;
+  background: linear-gradient(180deg, #fff 0%, #f1f5f9 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-symbol {
+  color: #0f172a !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-name {
+  color: #64748b !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .price {
+  color: #0f172a !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .mcap-value {
+  color: #64748b !important;
+}
+
+/* Search input */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-search {
+  color: #0f172a !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-search::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Add button */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-btn {
+  color: #64748b !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-btn:hover {
+  color: #0f172a !important;
+}
+
+/* Picker button */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-btn {
+  color: #0f172a !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-btn svg {
+  color: #64748b !important;
+}
+
+/* Sort button */
+.welcome-page.day-mode .welcome-watchlist-widget .sort-btn {
+  color: #64748b !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .sort-btn:hover,
+.welcome-page.day-mode .welcome-watchlist-widget .sort-btn.active {
+  color: #0f172a !important;
+}
+
+/* Watchlist count */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-count {
+  color: #64748b !important;
+}
+
+/* Empty state */
+.welcome-page.day-mode .welcome-watchlist-widget .empty-watchlist p {
+  color: #334155 !important;
+}
+.welcome-page.day-mode .welcome-watchlist-widget .empty-watchlist span {
+  color: #64748b !important;
+}
+
+/* ========== Day mode – Watchlist Critical Fixes ========== */
+
+/* Widget border - make visible with dark border like other widgets */
+.welcome-page.day-mode .welcome-watchlist-widget {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 70%, #e2e8f0 100%) !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.18) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Watchlist header row - white background and rounded corners to match search / Main Order */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  padding: 12px 16px !important;
+  margin-bottom: 12px !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Watchlist title - force visible and dark */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-title,
+.welcome-page.day-mode .watchlist-title {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* See All button - force visible with dark text */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn,
+.welcome-page.day-mode .watchlist-see-all-btn {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  font-weight: 500 !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn:hover,
+.welcome-page.day-mode .watchlist-see-all-btn:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* See All button SVG icon */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn svg,
+.welcome-page.day-mode .watchlist-see-all-btn svg {
+  color: #0f172a !important;
+  stroke: #0f172a !important;
+}
+
+/* Token symbols - DARK text for readability */
+.welcome-page.day-mode .welcome-watchlist-widget .token-symbol,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-symbol,
+.welcome-page.day-mode .welcome-watchlist-widget .token-text-info .token-symbol,
+.welcome-page.day-mode .token-symbol {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Token names - visible muted */
+.welcome-page.day-mode .welcome-watchlist-widget .token-name,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item .token-name {
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+}
+
+/* Watchlist item cards - better contrast */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Drag handle dots - visible */
+.welcome-page.day-mode .welcome-watchlist-widget .drag-handle,
+.welcome-page.day-mode .welcome-watchlist-widget .drag-handle svg {
+  color: #94a3b8 !important;
+  fill: #94a3b8 !important;
+  opacity: 0.6 !important;
+}
+
+/* Search bar area - white background and rounded corners (match header row) */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-add-row {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  margin-bottom: 12px !important;
+  border-bottom: none !important;
+  padding: 10px 14px !important;
+}
+
+/* Main Order button and count */
+.welcome-page.day-mode .welcome-watchlist-widget .sort-btn {
+  color: #334155 !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-count {
+  color: #64748b !important;
+}
+
+/* Controls row (Main Order + count) - white background and rounded corners (match header row) */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-controls {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  margin-bottom: 12px !important;
+  border-bottom: none !important;
+  padding: 10px 14px !important;
+}
+
+/* Price and stats */
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .price {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .mcap-value {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+}
+
+/* Positive/negative changes */
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .change.positive {
+  color: #059669 !important;
+  -webkit-text-fill-color: #059669 !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .token-stats .change.negative {
+  color: #dc2626 !important;
+  -webkit-text-fill-color: #dc2626 !important;
+}
+
+/* Inner container */
+.welcome-page.day-mode .welcome-watchlist-widget .welcome-watchlist-inner {
+  background: transparent !important;
+}
+
+/* Picker row */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-row {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-picker-btn {
+  color: #1e293b !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ========== Day mode – Watchlist Header & Actions Fix ========== */
+
+/* Header row container - white background and rounded corners */
+.welcome-page.day-mode .welcome-watchlist-widget .welcome-watchlist-inner .watchlist-header-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-bottom: 12px !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+/* WATCHLIST TITLE - Maximum specificity */
+.welcome-page.day-mode .welcome-watchlist-widget .welcome-watchlist-inner .watchlist-header-row .watchlist-title {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+
+/* SEE ALL BUTTON - Maximum specificity */
+.welcome-page.day-mode .welcome-watchlist-widget .welcome-watchlist-inner .watchlist-header-row .watchlist-see-all-btn {
+  display: flex !important;
+  align-items: center !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-see-all-btn svg {
+  color: #64748b !important;
+  opacity: 1 !important;
+}
+
+/* X REMOVE BUTTON - Make visible */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-actions {
+  opacity: 0 !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-item:hover .watchlist-actions {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .remove-watchlist-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: #ef4444 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .remove-watchlist-btn svg {
+  color: #ef4444 !important;
+  opacity: 1 !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .remove-watchlist-btn:hover {
+  background: #fee2e2 !important;
+  border-color: #fca5a5 !important;
+  color: #dc2626 !important;
+}
+
+/* PIN BUTTON - Make visible */
+.welcome-page.day-mode .welcome-watchlist-widget .pin-btn {
+  display: flex !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: #64748b !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .pin-btn svg {
+  color: inherit !important;
+  opacity: 1 !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .pin-btn:hover {
+  background: #f5f3ff !important;
+  border-color: #a78bfa !important;
+  color: #7c3aed !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .pin-btn.active {
+  background: #ede9fe !important;
+  border-color: #a78bfa !important;
+  color: #7c3aed !important;
+}
+
+/* ========== Day mode – Left Panel ========== */
+
+/* Left panel CSS variables override */
+.welcome-page.day-mode .left-panel {
+  --lp-glass-bg: rgba(255, 255, 255, 0.85);
+  --lp-glass-bg-light: rgba(0, 0, 0, 0.03);
+  --lp-glass-border: rgba(0, 0, 0, 0.1);
+  --lp-glass-border-light: rgba(0, 0, 0, 0.15);
+}
+
+/* Panel cards */
+.welcome-page.day-mode .left-panel .panel-card {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 100%);
+  border-color: var(--wp-day-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .left-panel .panel-card:hover {
+  background: linear-gradient(168deg, #ffffff 0%, #fafafa 100%);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Panel tabs */
+.welcome-page.day-mode .left-panel .panel-tabs {
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .tab {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .left-panel .tab:hover {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.04);
+}
+.welcome-page.day-mode .left-panel .tab.active {
+  color: #5b21b6;
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+/* Filter section */
+.welcome-page.day-mode .left-panel .filter-section {
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .filter-chip {
+  color: var(--wp-day-muted);
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .filter-chip:hover {
+  color: var(--wp-day-text);
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+.welcome-page.day-mode .left-panel .filter-chip.active {
+  color: #fff;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  border-color: transparent;
+}
+
+/* View mode buttons */
+.welcome-page.day-mode .left-panel .view-mode-btn {
+  color: var(--wp-day-muted);
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .view-mode-btn:hover {
+  color: var(--wp-day-text);
+  background: #fff;
+}
+.welcome-page.day-mode .left-panel .view-mode-btn.active {
+  color: #7c3aed;
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* Tweets / Feed */
+.welcome-page.day-mode .left-panel .tweet {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .tweet:hover {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .left-panel .tweet-user {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .left-panel .tweet-handle,
+.welcome-page.day-mode .left-panel .tweet-time,
+.welcome-page.day-mode .left-panel .tweet-dot {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .left-panel .tweet-text {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .left-panel .tweet:hover .tweet-text {
+  color: var(--wp-day-text) !important;
+}
+
+/* Tweet actions */
+.welcome-page.day-mode .left-panel .tweet-actions {
+  border-top-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .action-btn {
+  color: var(--wp-day-muted);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .action-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+.welcome-page.day-mode .left-panel .action-btn svg {
+  fill: var(--wp-day-muted);
+}
+
+/* View on X button */
+.welcome-page.day-mode .left-panel .view-on-x-btn {
+  color: var(--wp-day-muted);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .view-on-x-btn:hover {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Bottom section tabs */
+.welcome-page.day-mode .left-panel .bottom-tabs {
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .bottom-tab {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .left-panel .bottom-tab:hover {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.03);
+}
+.welcome-page.day-mode .left-panel .bottom-tab.active {
+  color: var(--wp-day-text);
+  background: rgba(139, 92, 246, 0.08);
+}
+
+/* Trending items */
+.welcome-page.day-mode .left-panel .trending-item {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .trending-item:hover {
+  background: #fff;
+  border-color: rgba(139, 92, 246, 0.2);
+}
+.welcome-page.day-mode .left-panel .trending-item .rank {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .left-panel .trending-info .symbol {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .left-panel .trending-info .name {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .left-panel .trending-price .price {
+  color: var(--wp-day-text) !important;
+}
+
+/* AI Log items */
+.welcome-page.day-mode .left-panel .log-item {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .log-item:hover {
+  background: #fff;
+}
+.welcome-page.day-mode .left-panel .log-title {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .left-panel .log-msg {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .left-panel .log-time {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Watchlist in left panel */
+.welcome-page.day-mode .left-panel .watchlist-title {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .left-panel .watchlist-add-row {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  margin-bottom: 12px;
+  border-bottom: none;
+}
+.welcome-page.day-mode .left-panel .watchlist-add-search {
+  color: var(--wp-day-text);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .watchlist-add-search::placeholder {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .left-panel .watchlist-add-btn {
+  color: #7c3aed;
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+.welcome-page.day-mode .left-panel .watchlist-controls {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  margin-bottom: 12px;
+  border-bottom: none;
+}
+.welcome-page.day-mode .left-panel .sort-btn {
+  color: var(--wp-day-muted);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .watchlist-count {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .left-panel .watchlist-item {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .watchlist-item:hover {
+  background: #fff;
+}
+.welcome-page.day-mode .left-panel .watchlist-item .token-symbol {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .left-panel .watchlist-item .token-name {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .left-panel .token-stats .price {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .left-panel .token-stats .mcap-value {
+  color: var(--wp-day-muted) !important;
+}
+.welcome-page.day-mode .left-panel .drag-handle svg {
+  fill: var(--wp-day-muted);
+}
+.welcome-page.day-mode .left-panel .remove-watchlist-btn {
+  background: #fff;
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #dc2626;
+}
+.welcome-page.day-mode .left-panel .pin-btn {
+  background: #fff;
+  border-color: rgba(139, 92, 246, 0.3);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .left-panel .pin-btn.active {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+}
+
+/* Sort dropdown */
+.welcome-page.day-mode .left-panel .sort-dropdown-menu {
+  background: #fff;
+  border-color: var(--wp-day-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+.welcome-page.day-mode .left-panel .sort-option {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .left-panel .sort-option:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .left-panel .sort-option.active {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--wp-day-text);
+}
+
+/* Search dropdown */
+.welcome-page.day-mode .left-panel .watchlist-search-dropdown {
+  background: #fff;
+  border-color: var(--wp-day-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .left-panel .watchlist-search-result {
+  color: var(--wp-day-text);
+  border-bottom-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .left-panel .watchlist-search-result:hover {
+  background: rgba(139, 92, 246, 0.06);
+}
+.welcome-page.day-mode .left-panel .watchlist-search-result-symbol {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .left-panel .watchlist-search-result-name {
+  color: var(--wp-day-muted) !important;
+}
+
+/* Empty state */
+.welcome-page.day-mode .left-panel .empty-watchlist {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .left-panel .empty-watchlist p {
+  color: var(--wp-day-text);
+}
+
+/* ========== Day mode – Header / Navigation ========== */
+
+/* Main header */
+.welcome-page.day-mode .header {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.92) 100%) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Header glow line */
+.welcome-page.day-mode .header::after {
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+}
+
+/* Nav toggle button */
+.welcome-page.day-mode .header-nav-toggle {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .header-nav-toggle:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--wp-day-text);
+}
+
+/* Logo text */
+.welcome-page.day-mode .logo-text {
+  color: var(--wp-day-text) !important;
+}
+
+/* Weather card */
+.welcome-page.day-mode .weather-card {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
+}
+
+/* DateTime card */
+.welcome-page.day-mode .datetime-card {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+}
+
+/* Market toggle */
+.welcome-page.day-mode .header-market-toggle {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+  border-color: var(--wp-day-border);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .header-market-toggle button {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .header-market-toggle button:hover {
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .header-market-toggle button.active {
+  color: var(--wp-day-text);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.02) 100%);
+}
+
+/* Search trigger */
+.welcome-page.day-mode .search-trigger {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.85) 100%);
+  border-color: var(--wp-day-border);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .search-trigger:hover {
+  background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+.welcome-page.day-mode .search-trigger .search-icon {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .search-trigger span {
+  color: var(--wp-day-muted);
+}
+.welcome-page.day-mode .search-shortcut kbd {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-muted);
+}
+
+/* Degen button */
+.welcome-page.day-mode .btn-degen {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-text);
+}
+.welcome-page.day-mode .btn-degen:hover {
+  background: rgba(251, 191, 36, 0.1);
+}
+
+/* Day mode button */
+.welcome-page.day-mode .header-day-mode-btn {
+  color: var(--wp-day-muted);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .header-day-mode-btn:hover {
+  color: var(--wp-day-text);
+  background: rgba(0, 0, 0, 0.08);
+}
+.welcome-page.day-mode .header-day-mode-btn.active {
+  color: #d97706;
+  background: rgba(251, 191, 36, 0.15);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+/* Deposit button - keep colorful */
+
+/* Icon buttons */
+.welcome-page.day-mode .icon-btn {
+  background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+  border-color: var(--wp-day-border);
+  color: var(--wp-day-muted);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.welcome-page.day-mode .icon-btn:hover {
+  background: linear-gradient(135deg, #fff 0%, #f1f5f9 100%);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: var(--wp-day-text);
+}
+
+/* Profile button */
+.welcome-page.day-mode .profile {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--wp-day-border);
+}
+.welcome-page.day-mode .profile:hover {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.welcome-page.day-mode .profile-info .name {
+  color: var(--wp-day-text) !important;
+}
+.welcome-page.day-mode .profile-chevron {
+  color: var(--wp-day-muted);
+}
+
+/* Search modal - keep dark for contrast */
+
+/* ========== Day mode – App-level styles (Header, Left Panel, Navigation) ========== */
+
+/* Main header - using app-level class */
+.app.welcome-day-mode .header {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.app.welcome-day-mode .header::after {
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.25), transparent) !important;
+}
+
+.app.welcome-day-mode .header-nav-toggle {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: #475569 !important;
+}
+.app.welcome-day-mode .header-nav-toggle:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+  color: #1e293b !important;
+}
+
+.app.welcome-day-mode .logo-text {
+  color: #0f172a !important;
+}
+
+.app.welcome-day-mode .header-market-toggle {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+.app.welcome-day-mode .header-market-toggle button {
+  color: #64748b !important;
+}
+.app.welcome-day-mode .header-market-toggle button:hover {
+  color: #1e293b !important;
+}
+.app.welcome-day-mode .header-market-toggle button.active {
+  color: #1e293b !important;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.04) 100%) !important;
+}
+
+.app.welcome-day-mode .search-trigger {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+}
+.app.welcome-day-mode .search-trigger:hover {
+  border-color: rgba(139, 92, 246, 0.4) !important;
+}
+.app.welcome-day-mode .search-trigger .search-icon,
+.app.welcome-day-mode .search-trigger span {
+  color: #64748b !important;
+}
+.app.welcome-day-mode .search-shortcut kbd {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #64748b !important;
+}
+
+.app.welcome-day-mode .btn-degen {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #1e293b !important;
+}
+
+.app.welcome-day-mode .header-day-mode-btn {
+  color: #64748b !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+.app.welcome-day-mode .header-day-mode-btn.active {
+  color: #d97706 !important;
+  background: rgba(251, 191, 36, 0.15) !important;
+  border-color: rgba(251, 191, 36, 0.4) !important;
+}
+
+.app.welcome-day-mode .icon-btn {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #64748b !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+}
+.app.welcome-day-mode .icon-btn:hover {
+  color: #1e293b !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+.app.welcome-day-mode .profile {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+.app.welcome-day-mode .profile-info .name {
+  color: #1e293b !important;
+}
+.app.welcome-day-mode .profile-chevron {
+  color: #64748b !important;
+}
+
+/* Left Panel - using app-level class */
+.app.welcome-day-mode .left-panel {
+  --lp-glass-bg: rgba(255, 255, 255, 0.92) !important;
+  --lp-glass-bg-light: rgba(0, 0, 0, 0.03) !important;
+  --lp-glass-border: rgba(0, 0, 0, 0.1) !important;
+  --lp-glass-border-light: rgba(0, 0, 0, 0.15) !important;
+}
+
+.app.welcome-day-mode .left-panel .panel-card {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.app.welcome-day-mode .left-panel .tab {
+  color: #64748b !important;
+}
+.app.welcome-day-mode .left-panel .tab:hover {
+  color: #1e293b !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+.app.welcome-day-mode .left-panel .tab.active {
+  color: #5b21b6 !important;
+  background: rgba(139, 92, 246, 0.12) !important;
+}
+
+.app.welcome-day-mode .left-panel .filter-chip {
+  color: #64748b !important;
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+.app.welcome-day-mode .left-panel .filter-chip:hover {
+  color: #1e293b !important;
+}
+.app.welcome-day-mode .left-panel .filter-chip.active {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+}
+
+.app.welcome-day-mode .left-panel .tweet {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+.app.welcome-day-mode .left-panel .tweet:hover {
+  background: #ffffff !important;
+}
+.app.welcome-day-mode .left-panel .tweet-user {
+  color: #1e293b !important;
+}
+.app.welcome-day-mode .left-panel .tweet-handle,
+.app.welcome-day-mode .left-panel .tweet-time {
+  color: #64748b !important;
+}
+.app.welcome-day-mode .left-panel .tweet-text {
+  color: #334155 !important;
+}
+
+.app.welcome-day-mode .left-panel .panel-tabs {
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.app.welcome-day-mode .left-panel .filter-section {
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.app.welcome-day-mode .left-panel .view-mode-btn {
+  color: #64748b !important;
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+.app.welcome-day-mode .left-panel .view-mode-btn.active {
+  color: #7c3aed !important;
+  background: rgba(139, 92, 246, 0.12) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Navigation Sidebar */
+.app.welcome-day-mode .navigation-sidebar {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-right-color: rgba(0, 0, 0, 0.1) !important;
+}
+.app.welcome-day-mode .navigation-sidebar .nav-item {
+  color: #64748b !important;
+}
+.app.welcome-day-mode .navigation-sidebar .nav-item:hover {
+  color: #1e293b !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+.app.welcome-day-mode .navigation-sidebar .nav-item.active {
+  color: #5b21b6 !important;
+  background: rgba(139, 92, 246, 0.12) !important;
+}
+
+/* Particle background - make lighter */
+.app.welcome-day-mode .particle-background {
+  opacity: 0.3 !important;
+}
+
+/* ========== Day mode – Navigation Sidebar (Full) ========== */
+
+/* Main sidebar container */
+.app.welcome-day-mode .navigation-sidebar {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 1px 0 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Remove dark purple glow in day mode */
+.app.welcome-day-mode .navigation-sidebar::before {
+  background: radial-gradient(ellipse 80% 100px at 50% -20px, rgba(139, 92, 246, 0.05), transparent) !important;
+}
+
+/* Toggle button */
+.app.welcome-day-mode .navigation-sidebar-toggle {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #64748b !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-toggle:hover {
+  background: linear-gradient(168deg, #f8fafc 0%, #f1f5f9 100%) !important;
+  color: #1e293b !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-toggle svg {
+  color: inherit !important;
+}
+
+/* Scrollbar */
+.app.welcome-day-mode .navigation-sidebar-content {
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent !important;
+}
+.app.welcome-day-mode .navigation-sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Header */
+.app.welcome-day-mode .navigation-sidebar-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-title {
+  color: #64748b !important;
+}
+
+/* Expand button */
+.app.welcome-day-mode .navigation-sidebar-expand-button {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #1e293b !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-expand-button:hover {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: #0f172a !important;
+}
+.app.welcome-day-mode .navigation-sidebar-expand-button svg {
+  color: inherit !important;
+}
+
+/* Navigation links */
+.app.welcome-day-mode .navigation-sidebar-link {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(248, 250, 252, 0.6) 100%) !important;
+  border-color: transparent !important;
+  color: #475569 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-link:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #1e293b !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-link.active {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.06) 100%) !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
+  color: #5b21b6 !important;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.12) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-link.active::before {
+  background: linear-gradient(180deg, #8b5cf6 0%, #a78bfa 100%) !important;
+}
+
+/* Navigation icons */
+.app.welcome-day-mode .navigation-sidebar-icon {
+  color: inherit !important;
+}
+.app.welcome-day-mode .navigation-sidebar-icon svg {
+  color: inherit !important;
+  stroke: currentColor !important;
+}
+
+/* Navigation labels */
+.app.welcome-day-mode .navigation-sidebar-label {
+  color: inherit !important;
+}
+
+/* Badge */
+.app.welcome-day-mode .navigation-sidebar-badge {
+  background: rgba(139, 92, 246, 0.15) !important;
+  color: #7c3aed !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
+}
+
+/* Footer */
+.app.welcome-day-mode .navigation-sidebar-footer {
+  border-top-color: rgba(0, 0, 0, 0.08) !important;
+  background: rgba(0, 0, 0, 0.02) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-footer-text {
+  color: #64748b !important;
+}
+.app.welcome-day-mode .navigation-sidebar-footer-link {
+  color: #475569 !important;
+}
+.app.welcome-day-mode .navigation-sidebar-footer-link:hover {
+  color: #1e293b !important;
+}
+
+/* Version text */
+.app.welcome-day-mode .navigation-sidebar-version {
+  color: #94a3b8 !important;
+}
+
+/* Social links */
+.app.welcome-day-mode .navigation-sidebar-social-link {
+  color: #64748b !important;
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-social-link:hover {
+  color: #1e293b !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+.app.welcome-day-mode .navigation-sidebar-social-link svg {
+  color: inherit !important;
+}
+
+/* Divider */
+.app.welcome-day-mode .navigation-sidebar-divider {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Section titles */
+.app.welcome-day-mode .navigation-sidebar-section-title {
+  color: #94a3b8 !important;
+}
+
+/* ========== FINAL Watchlist Widget Day Mode Overrides ========== */
+/* These rules have maximum specificity to ensure they apply */
+
+/* Main widget container - soft light border for day mode */
+.welcome-page.day-mode .welcome-watchlist-widget,
+.welcome-page.day-mode .welcome-sidebar-row .welcome-watchlist-widget {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 70%, #e8ecf0 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Header row - white background and rounded corners to match search / Main Order */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row,
+.welcome-page.day-mode .welcome-watchlist-widget .welcome-watchlist-inner .watchlist-header-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 12px 16px !important;
+  margin: 0 0 12px 0 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Watchlist title - dark and visible */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-title,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-title,
+.welcome-page.day-mode .welcome-watchlist-widget h3.watchlist-title {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  margin: 0 !important;
+}
+
+/* See All button - dark text and visible */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn,
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-see-all-btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 8px 14px !important;
+  background: rgba(15, 23, 42, 0.06) !important;
+  border: 1px solid rgba(15, 23, 42, 0.18) !important;
+  border-radius: 10px !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn:hover {
+  background: rgba(15, 23, 42, 0.1) !important;
+  border-color: rgba(15, 23, 42, 0.25) !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-see-all-btn svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: #0f172a !important;
+  stroke: #0f172a !important;
+  opacity: 1 !important;
+}
+
+/* Day mode: Embedded toggle button in watchlist header */
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-panel-toggle {
+  flex-shrink: 0 !important;
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  border-radius: 8px !important;
+  color: #475569 !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-panel-toggle:hover {
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%) !important;
+  border-color: rgba(0, 0, 0, 0.18) !important;
+  color: #1e293b !important;
+}
+
+.welcome-page.day-mode .welcome-watchlist-widget .watchlist-header-row .watchlist-panel-toggle svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: inherit !important;
+  stroke: currentColor !important;
+}
+
+/* ========== Day mode – Token Card Popup (Past, Present, Future) ========== */
+
+/* Overlay background - lighter for day mode */
+.welcome-page.day-mode .token-card-popup-overlay {
+  background: rgba(241, 245, 249, 0.96) !important;
+  /* Removed backdrop-filter for better performance */
+}
+
+/* Main popup container */
+.welcome-page.day-mode .token-card-popup {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 70%, #e2e8f0 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Force ALL text inside popup to be dark */
+.welcome-page.day-mode .token-card-popup,
+.welcome-page.day-mode .token-card-popup * {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Title */
+.welcome-page.day-mode .token-card-popup-title {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Close button */
+.welcome-page.day-mode .token-card-popup-close {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #475569 !important;
+}
+
+.welcome-page.day-mode .token-card-popup-close:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.18) !important;
+  color: #0f172a !important;
+}
+
+/* Individual cards (History, Live, Predictions) */
+.welcome-page.day-mode .token-card-popup .token-card {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card:hover {
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.1) !important;
+}
+
+/* Card header area */
+.welcome-page.day-mode .token-card-popup .token-card-head {
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Card labels (HISTORY, LIVE, PREDICTIONS) - slightly muted */
+.welcome-page.day-mode .token-card-popup .token-card-label {
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+}
+
+/* Card body content */
+.welcome-page.day-mode .token-card-popup .token-card-body {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* History card stats (7d High, 7d Low) - muted */
+.welcome-page.day-mode .token-card-popup .token-card-stats {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-stats span {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+}
+
+/* History card – chart area light in day mode (no gray box) */
+.welcome-page.day-mode .token-card-popup .token-card-chart {
+  background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+/* History card sparkline – up/down only (no gray line); default fallback dark on light bg */
+.welcome-page.day-mode .token-card-popup .token-card-sparkline {
+  color: #64748b !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-sparkline polyline {
+  stroke: #64748b !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-sparkline.up,
+.welcome-page.day-mode .token-card-popup .token-card-sparkline.up polyline {
+  color: #059669 !important;
+  stroke: #059669 !important;
+  -webkit-text-fill-color: initial !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-sparkline.down,
+.welcome-page.day-mode .token-card-popup .token-card-sparkline.down polyline {
+  color: #dc2626 !important;
+  stroke: #dc2626 !important;
+  -webkit-text-fill-color: initial !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-chart-placeholder {
+  color: #64748b !important;
+}
+
+/* Live card – avatar/logo keep original colors (no tint) */
+.welcome-page.day-mode .token-card-popup .token-card-live-avatar {
+  background: #f1f5f9 !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-live-avatar img {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-live-avatar span {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-live-name {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-live-symbol {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-live-price {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-live-change.positive {
+  color: #059669 !important;
+  -webkit-text-fill-color: #059669 !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-live-change.negative {
+  color: #dc2626 !important;
+  -webkit-text-fill-color: #dc2626 !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-live-change {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Card footer */
+.welcome-page.day-mode .token-card-popup .token-card-footer {
+  border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-footer-label {
+  color: #94a3b8 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-footer-highlight {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Predictions card – day mode (our way) */
+.welcome-page.day-mode .token-card-popup .token-card-predictions {
+  background: linear-gradient(168deg, #faf5ff 0%, #f5f3ff 35%, #ede9fe 70%, #e9e5ff 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.25) !important;
+  box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-label {
+  color: #6d28d9 !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-body > div {
+  background: linear-gradient(168deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.95) 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-body > div:hover {
+  border-color: rgba(139, 92, 246, 0.2) !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-pred-icon.up {
+  background: linear-gradient(168deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.1) 100%) !important;
+  border-color: rgba(34, 197, 94, 0.3) !important;
+  color: #059669 !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-pred-icon.down {
+  background: linear-gradient(168deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #dc2626 !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-pred-text {
+  color: #0f172a !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-pred-prob {
+  background: rgba(139, 92, 246, 0.12) !important;
+  border-color: rgba(139, 92, 246, 0.2) !important;
+  color: #5b21b6 !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-footer {
+  border-top-color: rgba(139, 92, 246, 0.15) !important;
+  background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.06) 100%) !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-footer-highlight {
+  color: #5b21b6 !important;
+}
+
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-pred-powered {
+  color: #64748b !important;
+  border-top-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Predictions footer text */
+.welcome-page.day-mode .token-card-popup .token-card-predictions .token-card-body > span {
+  color: #64748b !important;
+}
+
+/* View full details button */
+.welcome-page.day-mode .token-card-popup-cta,
+.welcome-page.day-mode .token-card-popup button[class*="cta"] {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(99, 102, 241, 0.06) 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+  color: #0f172a !important;
+}
+
+.welcome-page.day-mode .token-card-popup-cta:hover,
+.welcome-page.day-mode .token-card-popup button[class*="cta"]:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(99, 102, 241, 0.1) 100%) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Portaled 3-card popup (rendered to body) – same day-mode styles when token-card-popup-day-mode is set */
+.token-card-popup-overlay.token-card-popup-day-mode {
+  background: rgba(241, 245, 249, 0.96) !important;
+}
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-popup {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 70%, #e2e8f0 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-popup,
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-popup * {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Portaled popup – chart area light (no gray) */
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-chart {
+  background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-sparkline.up,
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-sparkline.up polyline {
+  color: #059669 !important;
+  stroke: #059669 !important;
+  -webkit-text-fill-color: initial !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-sparkline.down,
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-sparkline.down polyline {
+  color: #dc2626 !important;
+  stroke: #dc2626 !important;
+  -webkit-text-fill-color: initial !important;
+}
+
+/* Portaled popup – logo/avatar keep original colors */
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-live-avatar {
+  background: #f1f5f9 !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-live-avatar img {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-popup-close {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #475569 !important;
+}
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-popup .token-card {
+  background: linear-gradient(168deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-popup-view-details {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(99, 102, 241, 0.06) 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+  color: #0f172a !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-sparkline.up,
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-sparkline.up polyline {
+  color: #059669 !important;
+  stroke: #059669 !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-sparkline.down,
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-sparkline.down polyline {
+  color: #dc2626 !important;
+  stroke: #dc2626 !important;
+}
+
+/* Portaled popup – Predictions card day mode */
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-predictions {
+  background: linear-gradient(168deg, #faf5ff 0%, #f5f3ff 35%, #ede9fe 70%, #e9e5ff 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.25) !important;
+  box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-predictions .token-card-label {
+  color: #6d28d9 !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-predictions .token-card-body > div {
+  background: linear-gradient(168deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.95) 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-predictions .token-card-pred-icon.up {
+  background: linear-gradient(168deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.1) 100%) !important;
+  color: #059669 !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-predictions .token-card-pred-icon.down {
+  background: linear-gradient(168deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%) !important;
+  color: #dc2626 !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-predictions .token-card-pred-text {
+  color: #0f172a !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-predictions .token-card-pred-prob {
+  background: rgba(139, 92, 246, 0.12) !important;
+  color: #5b21b6 !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-predictions .token-card-footer-highlight {
+  color: #5b21b6 !important;
+}
+
+.token-card-popup-overlay.token-card-popup-day-mode .token-card-predictions .token-card-pred-powered {
+  color: #64748b !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   DAY MODE BORDER CLEANUP — Remove faint separator lines
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.app.app-day-mode .welcome-widget-input {
+  box-shadow: none !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.app.app-day-mode .mp-card-header,
+.app.app-day-mode .mp-scenario-header,
+.app.app-day-mode .mp-intel-row,
+.app.app-day-mode .welcome-horizontal-market-cme > .welcome-horizontal-market,
+.app.app-day-mode .welcome-chart-overlay-header,
+.app.app-day-mode .narrative-lifecycle-timeline,
+.app.app-day-mode .watchlist-header-row,
+.app.app-day-mode .watchlist-search-result,
+.app.app-day-mode .watchlist-picker-row {
+  border-bottom-color: transparent !important;
+  border-top-color: transparent !important;
+}

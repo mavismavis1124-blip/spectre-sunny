@@ -1,0 +1,624 @@
+/* GM full-screen zen dashboard – glass boxes, rotating beach/mountain backgrounds */
+.gm-dashboard {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.gm-dashboard-bg-base {
+  position: absolute;
+  inset: 0;
+  background: #0f172a;
+  z-index: 0;
+}
+
+.gm-dashboard-bg-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.gm-dashboard-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 1.4s ease-in-out;
+}
+
+.gm-dashboard-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.5) 100%);
+  backdrop-filter: blur(1px);
+  z-index: 2;
+}
+
+.gm-dashboard-top-actions {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+.gm-dashboard-top-actions.gm-dashboard-glass {
+  padding: 10px 14px;
+  border-radius: 20px;
+}
+
+.gm-dashboard-sound-toggle,
+.gm-dashboard-close {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 22px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.gm-dashboard-sound-toggle:hover,
+.gm-dashboard-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.02);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.gm-dashboard-sound-toggle svg,
+.gm-dashboard-close svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.gm-dashboard-btn-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.gm-dashboard-inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 900px;
+  padding: 48px 24px 80px;
+}
+
+.gm-dashboard-greeting {
+  margin: 0 0 8px;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 0, 0, 0.2);
+}
+
+.gm-dashboard-date-line {
+  margin: 0 0 28px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.02em;
+}
+
+.gm-dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.gm-dashboard-glass {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.gm-dashboard-time {
+  padding: 22px 32px;
+  min-width: 180px;
+  text-align: center;
+}
+
+.gm-dashboard-time-value {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.gm-dashboard-time-date {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 4px;
+}
+
+.gm-dashboard-weather {
+  padding: 20px 28px;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.gm-dashboard-weather-location {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.gm-dashboard-weather-temp {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.gm-dashboard-weather-range {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.gm-dashboard-weather-loading {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}
+
+.gm-dashboard-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 640px) {
+  .gm-dashboard-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gm-dashboard-block {
+  padding: 22px 26px;
+}
+
+.gm-dashboard-block-title {
+  margin: 0 0 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.gm-dashboard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gm-dashboard-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 12px;
+}
+
+.gm-dashboard-list-item:last-child {
+  border-bottom: none;
+}
+
+.gm-dashboard-symbol {
+  font-weight: 600;
+  color: #fff;
+  min-width: 48px;
+}
+
+.gm-dashboard-price {
+  color: rgba(255, 255, 255, 0.9);
+  font-variant-numeric: tabular-nums;
+}
+
+.gm-dashboard-change {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+}
+
+.gm-dashboard-change.up {
+  color: #86efac;
+}
+
+.gm-dashboard-change.down {
+  color: #fca5a5;
+}
+
+.gm-dashboard-news {
+  padding: 22px 26px;
+}
+
+.gm-dashboard-news-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gm-dashboard-news-item {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.gm-dashboard-news-item:last-child {
+  border-bottom: none;
+}
+
+.gm-dashboard-news-link {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  display: block;
+  transition: color 0.15s;
+}
+
+.gm-dashboard-news-link:hover {
+  color: #fff;
+}
+
+.gm-dashboard-news-title {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.gm-dashboard-news-meta {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+}
+
+.gm-dashboard-news-link:hover .gm-dashboard-news-meta {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.gm-dashboard-news-empty {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+}
+
+.gm-dashboard-footer {
+  margin-top: 48px;
+  padding-bottom: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.gm-dashboard-footer-text {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.03em;
+}
+
+.gm-dashboard-footer-brand {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   MOBILE APP STORE READY - GM Dashboard
+   ============================================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .gm-dashboard-content {
+    max-width: 600px;
+    padding: 24px;
+  }
+
+  .gm-dashboard-top-actions {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .gm-dashboard {
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  }
+
+  .gm-dashboard-top-actions {
+    position: fixed;
+    top: calc(12px + env(safe-area-inset-top, 0px));
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    flex-direction: row;
+    gap: 8px;
+    padding: 0;
+    z-index: 1000;
+  }
+
+  .gm-dashboard-top-actions.gm-dashboard-glass {
+    padding: 8px 10px;
+    border-radius: 16px;
+  }
+
+  /* Touch-friendly action buttons */
+  .gm-dashboard-sound-toggle,
+  .gm-dashboard-close {
+    min-width: 48px;
+    height: 48px;
+    padding: 0 12px;
+    border-radius: 16px;
+  }
+
+  .gm-dashboard-sound-toggle:active,
+  .gm-dashboard-close:active {
+    transform: scale(0.94);
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  .gm-dashboard-btn-label {
+    display: none; /* Hide labels on mobile */
+  }
+
+  .gm-dashboard-sound-toggle svg,
+  .gm-dashboard-close svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Content area */
+  .gm-dashboard-content {
+    max-width: 100%;
+    padding: calc(70px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Greeting */
+  .gm-dashboard-greeting {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 4px;
+  }
+
+  .gm-dashboard-date {
+    font-size: 0.95rem;
+  }
+
+  .gm-dashboard-weather {
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+
+  /* Card rows - stack on mobile */
+  .gm-dashboard-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  /* Cards */
+  .gm-dashboard-block {
+    padding: 16px 18px;
+    border-radius: 16px;
+  }
+
+  .gm-dashboard-block-title {
+    font-size: 0.75rem;
+    margin-bottom: 12px;
+  }
+
+  /* List items - touch friendly */
+  .gm-dashboard-list-item {
+    padding: 12px 0;
+    min-height: 48px;
+  }
+
+  .gm-dashboard-symbol {
+    font-size: 0.95rem;
+  }
+
+  .gm-dashboard-price {
+    font-size: 0.95rem;
+  }
+
+  .gm-dashboard-change {
+    font-size: 0.85rem;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  /* News section */
+  .gm-dashboard-news {
+    padding: 16px 18px;
+  }
+
+  .gm-dashboard-news-item {
+    padding: 14px 0;
+  }
+
+  .gm-dashboard-news-link {
+    font-size: 0.9rem;
+  }
+
+  .gm-dashboard-news-title {
+    line-height: 1.35;
+  }
+
+  /* Footer */
+  .gm-dashboard-footer {
+    margin-top: 32px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .gm-dashboard-footer-text {
+    font-size: 0.85rem;
+  }
+
+  .gm-dashboard-footer-brand {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ============================================================
+   DAY MODE - GM Dashboard
+   ============================================================ */
+
+.app.app-day-mode .gm-dashboard,
+.app.welcome-day-mode .gm-dashboard {
+  /* Keep the zen vibe even in day mode - just lighten slightly */
+}
+
+.app.app-day-mode .gm-dashboard-bg-base,
+.app.welcome-day-mode .gm-dashboard-bg-base {
+  background: #e0e7ef;
+}
+
+.app.app-day-mode .gm-dashboard-scrim,
+.app.welcome-day-mode .gm-dashboard-scrim {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.25) 100%);
+}
+
+.app.app-day-mode .gm-dashboard-glass,
+.app.welcome-day-mode .gm-dashboard-glass {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.app.app-day-mode .gm-dashboard-sound-toggle,
+.app.app-day-mode .gm-dashboard-close,
+.app.welcome-day-mode .gm-dashboard-sound-toggle,
+.app.welcome-day-mode .gm-dashboard-close {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(15, 23, 42, 0.12);
+  color: #334155;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.app.app-day-mode .gm-dashboard-sound-toggle:hover,
+.app.app-day-mode .gm-dashboard-close:hover,
+.app.welcome-day-mode .gm-dashboard-sound-toggle:hover,
+.app.welcome-day-mode .gm-dashboard-close:hover {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+}
+
+.app.app-day-mode .gm-dashboard-greeting,
+.app.welcome-day-mode .gm-dashboard-greeting {
+  color: #0f172a;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.app.app-day-mode .gm-dashboard-date,
+.app.welcome-day-mode .gm-dashboard-date {
+  color: #475569;
+}
+
+.app.app-day-mode .gm-dashboard-weather,
+.app.welcome-day-mode .gm-dashboard-weather {
+  color: #334155;
+}
+
+.app.app-day-mode .gm-dashboard-block,
+.app.welcome-day-mode .gm-dashboard-block {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(15, 23, 42, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.app.app-day-mode .gm-dashboard-block-title,
+.app.welcome-day-mode .gm-dashboard-block-title {
+  color: #64748b;
+}
+
+.app.app-day-mode .gm-dashboard-symbol,
+.app.welcome-day-mode .gm-dashboard-symbol {
+  color: #0f172a;
+}
+
+.app.app-day-mode .gm-dashboard-price,
+.app.welcome-day-mode .gm-dashboard-price {
+  color: #334155;
+}
+
+.app.app-day-mode .gm-dashboard-list-item,
+.app.welcome-day-mode .gm-dashboard-list-item {
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+.app.app-day-mode .gm-dashboard-change.up,
+.app.welcome-day-mode .gm-dashboard-change.up {
+  color: #16a34a;
+}
+
+.app.app-day-mode .gm-dashboard-change.down,
+.app.welcome-day-mode .gm-dashboard-change.down {
+  color: #dc2626;
+}
+
+.app.app-day-mode .gm-dashboard-news-link,
+.app.welcome-day-mode .gm-dashboard-news-link {
+  color: #334155;
+}
+
+.app.app-day-mode .gm-dashboard-news-link:hover,
+.app.welcome-day-mode .gm-dashboard-news-link:hover {
+  color: #0f172a;
+}
+
+.app.app-day-mode .gm-dashboard-news-meta,
+.app.welcome-day-mode .gm-dashboard-news-meta {
+  color: #64748b;
+}
+
+.app.app-day-mode .gm-dashboard-news-item,
+.app.welcome-day-mode .gm-dashboard-news-item {
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+.app.app-day-mode .gm-dashboard-footer-text,
+.app.welcome-day-mode .gm-dashboard-footer-text {
+  color: #475569;
+}
+
+.app.app-day-mode .gm-dashboard-footer-brand,
+.app.welcome-day-mode .gm-dashboard-footer-brand {
+  color: #0f172a;
+}

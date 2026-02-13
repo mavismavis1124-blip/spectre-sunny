@@ -1,0 +1,222 @@
+/**
+ * MobileTabBar – Glass-morphism floating tabs
+ * Three variants: default (full), compact, pills
+ * No borders - uses shadows and backgrounds for separation
+ */
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+.mobile-tab-bar {
+  display: none; /* Only show on mobile */
+  padding: 0 12px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+  .mobile-tab-bar {
+    display: block;
+  }
+}
+
+.mobile-tab-bar-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  /* Glass container */
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-radius: 16px;
+  /* Subtle depth - no border */
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-tab-item {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-glass, 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.mobile-tab-item:active {
+  transform: scale(0.96);
+}
+
+.mobile-tab-item.active {
+  color: #ffffff;
+}
+
+/* Animated indicator pill */
+.mobile-tab-indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: calc(100% - 8px);
+  width: calc((100% - 8px - (var(--tab-count) - 1) * 4px) / var(--tab-count));
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: translateX(calc(var(--active-index) * (100% + 4px)));
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.mobile-tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.mobile-tab-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.mobile-tab-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================
+   COMPACT VARIANT - Icon only on narrow screens
+   ============================================ */
+.mobile-tab-bar--compact .mobile-tab-item {
+  padding: 10px 8px;
+}
+
+@media (max-width: 380px) {
+  .mobile-tab-bar--compact .mobile-tab-label {
+    display: none;
+  }
+
+  .mobile-tab-bar--compact .mobile-tab-icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* ============================================
+   PILLS VARIANT - Separate pills, no container
+   ============================================ */
+.mobile-tab-bar--pills .mobile-tab-bar-inner {
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  gap: 8px;
+  padding: 0;
+}
+
+.mobile-tab-bar--pills .mobile-tab-item {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  box-shadow: none;
+}
+
+.mobile-tab-bar--pills .mobile-tab-item.active {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-tab-bar--pills .mobile-tab-indicator {
+  display: none;
+}
+
+/* ============================================
+   DAY MODE
+   ============================================ */
+.app.app-day-mode .mobile-tab-bar-inner,
+.app.welcome-day-mode .mobile-tab-bar-inner {
+  background: rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06) inset,
+    0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.app.app-day-mode .mobile-tab-item,
+.app.welcome-day-mode .mobile-tab-item {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.app.app-day-mode .mobile-tab-item.active,
+.app.welcome-day-mode .mobile-tab-item.active {
+  color: #1a1a1f;
+}
+
+.app.app-day-mode .mobile-tab-indicator,
+.app.welcome-day-mode .mobile-tab-indicator {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Pills day mode */
+.app.app-day-mode .mobile-tab-bar--pills .mobile-tab-item,
+.app.welcome-day-mode .mobile-tab-bar--pills .mobile-tab-item {
+  background: rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06) inset;
+}
+
+.app.app-day-mode .mobile-tab-bar--pills .mobile-tab-item.active,
+.app.welcome-day-mode .mobile-tab-bar--pills .mobile-tab-item.active {
+  background: rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08) inset,
+    0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   SCROLLABLE TABS (when many tabs)
+   ============================================ */
+.mobile-tab-bar--scrollable .mobile-tab-bar-inner {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex-wrap: nowrap;
+}
+
+.mobile-tab-bar--scrollable .mobile-tab-bar-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-tab-bar--scrollable .mobile-tab-item {
+  flex: 0 0 auto;
+}
+
+.mobile-tab-bar--scrollable .mobile-tab-indicator {
+  display: none; /* Can't animate properly with scroll */
+}

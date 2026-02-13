@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spectre AI — Welcome Widget V2 Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060610;
+    --surface: rgba(255,255,255,0.035);
+    --surface-2: rgba(255,255,255,0.055);
+    --border: rgba(255,255,255,0.06);
+    --border-2: rgba(255,255,255,0.1);
+    --text: #f0f0f5;
+    --text-muted: rgba(255,255,255,0.5);
+    --text-dim: rgba(255,255,255,0.28);
+    --green: #22c55e;
+    --green-soft: rgba(34,197,94,0.12);
+    --red: #ef4444;
+    --red-soft: rgba(239,68,68,0.12);
+    --gold: #eab308;
+    --cyan: #00f0ff;
+    --purple: #a855f7;
+    --orange: #f7931a;
+    --blue: #627eea;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-grotesk: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 48px;
+    min-height: 100vh;
+  }
+
+  .page-header { text-align: center; margin-bottom: 64px; }
+  .page-header h1 {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .page-header p { color: var(--text-muted); font-size: 14px; }
+
+  .concept { margin-bottom: 90px; }
+  .concept-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .concept-badge {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .concept-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 400;
+  }
+  .concept-desc {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-left: auto;
+    max-width: 420px;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* Annotations */
+  .annotations { display: flex; gap: 14px; margin-top: 18px; flex-wrap: wrap; }
+  .annotation {
+    display: flex; align-items: flex-start; gap: 8px;
+    background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px; font-size: 12px;
+    color: var(--text-muted); line-height: 1.5; flex: 1; min-width: 220px;
+  }
+  .annotation strong { color: var(--text); font-weight: 500; }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     OPTION D — COMMAND HUD
+     Military/gaming HUD. Segmented zones. Neon accents on dark.
+     Think: Destiny 2 orbit screen meets Bloomberg terminal.
+  ═══════════════════════════════════════════════════════════════════ */
+
+  .optD {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(6,6,16,0.97), rgba(10,15,30,0.95));
+    border: 1px solid rgba(0,240,255,0.08);
+    backdrop-filter: blur(40px);
+  }
+  /* Subtle scan line effect */
+  .optD::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,240,255,0.008) 2px,
+      rgba(0,240,255,0.008) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* Corner bracket decorations */
+  .optD::after {
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px;
+    width: 24px; height: 24px;
+    border-top: 2px solid rgba(0,240,255,0.25);
+    border-left: 2px solid rgba(0,240,255,0.25);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .optD-corner-br {
+    position: absolute;
+    bottom: 8px; right: 8px;
+    width: 24px; height: 24px;
+    border-bottom: 2px solid rgba(0,240,255,0.25);
+    border-right: 2px solid rgba(0,240,255,0.25);
+    z-index: 2;
+  }
+
+  .optD-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr auto;
+    grid-template-rows: auto auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Left: Identity + Market Status */
+  .optD-identity {
+    grid-row: 1 / 3;
+    padding: 20px 22px;
+    border-right: 1px solid rgba(0,240,255,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .optD-avatar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .optD-avatar {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px; color: #000;
+    position: relative;
+  }
+  .optD-avatar::after {
+    content: '';
+    position: absolute; inset: -2px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,240,255,0.3);
+  }
+  .optD-greet {
+    font-family: var(--font-grotesk);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .optD-greet span { color: var(--cyan); }
+
+  /* Market clock */
+  .optD-market-clock {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(239,68,68,0.15);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .optD-mc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .optD-mc-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .optD-mc-status {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .optD-mc-status.closed {
+    color: var(--red);
+    background: var(--red-soft);
+  }
+  .optD-mc-status.open {
+    color: var(--green);
+    background: var(--green-soft);
+  }
+  .optD-mc-time {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .optD-mc-countdown {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .optD-mc-countdown span { color: var(--cyan); font-weight: 600; }
+
+  /* CME Gaps */
+  .optD-cme {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(247,147,26,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+  .optD-cme-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--text-dim);
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .optD-cme-label::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+  }
+  .optD-cme-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0;
+  }
+  .optD-cme-row + .optD-cme-row { border-top: 1px solid rgba(255,255,255,0.04); }
+  .optD-cme-sym {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .optD-cme-range {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text);
+  }
+  .optD-cme-tag {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .optD-cme-tag.unfilled { color: var(--orange); background: rgba(247,147,26,0.12); }
+  .optD-cme-tag.filled { color: var(--green); background: var(--green-soft); }
+
+  /* Center: Token cards */
+  .optD-tokens {
+    display: flex;
+    gap: 2px;
+    padding: 16px 20px;
+  }
+  .optD-token {
+    flex: 1;
+    padding: 14px 16px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.35s var(--ease);
+    border: 1px solid transparent;
+  }
+  .optD-token:hover {
+    background: var(--surface-2);
+    border-color: var(--border);
+    transform: translateY(-2px);
+  }
+  .optD-token-spark {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    pointer-events: none;
+    opacity: 0.15;
+  }
+  .optD-token-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .optD-token-logo {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.08);
+  }
+  .optD-token-sym {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .optD-token-name {
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .optD-token-change-badge {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: flex; align-items: center; gap: 3px;
+  }
+  .optD-token-change-badge.down { color: var(--red); background: var(--red-soft); }
+  .optD-token-change-badge.up { color: var(--green); background: var(--green-soft); }
+  .optD-token-price {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 2px;
+  }
+  .optD-token-mcap {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Right: Gauges panel */
+  .optD-gauges {
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-left: 1px solid rgba(0,240,255,0.06);
+    min-width: 280px;
+  }
+
+  /* Horizontal mini-gauge */
+  .optD-hgauge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+  .optD-hgauge-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dim);
+    font-weight: 600;
+    width: 70px;
+    flex-shrink: 0;
+  }
+  .optD-hgauge-bar {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+  .optD-hgauge-bar-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: 3px;
+  }
+  .optD-hgauge-bar-fill {
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    border-radius: 3px;
+    transition: width 0.6s var(--ease);
+  }
+  .optD-hgauge-val {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 32px;
+    text-align: right;
+  }
+  .optD-hgauge-tag {
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* Dominance visual in HUD */
+  .optD-dom-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+  .optD-dom-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dim);
+    font-weight: 600;
+    width: 70px;
+    flex-shrink: 0;
+  }
+  .optD-dom-bar {
+    flex: 1;
+    display: flex;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    gap: 1px;
+  }
+  .optD-dom-seg { height: 100%; border-radius: 4px; }
+  .optD-dom-chips {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .optD-dom-chip {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    color: var(--text-dim);
+  }
+  .optD-dom-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* Bottom strip - trending + market cap */
+  .optD-bottom {
+    grid-column: 2 / 4;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 20px;
+    border-top: 1px solid rgba(0,240,255,0.04);
+    background: rgba(0,0,0,0.15);
+  }
+  .optD-bottom-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+  .optD-bottom-item .val { font-weight: 600; color: var(--text); }
+  .optD-bottom-sep { color: rgba(0,240,255,0.12); font-size: 10px; }
+  .optD-trending-badge {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    color: var(--green);
+    background: var(--green-soft);
+    margin-right: 4px;
+  }
+  .optD-spotify-mini {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(30,215,96,0.08);
+    border: 1px solid rgba(30,215,96,0.12);
+    font-size: 11px;
+    color: #1ed760;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+  }
+  .optD-spotify-mini:hover {
+    background: rgba(30,215,96,0.15);
+  }
+  .optD-spotify-mini svg { width: 14px; height: 14px; fill: #1ed760; }
+  .optD-spotify-mini .track { color: rgba(255,255,255,0.5); font-size: 10px; }
+
+
+  /* ═══════════════════════════════════════════════════════════════════
+     OPTION E — CINEMATIC EDITORIAL
+     Magazine cover meets data dashboard. Large editorial typography.
+     Asymmetric layout with a dramatic sentiment centerpiece.
+  ═══════════════════════════════════════════════════════════════════ */
+
+  .optE {
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(10,8,20,0.97), rgba(15,10,25,0.95));
+    border: 1px solid var(--border);
+    backdrop-filter: blur(40px);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    min-height: 160px;
+    position: relative;
+  }
+  .optE::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168,85,247,0.2), rgba(0,240,255,0.2), transparent);
+  }
+
+  /* Left: Greeting + Prices */
+  .optE-left {
+    padding: 22px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .optE-greeting {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .optE-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; color: #fff;
+    box-shadow: 0 0 20px rgba(168,85,247,0.25);
+  }
+  .optE-greet-text h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .optE-greet-text h2 em {
+    font-style: italic;
+    color: var(--purple);
+  }
+  .optE-greet-text .sub {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    font-family: var(--font-mono);
+  }
+
+  /* Price row */
+  .optE-prices {
+    display: flex;
+    gap: 6px;
+  }
+  .optE-price {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    position: relative;
+    overflow: hidden;
+  }
+  .optE-price:hover {
+    border-color: var(--border-2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .optE-price-spark {
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 50%;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+  .optE-price-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    position: relative; z-index: 1;
+  }
+  .optE-price-logo {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .optE-price-sym {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .optE-price-chg {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .optE-price-chg.down { color: var(--red); }
+  .optE-price-chg.up { color: var(--green); }
+  .optE-price-val {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    position: relative; z-index: 1;
+  }
+
+  /* Center: Dramatic sentiment orb */
+  .optE-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 36px;
+    position: relative;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .optE-orb-wrap {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 8px;
+  }
+  .optE-orb {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 35% 35%, rgba(239,68,68,0.2), rgba(239,68,68,0.05) 60%, transparent 80%);
+    border: 2px solid rgba(239,68,68,0.2);
+    box-shadow: 0 0 40px rgba(239,68,68,0.1), inset 0 0 30px rgba(239,68,68,0.05);
+  }
+  .optE-orb-val {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--red);
+  }
+  .optE-orb-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  .optE-orb-glow {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(239,68,68,0.08), transparent 70%);
+    animation: orbPulse 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes orbPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+  .optE-center-label {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--red);
+    letter-spacing: 0.5px;
+  }
+  .optE-center-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* Right: Market intel stack */
+  .optE-right {
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Mini info cards */
+  .optE-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+  .optE-info-icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .optE-info-content { flex: 1; }
+  .optE-info-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .optE-info-val {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .optE-info-tag {
+    font-size: 8px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .optE-info-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════════════
+     OPTION F — RIBBON DASHBOARD
+     Horizontal ribbon with nested segments. Each segment has its own
+     visual language. Compact but extremely readable. Inspired by
+     F1 telemetry dashboards + fintech apps like Robinhood/Coinbase.
+  ═══════════════════════════════════════════════════════════════════ */
+
+  .optF {
+    border-radius: 18px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(10,10,20,0.96), rgba(8,8,16,0.92));
+    border: 1px solid var(--border);
+    backdrop-filter: blur(40px);
+  }
+
+  .optF-main {
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* Segment base */
+  .optF-seg {
+    padding: 14px 18px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .optF-seg + .optF-seg {
+    border-left: 1px solid var(--border);
+  }
+
+  /* Segment 1: Greeting */
+  .optF-greeting {
+    min-width: 180px;
+    gap: 6px;
+  }
+  .optF-g-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .optF-g-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b6b, var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; color: #fff;
+    flex-shrink: 0;
+  }
+  .optF-g-text h3 {
+    font-family: var(--font-grotesk);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .optF-g-text h3 span { color: var(--cyan); }
+  .optF-g-text .mood {
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .optF-g-mcap {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .optF-g-mcap-val {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .optF-g-mcap-chg {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .optF-g-mcap-chg.down { color: var(--red); }
+  .optF-g-mcap-sub {
+    font-size: 9px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  /* Segment 2-4: Token cards with embedded sparkline */
+  .optF-token {
+    flex: 1;
+    min-width: 160px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    overflow: hidden;
+  }
+  .optF-token:hover {
+    background: var(--surface);
+  }
+  .optF-token-row1 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .optF-token-logo {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .optF-token-meta { flex: 1; }
+  .optF-token-sym {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .optF-token-name {
+    font-size: 9px;
+    color: var(--text-dim);
+  }
+  .optF-token-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: flex; align-items: center; gap: 2px;
+  }
+  .optF-token-badge.down { color: var(--red); background: var(--red-soft); }
+  .optF-token-badge.up { color: var(--green); background: var(--green-soft); }
+  .optF-token-row2 {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+  .optF-token-price {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .optF-token-spark {
+    width: 72px; height: 28px;
+    opacity: 0.6;
+  }
+  .optF-token-spark svg { width: 100%; height: 100%; }
+
+  /* Segment 5: Sentiment strip */
+  .optF-sentiment {
+    min-width: 240px;
+    gap: 6px;
+  }
+  .optF-sent-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .optF-sent-mini-ring {
+    width: 40px; height: 40px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .optF-sent-mini-ring svg { transform: rotate(-90deg); }
+  .optF-sent-mini-val {
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .optF-sent-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .optF-sent-class {
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .optF-sent-sub {
+    font-size: 9px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+  }
+  /* Alt + Dom row */
+  .optF-meta-row {
+    display: flex;
+    gap: 12px;
+  }
+  .optF-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+  .optF-meta-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .optF-meta-item .val { font-weight: 600; color: var(--text); }
+
+  /* Segment 6: Market + CME */
+  .optF-market {
+    min-width: 180px;
+    gap: 8px;
+  }
+  .optF-mkt-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .optF-mkt-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .optF-mkt-dot.closed { background: var(--red); }
+  .optF-mkt-dot.closed::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid rgba(239,68,68,0.3);
+    animation: orbPulse 2s infinite;
+  }
+  .optF-mkt-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .optF-mkt-opens {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+  }
+  .optF-mkt-opens span { color: var(--cyan); }
+  .optF-cme-mini {
+    border-top: 1px solid rgba(255,255,255,0.04);
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .optF-cme-mini-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .optF-cme-mini-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+  .optF-cme-mini-row .sym { font-weight: 600; color: var(--text); width: 28px; }
+  .optF-cme-mini-row .range { color: var(--text); }
+  .optF-cme-mini-row .tag {
+    font-size: 7px; font-weight: 700;
+    padding: 1px 5px; border-radius: 3px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    margin-left: auto;
+  }
+  .optF-cme-mini-row .tag.unfilled { color: var(--orange); background: rgba(247,147,26,0.12); }
+  .optF-cme-mini-row .tag.filled { color: var(--green); background: var(--green-soft); }
+
+  /* Bottom bar */
+  .optF-bottom {
+    display: flex;
+    align-items: center;
+    padding: 7px 18px;
+    gap: 14px;
+    border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.12);
+  }
+  .optF-bottom-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+  .optF-bottom-chip .val { color: var(--text-muted); font-weight: 500; }
+  .optF-bottom-sep { color: rgba(255,255,255,0.06); }
+  .optF-spotify-pill {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 14px;
+    background: rgba(30,215,96,0.06);
+    border: 1px solid rgba(30,215,96,0.1);
+    font-size: 10px;
+    color: #1ed760;
+    cursor: pointer;
+  }
+  .optF-spotify-pill svg { width: 12px; height: 12px; fill: #1ed760; }
+
+
+  /* ═══════════════════════════════════════════════════════════════════
+     SVG Sparklines shared
+  ═══════════════════════════════════════════════════════════════════ */
+  .spark-line { fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Welcome Widget — V2 Concepts</h1>
+  <p>More creative, all elements included: market status, CME gaps, trending, dominance, Spotify</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     OPTION D — COMMAND HUD
+═══════════════════════════════════════════════════════════════════ -->
+<div class="concept">
+  <div class="concept-label">
+    <span class="concept-badge">Option D</span>
+    <span class="concept-title">Command HUD</span>
+    <span class="concept-desc">Destiny 2 orbit screen meets Bloomberg terminal. Military HUD brackets, scan lines, neon accents. Every data point has a home.</span>
+  </div>
+
+  <div class="optD">
+    <div class="optD-corner-br"></div>
+    <div class="optD-layout">
+      <!-- Left: Identity + Market Clock + CME -->
+      <div class="optD-identity">
+        <div class="optD-avatar-row">
+          <div class="optD-avatar">S</div>
+          <div class="optD-greet">Good evening, <span>Sunny</span></div>
+        </div>
+
+        <div class="optD-market-clock">
+          <div class="optD-mc-header">
+            <span class="optD-mc-label">US Market</span>
+            <span class="optD-mc-status closed">Closed</span>
+          </div>
+          <div class="optD-mc-time">Opens 9:30 AM ET</div>
+          <div class="optD-mc-countdown">Tomorrow &middot; <span>9h 22m</span></div>
+        </div>
+
+        <div class="optD-cme">
+          <div class="optD-cme-label">CME Gaps</div>
+          <div class="optD-cme-row">
+            <span class="optD-cme-sym">BTC</span>
+            <span class="optD-cme-range">$91.2K – $93.4K</span>
+            <span class="optD-cme-tag unfilled">Unfilled</span>
+          </div>
+          <div class="optD-cme-row">
+            <span class="optD-cme-sym">ETH</span>
+            <span class="optD-cme-range">$2.48K – $2.52K</span>
+            <span class="optD-cme-tag filled">Filled</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Token cards -->
+      <div class="optD-tokens">
+        <div class="optD-token">
+          <div class="optD-token-spark">
+            <svg width="100%" height="100%" viewBox="0 0 200 70" preserveAspectRatio="none">
+              <defs><linearGradient id="dSpark1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.4"/><stop offset="100%" stop-color="#ef4444" stop-opacity="0"/></linearGradient></defs>
+              <polygon points="0,70 10,45 30,40 55,48 80,35 110,42 140,30 170,38 200,45 200,70" fill="url(#dSpark1)"/>
+              <polyline class="spark-line" stroke="#ef4444" stroke-opacity="0.5" points="10,45 30,40 55,48 80,35 110,42 140,30 170,38 200,45"/>
+            </svg>
+          </div>
+          <div class="optD-token-head">
+            <img class="optD-token-logo" src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="BTC">
+            <div>
+              <div class="optD-token-sym">BTC</div>
+              <div class="optD-token-name">Bitcoin</div>
+            </div>
+            <div class="optD-token-change-badge down">&#8595; 1.70%</div>
+          </div>
+          <div class="optD-token-price">$67,428</div>
+          <div class="optD-token-mcap">MCap $1.35T</div>
+        </div>
+
+        <div class="optD-token">
+          <div class="optD-token-spark">
+            <svg width="100%" height="100%" viewBox="0 0 200 70" preserveAspectRatio="none">
+              <defs><linearGradient id="dSpark2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.4"/><stop offset="100%" stop-color="#ef4444" stop-opacity="0"/></linearGradient></defs>
+              <polygon points="0,70 10,30 35,32 60,28 90,38 120,45 150,42 180,52 200,55 200,70" fill="url(#dSpark2)"/>
+              <polyline class="spark-line" stroke="#ef4444" stroke-opacity="0.5" points="10,30 35,32 60,28 90,38 120,45 150,42 180,52 200,55"/>
+            </svg>
+          </div>
+          <div class="optD-token-head">
+            <img class="optD-token-logo" src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="ETH">
+            <div>
+              <div class="optD-token-sym">ETH</div>
+              <div class="optD-token-name">Ethereum</div>
+            </div>
+            <div class="optD-token-change-badge down">&#8595; 3.05%</div>
+          </div>
+          <div class="optD-token-price">$1,954</div>
+          <div class="optD-token-mcap">MCap $235B</div>
+        </div>
+
+        <div class="optD-token">
+          <div class="optD-token-spark">
+            <svg width="100%" height="100%" viewBox="0 0 200 70" preserveAspectRatio="none">
+              <defs><linearGradient id="dSpark3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.4"/><stop offset="100%" stop-color="#ef4444" stop-opacity="0"/></linearGradient></defs>
+              <polygon points="0,70 10,25 35,30 65,28 95,36 125,32 155,45 185,48 200,46 200,70" fill="url(#dSpark3)"/>
+              <polyline class="spark-line" stroke="#ef4444" stroke-opacity="0.5" points="10,25 35,30 65,28 95,36 125,32 155,45 185,48 200,46"/>
+            </svg>
+          </div>
+          <div class="optD-token-head">
+            <img class="optD-token-logo" src="https://assets.coingecko.com/coins/images/4128/small/solana.png" alt="SOL">
+            <div>
+              <div class="optD-token-sym">SOL</div>
+              <div class="optD-token-name">Solana</div>
+            </div>
+            <div class="optD-token-change-badge down">&#8595; 3.75%</div>
+          </div>
+          <div class="optD-token-price">$79.49</div>
+          <div class="optD-token-mcap">MCap $39B</div>
+        </div>
+      </div>
+
+      <!-- Right: Gauges -->
+      <div class="optD-gauges">
+        <div class="optD-hgauge">
+          <span class="optD-hgauge-label">F&G</span>
+          <div class="optD-hgauge-bar">
+            <div class="optD-hgauge-bar-bg" style="background: linear-gradient(90deg, rgba(239,68,68,0.2), rgba(234,179,8,0.2), rgba(34,197,94,0.2));"></div>
+            <div class="optD-hgauge-bar-fill" style="width: 11%; background: var(--red);"></div>
+          </div>
+          <span class="optD-hgauge-val" style="color: var(--red);">11</span>
+          <span class="optD-hgauge-tag" style="color: var(--red); background: var(--red-soft);">Ext. Fear</span>
+        </div>
+
+        <div class="optD-hgauge">
+          <span class="optD-hgauge-label">Alt Szn</span>
+          <div class="optD-hgauge-bar">
+            <div class="optD-hgauge-bar-bg" style="background: rgba(255,255,255,0.04);"></div>
+            <div class="optD-hgauge-bar-fill" style="width: 26%; background: var(--orange);"></div>
+          </div>
+          <span class="optD-hgauge-val" style="color: var(--orange);">26</span>
+          <span class="optD-hgauge-tag" style="color: var(--orange); background: rgba(247,147,26,0.12);">BTC Szn</span>
+        </div>
+
+        <div class="optD-dom-row">
+          <span class="optD-dom-label">Dom.</span>
+          <div class="optD-dom-bar">
+            <div class="optD-dom-seg" style="width: 57%; background: var(--orange);"></div>
+            <div class="optD-dom-seg" style="width: 10%; background: var(--blue);"></div>
+            <div class="optD-dom-seg" style="width: 4%; background: #14f195;"></div>
+            <div class="optD-dom-seg" style="width: 29%; background: rgba(255,255,255,0.08);"></div>
+          </div>
+          <div class="optD-dom-chips">
+            <span class="optD-dom-chip"><span class="optD-dom-dot" style="background: var(--orange);"></span>57</span>
+            <span class="optD-dom-chip"><span class="optD-dom-dot" style="background: var(--blue);"></span>10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom: Trending + Market Cap + Spotify -->
+      <div class="optD-bottom">
+        <div class="optD-bottom-item">
+          Crypto Mkt <span class="val">$2.37T</span>
+        </div>
+        <span class="optD-bottom-sep">|</span>
+        <div class="optD-bottom-item">
+          24h Vol <span class="val">$121B</span>
+        </div>
+        <span class="optD-bottom-sep">|</span>
+        <div class="optD-bottom-item">
+          <span class="optD-trending-badge">Trending</span>
+          USDC <span class="val" style="color: var(--green);">-0.00%</span>
+        </div>
+        <div class="optD-spotify-mini">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Today's Top Hits
+          <span class="track">Bad Bunny</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotations">
+    <div class="annotation"><strong>HUD brackets + scan lines.</strong> Corner brackets and subtle horizontal scan lines give a military/gaming command center feel.</div>
+    <div class="annotation"><strong>Market clock with countdown.</strong> Dedicated card shows market status, open time, AND a live countdown ("9h 22m") so you always know when action starts.</div>
+    <div class="annotation"><strong>CME gaps first-class.</strong> Own dedicated card with UNFILLED/FILLED tags. No longer buried as tiny text — traders see this instantly.</div>
+    <div class="annotation"><strong>Horizontal gauge bars.</strong> F&G and Alt Season as labeled progress bars with value + tag. Scan left-to-right naturally, far more readable than tiny vertical cards.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     OPTION E — CINEMATIC EDITORIAL
+═══════════════════════════════════════════════════════════════════ -->
+<div class="concept">
+  <div class="concept-label">
+    <span class="concept-badge">Option E</span>
+    <span class="concept-title">Cinematic Editorial</span>
+    <span class="concept-desc">Magazine cover meets dashboard. Dramatic sentiment orb as the centerpiece. Asymmetric 3-column layout with editorial typography.</span>
+  </div>
+
+  <div class="optE">
+    <!-- Left: Greeting + Prices -->
+    <div class="optE-left">
+      <div class="optE-greeting">
+        <div class="optE-avatar">S</div>
+        <div class="optE-greet-text">
+          <h2>Good evening, <em>Sunny</em></h2>
+          <div class="sub">Markets in fear &middot; 12:08 AM Thu</div>
+        </div>
+      </div>
+
+      <div class="optE-prices">
+        <div class="optE-price">
+          <div class="optE-price-spark">
+            <svg width="100%" height="100%" viewBox="0 0 180 60" preserveAspectRatio="none">
+              <defs><linearGradient id="eSpark1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.3"/><stop offset="100%" stop-color="#ef4444" stop-opacity="0"/></linearGradient></defs>
+              <polygon points="0,60 10,38 40,35 70,42 100,30 130,36 160,25 180,38 180,60" fill="url(#eSpark1)"/>
+            </svg>
+          </div>
+          <div class="optE-price-top">
+            <img class="optE-price-logo" src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="BTC">
+            <span class="optE-price-sym">BTC</span>
+            <span class="optE-price-chg down">-1.70%</span>
+          </div>
+          <div class="optE-price-val">$67,428</div>
+        </div>
+
+        <div class="optE-price">
+          <div class="optE-price-spark">
+            <svg width="100%" height="100%" viewBox="0 0 180 60" preserveAspectRatio="none">
+              <defs><linearGradient id="eSpark2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.3"/><stop offset="100%" stop-color="#ef4444" stop-opacity="0"/></linearGradient></defs>
+              <polygon points="0,60 10,25 40,28 70,22 100,35 130,42 160,38 180,48 180,60" fill="url(#eSpark2)"/>
+            </svg>
+          </div>
+          <div class="optE-price-top">
+            <img class="optE-price-logo" src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="ETH">
+            <span class="optE-price-sym">ETH</span>
+            <span class="optE-price-chg down">-3.05%</span>
+          </div>
+          <div class="optE-price-val">$1,954</div>
+        </div>
+
+        <div class="optE-price">
+          <div class="optE-price-spark">
+            <svg width="100%" height="100%" viewBox="0 0 180 60" preserveAspectRatio="none">
+              <defs><linearGradient id="eSpark3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.3"/><stop offset="100%" stop-color="#ef4444" stop-opacity="0"/></linearGradient></defs>
+              <polygon points="0,60 10,20 40,25 70,28 100,35 130,30 160,42 180,45 180,60" fill="url(#eSpark3)"/>
+            </svg>
+          </div>
+          <div class="optE-price-top">
+            <img class="optE-price-logo" src="https://assets.coingecko.com/coins/images/4128/small/solana.png" alt="SOL">
+            <span class="optE-price-sym">SOL</span>
+            <span class="optE-price-chg down">-3.75%</span>
+          </div>
+          <div class="optE-price-val">$79.49</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center: Sentiment Orb -->
+    <div class="optE-center">
+      <div class="optE-orb-wrap">
+        <div class="optE-orb-glow"></div>
+        <div class="optE-orb">
+          <span class="optE-orb-val">11</span>
+          <span class="optE-orb-label">Fear & Greed</span>
+        </div>
+      </div>
+      <div class="optE-center-label">Extreme Fear</div>
+      <div class="optE-center-sub">Alt Season 26 &middot; BTC Season</div>
+    </div>
+
+    <!-- Right: Market Intel Stack -->
+    <div class="optE-right">
+      <div class="optE-info">
+        <div class="optE-info-icon" style="background: rgba(0,240,255,0.08); color: var(--cyan);">$</div>
+        <div class="optE-info-content">
+          <div class="optE-info-label">Crypto Market</div>
+          <div class="optE-info-val">$2.37T <span style="color: var(--red); font-size: 11px;">-1.7%</span></div>
+        </div>
+        <div class="optE-info-sub">Vol $121B</div>
+      </div>
+
+      <div class="optE-info">
+        <div class="optE-info-icon" style="background: var(--red-soft); color: var(--red);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="optE-info-content">
+          <div class="optE-info-label">US Market</div>
+          <div class="optE-info-val">Closed</div>
+        </div>
+        <div class="optE-info-sub">Opens 9:30 AM</div>
+      </div>
+
+      <div class="optE-info">
+        <div class="optE-info-icon" style="background: rgba(247,147,26,0.1); color: var(--orange);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 3v18"/></svg>
+        </div>
+        <div class="optE-info-content">
+          <div class="optE-info-label">CME Gap BTC</div>
+          <div class="optE-info-val">$91.2K – $93.4K</div>
+        </div>
+        <span class="optE-info-tag" style="color: var(--orange); background: rgba(247,147,26,0.12);">Unfilled</span>
+      </div>
+
+      <div class="optE-info">
+        <div class="optE-info-icon" style="background: rgba(247,147,26,0.1); color: var(--orange);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 3v18"/></svg>
+        </div>
+        <div class="optE-info-content">
+          <div class="optE-info-label">CME Gap ETH</div>
+          <div class="optE-info-val">$2.48K – $2.52K</div>
+        </div>
+        <span class="optE-info-tag" style="color: var(--green); background: var(--green-soft);">Filled</span>
+      </div>
+
+      <div class="optE-info">
+        <div class="optE-info-icon" style="background: rgba(247,147,26,0.1); color: var(--orange);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        </div>
+        <div class="optE-info-content">
+          <div class="optE-info-label">Dominance</div>
+          <div class="optE-info-val" style="font-size: 11px;">BTC 57% &middot; ETH 10% &middot; SOL 4%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotations">
+    <div class="annotation"><strong>Sentiment orb centerpiece.</strong> A pulsing glowing orb that changes color based on Fear/Greed. The dashboard's emotional heartbeat — you feel the market mood instantly.</div>
+    <div class="annotation"><strong>Icon-driven info cards.</strong> Each data point gets a colored icon + label + value + optional tag. Consistent pattern makes scanning effortless.</div>
+    <div class="annotation"><strong>Asymmetric drama.</strong> Left = personal (greeting + prices), Center = emotion (sentiment), Right = intelligence (market data). Three mental zones.</div>
+    <div class="annotation"><strong>All elements present.</strong> Market status, CME gaps (with filled/unfilled), dominance, market cap, volume — nothing missing, nothing buried.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     OPTION F — RIBBON DASHBOARD
+═══════════════════════════════════════════════════════════════════ -->
+<div class="concept">
+  <div class="concept-label">
+    <span class="concept-badge">Option F</span>
+    <span class="concept-title">Ribbon Dashboard</span>
+    <span class="concept-desc">F1 telemetry meets Robinhood. Segmented ribbon with each zone having its own visual language. Ultra-compact but every element is readable.</span>
+  </div>
+
+  <div class="optF">
+    <div class="optF-main">
+      <!-- Seg 1: Greeting + Market Cap -->
+      <div class="optF-seg optF-greeting">
+        <div class="optF-g-row">
+          <div class="optF-g-avatar">S</div>
+          <div class="optF-g-text">
+            <h3>Evening, <span>Sunny</span></h3>
+            <div class="mood">Markets in fear</div>
+          </div>
+        </div>
+        <div class="optF-g-mcap">
+          <span class="optF-g-mcap-val">$2.37T</span>
+          <span class="optF-g-mcap-chg down">-1.7%</span>
+        </div>
+        <div class="optF-g-mcap-sub">Crypto Market Cap &middot; Vol $121B</div>
+      </div>
+
+      <!-- Seg 2: BTC -->
+      <div class="optF-seg optF-token">
+        <div class="optF-token-row1">
+          <img class="optF-token-logo" src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="BTC">
+          <div class="optF-token-meta">
+            <div class="optF-token-sym">BTC</div>
+            <div class="optF-token-name">Bitcoin</div>
+          </div>
+          <div class="optF-token-badge down">&#8595; 1.70%</div>
+        </div>
+        <div class="optF-token-row2">
+          <span class="optF-token-price">$67,428</span>
+          <div class="optF-token-spark">
+            <svg viewBox="0 0 72 28" preserveAspectRatio="none">
+              <polyline class="spark-line" stroke="#ef4444" points="2,18 10,15 20,16 30,12 42,14 52,8 62,12 70,16"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seg 3: ETH -->
+      <div class="optF-seg optF-token">
+        <div class="optF-token-row1">
+          <img class="optF-token-logo" src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="ETH">
+          <div class="optF-token-meta">
+            <div class="optF-token-sym">ETH</div>
+            <div class="optF-token-name">Ethereum</div>
+          </div>
+          <div class="optF-token-badge down">&#8595; 3.05%</div>
+        </div>
+        <div class="optF-token-row2">
+          <span class="optF-token-price">$1,954</span>
+          <div class="optF-token-spark">
+            <svg viewBox="0 0 72 28" preserveAspectRatio="none">
+              <polyline class="spark-line" stroke="#ef4444" points="2,8 10,10 20,9 30,14 42,16 52,15 62,20 70,22"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seg 4: SOL -->
+      <div class="optF-seg optF-token">
+        <div class="optF-token-row1">
+          <img class="optF-token-logo" src="https://assets.coingecko.com/coins/images/4128/small/solana.png" alt="SOL">
+          <div class="optF-token-meta">
+            <div class="optF-token-sym">SOL</div>
+            <div class="optF-token-name">Solana</div>
+          </div>
+          <div class="optF-token-badge down">&#8595; 3.75%</div>
+        </div>
+        <div class="optF-token-row2">
+          <span class="optF-token-price">$79.49</span>
+          <div class="optF-token-spark">
+            <svg viewBox="0 0 72 28" preserveAspectRatio="none">
+              <polyline class="spark-line" stroke="#ef4444" points="2,6 10,8 20,10 30,12 42,10 52,16 62,18 70,17"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seg 5: Sentiment -->
+      <div class="optF-seg optF-sentiment">
+        <div class="optF-sent-row">
+          <div class="optF-sent-mini-ring">
+            <svg width="40" height="40" viewBox="0 0 40 40">
+              <circle cx="20" cy="20" r="16" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3.5"/>
+              <circle cx="20" cy="20" r="16" fill="none" stroke="#ef4444" stroke-width="3.5"
+                stroke-dasharray="11.06 100.53"
+                stroke-linecap="round"/>
+            </svg>
+            <div class="optF-sent-mini-val" style="color: var(--red);">11</div>
+          </div>
+          <div class="optF-sent-details">
+            <span class="optF-sent-class" style="color: var(--red);">Extreme Fear</span>
+            <span class="optF-sent-sub">Fear & Greed Index</span>
+          </div>
+        </div>
+        <div class="optF-meta-row">
+          <div class="optF-meta-item">
+            <span class="optF-meta-dot" style="background: var(--orange);"></span>
+            Alt Szn <span class="val">26</span>
+          </div>
+          <div class="optF-meta-item">
+            <span class="optF-meta-dot" style="background: var(--orange);"></span>
+            BTC.D <span class="val">57%</span>
+          </div>
+          <div class="optF-meta-item">
+            <span class="optF-meta-dot" style="background: var(--blue);"></span>
+            ETH.D <span class="val">10%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seg 6: Market + CME -->
+      <div class="optF-seg optF-market">
+        <div class="optF-mkt-status">
+          <div class="optF-mkt-dot closed"></div>
+          <span class="optF-mkt-text" style="color: var(--red);">US Closed</span>
+        </div>
+        <div class="optF-mkt-opens">Opens <span>9:30 AM ET</span> &middot; Tomorrow</div>
+
+        <div class="optF-cme-mini">
+          <div class="optF-cme-mini-label">CME Gaps</div>
+          <div class="optF-cme-mini-row">
+            <span class="sym">BTC</span>
+            <span class="range">$91.2K–$93.4K</span>
+            <span class="tag unfilled">Unfilled</span>
+          </div>
+          <div class="optF-cme-mini-row">
+            <span class="sym">ETH</span>
+            <span class="range">$2.48K–$2.52K</span>
+            <span class="tag filled">Filled</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom ticker -->
+    <div class="optF-bottom">
+      <div class="optF-bottom-chip">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--green)"><circle cx="12" cy="12" r="4"/></svg>
+        Trending <span class="val">USDC -0.00%</span>
+      </div>
+      <span class="optF-bottom-sep">|</span>
+      <div class="optF-bottom-chip">
+        BTC.D <span class="val">57%</span>
+      </div>
+      <span class="optF-bottom-sep">|</span>
+      <div class="optF-bottom-chip">
+        ETH.D <span class="val">10%</span>
+      </div>
+      <span class="optF-bottom-sep">|</span>
+      <div class="optF-bottom-chip">
+        SOL.D <span class="val">4%</span>
+      </div>
+      <div class="optF-spotify-pill">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2z"/></svg>
+        Today's Top Hits
+      </div>
+    </div>
+  </div>
+
+  <div class="annotations">
+    <div class="annotation"><strong>Segmented ribbon.</strong> Each zone (identity, tokens, sentiment, market) has its own visual personality but shares a consistent height. Scan left-to-right like reading.</div>
+    <div class="annotation"><strong>Inline sparklines.</strong> Mini sparklines sit right next to prices — you see trend + number simultaneously, no hunting.</div>
+    <div class="annotation"><strong>Market + CME in one segment.</strong> Red dot pulses for closed market. CME gaps nested below with tiny filled/unfilled tags. Dense but clear.</div>
+    <div class="annotation"><strong>Market cap as greeting anchor.</strong> $2.37T right under the greeting — the first big number you see. Sets market context immediately.</div>
+  </div>
+</div>
+
+</body>
+</html>

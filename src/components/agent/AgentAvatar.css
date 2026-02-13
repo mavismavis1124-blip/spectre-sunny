@@ -1,0 +1,99 @@
+/* ============================================================
+   AgentAvatar — Hatched creature with evolving visual levels
+   ============================================================ */
+
+.agent-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.agent-avatar[role="button"] {
+  cursor: pointer;
+}
+.agent-avatar__svg {
+  display: block;
+  overflow: visible;
+}
+
+/* Glow pulse */
+.agent-avatar__glow {
+  animation: avatarGlowPulse 3s ease-in-out infinite;
+}
+@keyframes avatarGlowPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Body breathing */
+.agent-avatar__body {
+  animation: avatarBodyBreathe 4s ease-in-out infinite;
+}
+@keyframes avatarBodyBreathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-0.5px); }
+}
+
+/* Eye blink */
+.agent-avatar__eye {
+  animation: avatarEyeBlink 4s ease-in-out infinite;
+}
+.agent-avatar__eye--right {
+  animation-delay: 0.1s;
+}
+@keyframes avatarEyeBlink {
+  0%, 45%, 55%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.1); }
+}
+
+/* Aura rings */
+.agent-avatar__aura {
+  animation: auraRing 3s ease-in-out infinite;
+}
+.agent-avatar__aura--0 { animation-delay: 0s; }
+.agent-avatar__aura--1 { animation-delay: 0.5s; }
+.agent-avatar__aura--2 { animation-delay: 1s; }
+@keyframes auraRing {
+  0%, 100% { opacity: 0.08; }
+  50% { opacity: 0.15; }
+}
+
+/* Particles (level 4+) */
+.agent-avatar__particle--0 { animation: particleFloat0 5s ease-in-out infinite; }
+.agent-avatar__particle--1 { animation: particleFloat1 6s ease-in-out infinite; }
+.agent-avatar__particle--2 { animation: particleFloat2 4.5s ease-in-out infinite; }
+.agent-avatar__particle--3 { animation: particleFloat3 5.5s ease-in-out infinite; }
+.agent-avatar__particle--4 { animation: particleFloat4 7s ease-in-out infinite; }
+@keyframes particleFloat0 {
+  0%, 100% { transform: translate(0, 0); opacity: 0.4; }
+  50% { transform: translate(2px, -4px); opacity: 0.1; }
+}
+@keyframes particleFloat1 {
+  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+  50% { transform: translate(-3px, -2px); opacity: 0.1; }
+}
+@keyframes particleFloat2 {
+  0%, 100% { transform: translate(0, 0); opacity: 0.35; }
+  50% { transform: translate(1px, -5px); opacity: 0.1; }
+}
+@keyframes particleFloat3 {
+  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+  50% { transform: translate(-2px, -3px); opacity: 0.05; }
+}
+@keyframes particleFloat4 {
+  0%, 100% { transform: translate(0, 0); opacity: 0.25; }
+  50% { transform: translate(3px, 3px); opacity: 0.1; }
+}
+
+/* Level-based intensity */
+.agent-avatar--level-1 .agent-avatar__glow { opacity: 0.6; }
+.agent-avatar--level-2 .agent-avatar__glow { opacity: 0.75; }
+.agent-avatar--level-3 .agent-avatar__glow { opacity: 0.85; }
+.agent-avatar--level-4 .agent-avatar__glow { opacity: 0.95; }
+.agent-avatar--level-5 .agent-avatar__glow { opacity: 1; }
+
+/* Hover on clickable avatar */
+.agent-avatar[role="button"]:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}

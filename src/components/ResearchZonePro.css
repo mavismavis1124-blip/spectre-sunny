@@ -1,0 +1,2663 @@
+/* ============================================================================
+   Research Zone PRO -- Crypto research dashboard, glassmorphic dark theme.
+   All class names use `rz-pro-` prefix.
+   ============================================================================ */
+
+/* ─── Keyframes ─── */
+
+@keyframes rzProFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Root Container ─── */
+
+.rz-pro {
+  width: 100%;
+  position: relative;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  --rz-token-rgb: 139, 92, 246;
+}
+
+/* ─── Hero Banner (Option A — Token Hero Card) ─── */
+
+.rz-pro-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 28px;
+  margin-bottom: 0;
+  position: relative;
+  min-height: 100px;
+  background:
+    radial-gradient(ellipse 60% 200% at 10% 50%, rgba(var(--rz-token-rgb), 0.14) 0%, transparent 55%),
+    linear-gradient(135deg, rgba(12, 10, 16, 0.98) 0%, rgba(6, 5, 8, 1) 100%);
+  border: 1px solid rgba(var(--rz-token-rgb), 0.12);
+  border-radius: 14px 14px 0 0;
+  overflow: hidden;
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 4px 20px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.rz-pro-hero-glow {
+  position: absolute;
+  top: -60%;
+  left: -8%;
+  width: 40%;
+  height: 220%;
+  background: radial-gradient(ellipse at center, rgba(var(--rz-token-rgb), 0.1) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(24px);
+}
+
+.rz-pro-hero-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(var(--rz-token-rgb), 0.5), rgba(var(--rz-token-rgb), 0.15), transparent);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.rz-pro-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.rz-pro-hero-star {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.rz-pro-hero-star:hover {
+  background: rgba(var(--rz-token-rgb), 0.12);
+  color: rgb(var(--rz-token-rgb));
+  border-color: rgba(var(--rz-token-rgb), 0.25);
+}
+
+.rz-pro-hero-star svg {
+  width: 15px;
+  height: 15px;
+}
+
+.rz-pro-hero-logo-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.rz-pro-hero-logo-wrap .rz-pro-hero-logo,
+.rz-pro-hero-logo-wrap .rz-pro-hero-logo-fallback {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(var(--rz-token-rgb), 0.3);
+  box-shadow: 0 0 24px rgba(var(--rz-token-rgb), 0.2), 0 0 48px rgba(var(--rz-token-rgb), 0.08);
+}
+
+.rz-pro-hero-logo-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--rz-token-rgb), 0.15);
+  color: rgb(var(--rz-token-rgb));
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.rz-pro-hero-rank {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  background: rgba(var(--rz-token-rgb), 0.15);
+  border: 1px solid rgba(var(--rz-token-rgb), 0.3);
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgb(var(--rz-token-rgb));
+  z-index: 2;
+}
+
+.rz-pro-hero-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  position: relative;
+  z-index: 1;
+}
+
+.rz-pro-hero-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.rz-pro-hero-ticker {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.rz-pro-hero-socials {
+  display: flex;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.rz-pro-hero-social {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.rz-pro-hero-social:hover {
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.rz-pro-hero-price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  margin-left: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.rz-pro-hero-price {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.rz-pro-hero-change {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rz-pro-hero-change-pill {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rz-pro-hero-change.up .rz-pro-hero-change-pill {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.rz-pro-hero-change.down .rz-pro-hero-change-pill {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.rz-pro-hero-change-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+}
+
+/* ─── Tab Bar (below hero) ─── */
+
+.rz-pro-tab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background: rgba(8, 7, 12, 0.95);
+  border: 1px solid rgba(var(--rz-token-rgb), 0.08);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.rz-pro-tab-bar-tabs {
+  display: flex;
+  gap: 3px;
+}
+
+.rz-pro-tab-bar-tab {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  user-select: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rz-pro-tab-bar-tab svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.rz-pro-tab-bar-tab:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.rz-pro-tab-bar-tab.active {
+  background: rgba(var(--rz-token-rgb), 0.1);
+  color: rgb(var(--rz-token-rgb));
+  border-color: rgba(var(--rz-token-rgb), 0.2);
+}
+
+.rz-pro-tab-bar-tab.active svg {
+  color: rgb(var(--rz-token-rgb));
+}
+
+.rz-pro-tab-bar-mode {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.rz-pro-tab-bar-mode-btn {
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.35);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+}
+
+.rz-pro-tab-bar-mode-btn:hover {
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.rz-pro-tab-bar-mode-btn.active {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+/* ─── Section Dividers (replaces CollapsibleSection) ─── */
+
+.rz-pro-content-section {
+  margin: 0;
+  padding: 0;
+}
+
+.rz-pro-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  margin-top: 2px;
+}
+
+.rz-pro-content-section:first-child .rz-pro-section-divider {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.rz-pro-section-divider-icon {
+  display: flex;
+  align-items: center;
+  color: rgb(var(--rz-token-rgb));
+  flex-shrink: 0;
+}
+
+.rz-pro-section-divider-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.rz-pro-section-divider-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: rgba(255, 255, 255, 0.22);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+}
+
+/* ─── 2-Column Layout ─── */
+
+.rz-pro-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 28px;
+  align-items: start;
+}
+
+.rz-pro-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* ─── Right Sticky Sidebar ─── */
+
+.rz-pro-sidebar {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+.rz-pro-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.rz-pro-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rz-pro-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+.rz-pro-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Sidebar: Token Info Card ─── */
+
+.rz-pro-sidebar-card {
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.rz-pro-sidebar-token-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.rz-pro-sidebar-token-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.rz-pro-sidebar-token-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rz-pro-sidebar-token-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rz-pro-sidebar-token-symbol {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+}
+
+.rz-pro-sidebar-token-price {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.rz-pro-sidebar-token-change {
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.rz-pro-sidebar-token-change.positive {
+  color: #22c55e;
+}
+
+.rz-pro-sidebar-token-change.negative {
+  color: #ef4444;
+}
+
+/* ─── Sidebar: Stats Grid ─── */
+
+.rz-pro-sidebar-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: rgba(15, 15, 20, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.rz-pro-sidebar-stat {
+  padding: 14px;
+  background: rgba(15, 15, 20, 0.4);
+  transition: background 0.3s ease;
+}
+
+.rz-pro-sidebar-stat:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.rz-pro-sidebar-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 6px;
+}
+
+.rz-pro-sidebar-stat-value {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* ─── Sidebar: Markets ─── */
+
+.rz-pro-sidebar-markets {
+  margin-top: 4px;
+}
+
+.rz-pro-sidebar-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 16px 0 10px;
+}
+
+.rz-pro-sidebar-markets-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rz-pro-sidebar-market-pill {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.rz-pro-sidebar-market-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ─── Sidebar: Category Tags ─── */
+
+.rz-pro-sidebar-categories {
+  margin-top: 4px;
+}
+
+.rz-pro-sidebar-categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rz-pro-sidebar-category-pill {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(var(--rz-token-rgb), 0.06);
+  border: 1px solid rgba(var(--rz-token-rgb), 0.12);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(var(--rz-token-rgb), 0.8);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.rz-pro-sidebar-category-pill:hover {
+  background: rgba(var(--rz-token-rgb), 0.12);
+  color: rgb(var(--rz-token-rgb));
+}
+
+/* ─── Sidebar: Tweets ─── */
+
+.rz-pro-sidebar-tweets {
+  margin-top: 4px;
+}
+
+.rz-pro-sidebar-tweets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 0;
+  user-select: none;
+}
+
+.rz-pro-sidebar-tweets-header svg {
+  width: 14px;
+  height: 14px;
+  color: rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rz-pro-sidebar-tweets-header.open svg {
+  transform: rotate(180deg);
+}
+
+.rz-pro-sidebar-tweet-search {
+  width: 100%;
+  padding: 10px 12px 10px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  outline: none;
+  margin: 12px 0;
+  transition: all 0.3s ease;
+}
+
+.rz-pro-sidebar-tweet-search::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.rz-pro-sidebar-tweet-search:focus {
+  border-color: rgba(var(--rz-token-rgb), 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 2px rgba(var(--rz-token-rgb), 0.15);
+}
+
+.rz-pro-sidebar-tweet-card {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.rz-pro-sidebar-tweet-card:last-child {
+  border-bottom: none;
+}
+
+.rz-pro-sidebar-tweet-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.rz-pro-sidebar-tweet-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.rz-pro-sidebar-tweet-handle {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.rz-pro-sidebar-tweet-time {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.rz-pro-sidebar-tweet-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ─── Generic Collapsible Section ─── */
+
+.rz-pro-section {
+  margin: 0;
+  padding: 0;
+  animation: rzProFadeIn 0.4s ease both;
+}
+
+.rz-pro-section:nth-child(1) { animation-delay: 0s; }
+.rz-pro-section:nth-child(2) { animation-delay: 0.05s; }
+.rz-pro-section:nth-child(3) { animation-delay: 0.10s; }
+.rz-pro-section:nth-child(4) { animation-delay: 0.15s; }
+.rz-pro-section:nth-child(5) { animation-delay: 0.20s; }
+.rz-pro-section:nth-child(6) { animation-delay: 0.25s; }
+.rz-pro-section:nth-child(7) { animation-delay: 0.30s; }
+.rz-pro-section:nth-child(8) { animation-delay: 0.35s; }
+.rz-pro-section:nth-child(9) { animation-delay: 0.40s; }
+.rz-pro-section:nth-child(10) { animation-delay: 0.45s; }
+
+.rz-pro-section-icon {
+  width: 16px;
+  height: 16px;
+  color: rgb(var(--rz-token-rgb));
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.rz-pro-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.rz-pro-section-body {
+  padding: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Project Links Row ─── */
+
+.rz-pro-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rz-pro-link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.rz-pro-link-pill svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.rz-pro-link-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Chart Section ─── */
+
+.rz-pro-chart-section {
+  /* Wrapper for chart toolbar + container */
+}
+
+.rz-pro-chart-types {
+  display: flex;
+  gap: 4px;
+}
+
+.rz-pro-chart-type-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.rz-pro-chart-type-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.rz-pro-chart-type-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.rz-pro-chart-type-btn.active {
+  background: rgba(var(--rz-token-rgb), 0.12);
+  color: rgb(var(--rz-token-rgb));
+  border-color: rgba(var(--rz-token-rgb), 0.2);
+}
+
+.rz-pro-chart-timeframes {
+  display: flex;
+  gap: 2px;
+}
+
+.rz-pro-chart-tf-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.rz-pro-chart-tf-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.rz-pro-chart-tf-btn.active {
+  background: rgba(var(--rz-token-rgb), 0.12);
+  color: rgb(var(--rz-token-rgb));
+}
+
+.rz-pro-chart-range {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.rz-pro-chart-range-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.rz-pro-chart-range-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+}
+
+.rz-pro-chart-range-dot.low {
+  background: #ef4444;
+}
+
+.rz-pro-chart-range-dot.high {
+  background: #22c55e;
+}
+
+.rz-pro-chart-container {
+  border-radius: 12px;
+  overflow: hidden;
+  height: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(15, 15, 20, 0.4);
+}
+
+/* ─── Price Performance Cards ─── */
+
+.rz-pro-perf-cards {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+}
+
+.rz-pro-perf-cards::-webkit-scrollbar {
+  height: 4px;
+}
+
+.rz-pro-perf-cards::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rz-pro-perf-cards::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.rz-pro-perf-card {
+  min-width: 150px;
+  flex: 1;
+  padding: 16px 20px;
+  border-radius: 12px;
+  text-align: center;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(var(--rz-token-rgb), 0.10) 0%,
+    rgba(15, 15, 20, 0.6) 70%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.rz-pro-perf-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.rz-pro-perf-value {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.rz-pro-perf-value.positive {
+  color: #22c55e;
+}
+
+.rz-pro-perf-value.negative {
+  color: #ef4444;
+}
+
+/* ─── AI Analysis Card ─── */
+
+.rz-pro-ai-analysis {
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.rz-pro-ai-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgb(var(--rz-token-rgb));
+  margin-bottom: 8px;
+}
+.rz-pro-ai-label + .rz-pro-ai-text + .rz-pro-ai-label,
+.rz-pro-ai-label + .rz-pro-ai-key-levels + .rz-pro-ai-label {
+  margin-top: 16px;
+}
+
+.rz-pro-ai-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.rz-pro-ai-text .highlight {
+  color: rgb(var(--rz-token-rgb));
+  font-weight: 600;
+}
+
+/* ─── Category Analysis 3-Panel Grid ─── */
+
+.rz-pro-category-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.rz-pro-category-panel {
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.rz-pro-category-panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 12px;
+}
+
+.rz-pro-category-chart {
+  height: 200px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.rz-pro-category-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+.rz-pro-category-ai-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ─── Sentiment Analysis Section ─── */
+
+.rz-pro-sentiment-chart {
+  /* Wrapper for sentiment header + toggles + canvas */
+}
+
+.rz-pro-sentiment-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.rz-pro-sentiment-toggles {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.rz-pro-sentiment-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rz-pro-sentiment-toggle:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.rz-pro-sentiment-toggle.active {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.rz-pro-sentiment-toggle-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rz-pro-sentiment-canvas {
+  width: 100%;
+  height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(15, 15, 20, 0.3);
+}
+
+/* ─── Influencer Tweet Cards (Horizontal Scroll) ─── */
+
+.rz-pro-influencer-tweets {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+}
+
+.rz-pro-influencer-tweets::-webkit-scrollbar {
+  height: 4px;
+}
+
+.rz-pro-influencer-tweets::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rz-pro-influencer-tweets::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.rz-pro-tweet-card {
+  min-width: 280px;
+  max-width: 320px;
+  flex-shrink: 0;
+  padding: 20px;
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.rz-pro-tweet-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.rz-pro-tweet-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.rz-pro-tweet-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rz-pro-tweet-handle {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.rz-pro-tweet-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.rz-pro-tweet-score {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
+}
+
+.rz-pro-tweet-score-bar {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.rz-pro-tweet-score-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: rgb(var(--rz-token-rgb));
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rz-pro-tweet-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.rz-pro-tweet-action {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.rz-pro-tweet-action svg {
+  width: 12px;
+  height: 12px;
+}
+
+.rz-pro-tweet-action:hover {
+  color: rgb(var(--rz-token-rgb));
+}
+
+/* ─── Sentiment Summary Cards Grid ─── */
+
+.rz-pro-sentiment-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.rz-pro-sentiment-summary-card {
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.rz-pro-sentiment-score {
+  font-family: var(--font-mono);
+  font-size: 48px;
+  font-weight: 700;
+  color: rgb(var(--rz-token-rgb));
+  line-height: 1;
+}
+
+.rz-pro-sentiment-score-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 6px;
+}
+
+.rz-pro-summary-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.rz-pro-summary-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ─── Technical Analysis Layout ─── */
+
+.rz-pro-ta-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ─── Technical Indicators List ─── */
+
+.rz-pro-indicators {
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 15, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 8px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.rz-pro-indicator-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.rz-pro-indicator-row:last-child {
+  border-bottom: none;
+}
+
+.rz-pro-indicator-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rz-pro-indicator-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.rz-pro-indicator-name {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rz-pro-indicator-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.rz-pro-indicator-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.rz-pro-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rz-pro-indicator-dot.bullish {
+  background: #22c55e;
+}
+
+.rz-pro-indicator-dot.bearish {
+  background: #ef4444;
+}
+
+.rz-pro-indicator-dot.neutral {
+  background: #eab308;
+}
+
+/* ─── TA AI Explanations ─── */
+
+.rz-pro-ta-analysis {
+  display: flex;
+  flex-direction: column;
+}
+
+.rz-pro-ta-item {
+  margin-bottom: 16px;
+  background: rgba(15, 15, 20, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rz-pro-ta-item:last-child {
+  margin-bottom: 0;
+}
+
+.rz-pro-ta-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.rz-pro-ta-item-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(var(--rz-token-rgb), 0.12);
+  color: rgb(var(--rz-token-rgb));
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(var(--rz-token-rgb), 0.15);
+}
+
+.rz-pro-ta-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.rz-pro-ta-item-info {
+  width: 14px;
+  height: 14px;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: help;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.rz-pro-ta-item-info:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.rz-pro-ta-item-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.5);
+  padding-left: 30px;
+}
+
+/* ─── Recent Performance ─── */
+
+.rz-pro-recent-perf {
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.rz-pro-recent-perf-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.rz-pro-recent-perf-text .positive {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.rz-pro-recent-perf-text .negative {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* ─── Section Headers (Playfair Display) ─── */
+
+.rz-pro-heading {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.rz-pro-heading-sm {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 16px 0;
+}
+
+
+/* ============================================================================
+   DAY MODE (.rz-pro.day-mode)
+   ============================================================================ */
+
+.rz-pro.day-mode {
+  color: #1e293b;
+}
+
+/* ─── Day: Hero Banner ─── */
+
+.rz-pro.day-mode .rz-pro-hero {
+  background:
+    radial-gradient(ellipse 60% 200% at 10% 50%, rgba(var(--rz-token-rgb), 0.06) 0%, transparent 55%),
+    linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-hero-glow {
+  background: radial-gradient(ellipse at center, rgba(var(--rz-token-rgb), 0.04) 0%, transparent 65%);
+}
+
+.rz-pro.day-mode .rz-pro-hero-accent {
+  background: linear-gradient(90deg, transparent, rgba(var(--rz-token-rgb), 0.3), rgba(var(--rz-token-rgb), 0.1), transparent);
+}
+
+.rz-pro.day-mode .rz-pro-hero-star {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-hero-star:hover {
+  background: rgba(var(--rz-token-rgb), 0.08);
+  color: rgb(var(--rz-token-rgb));
+}
+
+.rz-pro.day-mode .rz-pro-hero-logo-wrap .rz-pro-hero-logo,
+.rz-pro.day-mode .rz-pro-hero-logo-wrap .rz-pro-hero-logo-fallback {
+  border-color: rgba(var(--rz-token-rgb), 0.15);
+  box-shadow: 0 0 16px rgba(var(--rz-token-rgb), 0.08);
+}
+
+.rz-pro.day-mode .rz-pro-hero-rank {
+  background: rgba(var(--rz-token-rgb), 0.06);
+  border-color: rgba(var(--rz-token-rgb), 0.12);
+}
+
+.rz-pro.day-mode .rz-pro-hero-name {
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-hero-ticker {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-hero-social {
+  color: #94a3b8;
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-hero-social:hover {
+  color: #64748b;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-hero-price {
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-hero-change.up .rz-pro-hero-change-pill {
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.08);
+  border-color: rgba(22, 163, 74, 0.15);
+}
+
+.rz-pro.day-mode .rz-pro-hero-change.down .rz-pro-hero-change-pill {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+  border-color: rgba(220, 38, 38, 0.15);
+}
+
+.rz-pro.day-mode .rz-pro-hero-change-label {
+  color: #94a3b8;
+}
+
+/* ─── Day: Tab Bar ─── */
+
+.rz-pro.day-mode .rz-pro-tab-bar {
+  background: #f8fafc;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-tab-bar-tab {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-tab-bar-tab:hover {
+  background: rgba(0, 0, 0, 0.03);
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-tab-bar-tab.active {
+  background: rgba(var(--rz-token-rgb), 0.08);
+  color: rgb(var(--rz-token-rgb));
+  border-color: rgba(var(--rz-token-rgb), 0.15);
+}
+
+.rz-pro.day-mode .rz-pro-tab-bar-mode {
+  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.rz-pro.day-mode .rz-pro-tab-bar-mode-btn {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-tab-bar-mode-btn:hover {
+  color: #64748b;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.rz-pro.day-mode .rz-pro-tab-bar-mode-btn.active {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
+}
+
+/* ─── Day: Section Dividers ─── */
+
+.rz-pro.day-mode .rz-pro-section-divider {
+  border-top-color: rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-section-divider-label {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+/* ─── Day: Cards & Surfaces ─── */
+
+.rz-pro.day-mode .rz-pro-sidebar-card,
+.rz-pro.day-mode .rz-pro-ai-analysis,
+.rz-pro.day-mode .rz-pro-category-panel,
+.rz-pro.day-mode .rz-pro-sentiment-summary-card,
+.rz-pro.day-mode .rz-pro-recent-perf,
+.rz-pro.day-mode .rz-pro-tweet-card {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ─── Day: Sidebar Token ─── */
+
+.rz-pro.day-mode .rz-pro-sidebar-token-name {
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-token-symbol {
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-token-price {
+  color: #0f172a;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-token-logo {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Day: Sidebar Stats ─── */
+
+.rz-pro.day-mode .rz-pro-sidebar-stats {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-stat {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-stat-label {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-stat-value {
+  color: #0f172a;
+}
+
+/* ─── Day: Market / Category Pills ─── */
+
+.rz-pro.day-mode .rz-pro-sidebar-market-pill {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-market-pill:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-category-pill {
+  background: rgba(var(--rz-token-rgb), 0.06);
+  border-color: rgba(var(--rz-token-rgb), 0.1);
+}
+
+/* ─── Day: Section Titles ─── */
+
+.rz-pro.day-mode .rz-pro-section-title,
+.rz-pro.day-mode .rz-pro-sidebar-section-title {
+  color: #64748b;
+}
+
+/* ─── Day: Link Pills ─── */
+
+.rz-pro.day-mode .rz-pro-link-pill {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-link-pill:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1e293b;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ─── Day: Chart ─── */
+
+.rz-pro.day-mode .rz-pro-chart-container {
+  border-color: rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.rz-pro.day-mode .rz-pro-chart-type-btn {
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-chart-type-btn:hover {
+  background: rgba(0, 0, 0, 0.03);
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-chart-type-btn.active {
+  background: rgba(var(--rz-token-rgb), 0.08);
+  color: rgb(var(--rz-token-rgb));
+  border-color: rgba(var(--rz-token-rgb), 0.15);
+}
+
+.rz-pro.day-mode .rz-pro-chart-tf-btn {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-chart-tf-btn:hover {
+  color: #64748b;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.rz-pro.day-mode .rz-pro-chart-tf-btn.active {
+  background: rgba(var(--rz-token-rgb), 0.08);
+  color: rgb(var(--rz-token-rgb));
+}
+
+.rz-pro.day-mode .rz-pro-chart-range-item {
+  color: #64748b;
+}
+
+/* ─── Day: Performance Cards ─── */
+
+.rz-pro.day-mode .rz-pro-perf-card {
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(var(--rz-token-rgb), 0.06) 0%,
+    rgba(255, 255, 255, 0.6) 70%
+  );
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-perf-label {
+  color: #94a3b8;
+}
+
+/* ─── Day: AI Analysis ─── */
+
+.rz-pro.day-mode .rz-pro-ai-text {
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-ai-label {
+  color: rgb(var(--rz-token-rgb));
+}
+
+/* ─── Day: Category Panels ─── */
+
+.rz-pro.day-mode .rz-pro-category-panel-title {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-category-ai-text {
+  color: #64748b;
+}
+
+/* ─── Day: Sentiment ─── */
+
+.rz-pro.day-mode .rz-pro-sentiment-toggle {
+  color: #94a3b8;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-sentiment-toggle:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.rz-pro.day-mode .rz-pro-sentiment-toggle.active {
+  background: rgba(0, 0, 0, 0.04);
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-sentiment-canvas {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.rz-pro.day-mode .rz-pro-sentiment-score-label {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-summary-title {
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-summary-text {
+  color: #64748b;
+}
+
+/* ─── Day: Tweet Cards ─── */
+
+.rz-pro.day-mode .rz-pro-tweet-card {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-tweet-card:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.rz-pro.day-mode .rz-pro-tweet-handle {
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-tweet-text {
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-tweet-score {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-tweet-score-bar {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-tweet-action {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-tweet-action:hover {
+  color: rgb(var(--rz-token-rgb));
+}
+
+.rz-pro.day-mode .rz-pro-tweet-avatar {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Day: Sidebar Tweets ─── */
+
+.rz-pro.day-mode .rz-pro-sidebar-tweets-header svg {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-tweet-search {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-tweet-search::placeholder {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-tweet-card {
+  border-bottom-color: rgba(0, 0, 0, 0.04);
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-tweet-handle {
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-tweet-time {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-tweet-text {
+  color: #64748b;
+}
+
+/* ─── Day: Technical Indicators ─── */
+
+.rz-pro.day-mode .rz-pro-indicator-row {
+  border-bottom-color: rgba(0, 0, 0, 0.04);
+}
+
+.rz-pro.day-mode .rz-pro-indicator-num {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-indicator-name {
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-indicator-value {
+  color: #0f172a;
+}
+
+/* Indicator dots keep their colors in day mode */
+
+/* ─── Day: TA Analysis ─── */
+
+.rz-pro.day-mode .rz-pro-ta-item-name {
+  color: #1e293b;
+}
+
+.rz-pro.day-mode .rz-pro-ta-item-info {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-ta-item-info:hover {
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-ta-item-text {
+  color: #64748b;
+}
+
+/* ─── Day: Recent Performance ─── */
+
+.rz-pro.day-mode .rz-pro-recent-perf-text {
+  color: #334155;
+}
+
+/* Positive / negative spans keep their green/red in day mode */
+
+/* ─── Day: Headings ─── */
+
+.rz-pro.day-mode .rz-pro-heading,
+.rz-pro.day-mode .rz-pro-heading-sm {
+  color: #1e293b;
+}
+
+/* ─── Day: Scrollbars ─── */
+
+.rz-pro.day-mode .rz-pro-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.rz-pro.day-mode .rz-pro-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.rz-pro.day-mode .rz-pro-perf-cards::-webkit-scrollbar-thumb,
+.rz-pro.day-mode .rz-pro-influencer-tweets::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.rz-pro.day-mode .rz-pro-sidebar {
+  scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
+}
+
+.rz-pro.day-mode .rz-pro-perf-cards,
+.rz-pro.day-mode .rz-pro-influencer-tweets {
+  scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
+}
+
+
+/* ============================================================================
+   RESPONSIVE -- max-width: 1024px
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+  .rz-pro-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .rz-pro-sidebar {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .rz-pro-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rz-pro-sentiment-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .rz-pro-ta-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .rz-pro-perf-cards {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .rz-pro-hero {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .rz-pro-tab-bar {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 6px 14px;
+  }
+
+  .rz-pro-tab-bar-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .rz-pro-tab-bar-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rz-pro-sentiment-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rz-pro-sentiment-toggles {
+    margin-left: 0;
+    flex-wrap: wrap;
+  }
+}
+
+/* ─── Extra Small (phones) ─── */
+
+@media (max-width: 640px) {
+  .rz-pro-perf-card {
+    min-width: 120px;
+    padding: 12px 14px;
+  }
+
+  .rz-pro-perf-value {
+    font-size: 16px;
+  }
+
+  .rz-pro-tweet-card {
+    min-width: 240px;
+    padding: 16px;
+  }
+
+  .rz-pro-ai-analysis {
+    padding: 18px;
+  }
+
+  .rz-pro-category-panel {
+    padding: 16px;
+  }
+
+  .rz-pro-sentiment-summary-card {
+    padding: 18px;
+  }
+
+  .rz-pro-sentiment-score {
+    font-size: 36px;
+  }
+
+  .rz-pro-sidebar-card {
+    padding: 16px;
+  }
+
+  .rz-pro-chart-container {
+    height: 300px;
+  }
+
+  .rz-pro-ta-item-text {
+    padding-left: 0;
+  }
+}
+
+
+/* ============================================================================
+   WEBKIT SCROLLBAR DEFAULTS (dark mode base)
+   ============================================================================ */
+
+.rz-pro ::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.rz-pro ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rz-pro ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.rz-pro ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.rz-pro.day-mode ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.rz-pro.day-mode ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SHIMMER LOADING STATES
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@keyframes rzProShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.rz-pro-shimmer {
+  border-radius: 8px;
+  min-height: 20px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.025) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.025) 75%);
+  background-size: 200% 100%;
+  animation: rzProShimmer 1.5s ease-in-out infinite;
+}
+
+.rz-pro-shimmer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.rz-pro-shimmer-stat {
+  height: 52px;
+  border-radius: 10px;
+}
+
+.rz-pro-shimmer-pill {
+  height: 34px;
+  width: 100px;
+  border-radius: 17px;
+  display: inline-block;
+}
+
+.rz-pro-shimmer-line {
+  height: 14px;
+  border-radius: 7px;
+  margin-bottom: 10px;
+}
+.rz-pro-shimmer-line.w-full { width: 100%; }
+.rz-pro-shimmer-line.w-3-4 { width: 75%; }
+.rz-pro-shimmer-line.w-1-2 { width: 50%; }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CARD HOVER EFFECTS + CORNER ACCENTS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Performance cards */
+.rz-pro-perf-card {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.rz-pro-perf-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--rz-token-rgb), 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(var(--rz-token-rgb), 0.06);
+}
+
+/* Corner accents on perf cards */
+.rz-pro-perf-card::before,
+.rz-pro-perf-card::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgba(var(--rz-token-rgb), 0);
+  border-style: solid;
+  border-width: 0;
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+}
+.rz-pro-perf-card::before {
+  top: -1px;
+  left: -1px;
+  border-top-width: 1.5px;
+  border-left-width: 1.5px;
+  border-radius: 4px 0 0 0;
+}
+.rz-pro-perf-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom-width: 1.5px;
+  border-right-width: 1.5px;
+  border-radius: 0 0 4px 0;
+}
+.rz-pro-perf-card:hover::before,
+.rz-pro-perf-card:hover::after {
+  border-color: rgba(var(--rz-token-rgb), 0.6);
+  opacity: 1;
+}
+
+/* Sidebar card hover */
+.rz-pro-sidebar-card {
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+.rz-pro-sidebar-card:hover {
+  border-color: rgba(var(--rz-token-rgb), 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 16px rgba(var(--rz-token-rgb), 0.04);
+}
+
+/* Tweet cards hover */
+.rz-pro-tweet-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.rz-pro-tweet-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--rz-token-rgb), 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 16px rgba(var(--rz-token-rgb), 0.05);
+}
+
+/* Category panels hover */
+.rz-pro-category-panel {
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+.rz-pro-category-panel:hover {
+  border-color: rgba(var(--rz-token-rgb), 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 16px rgba(var(--rz-token-rgb), 0.04);
+}
+
+/* AI Analysis card left accent bar */
+.rz-pro-ai-analysis {
+  position: relative;
+  padding-left: 16px;
+}
+.rz-pro-ai-analysis::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: rgb(var(--rz-token-rgb));
+  opacity: 0.5;
+}
+
+/* Sentiment summary cards hover */
+.rz-pro-sentiment-summary-card {
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rz-pro-sentiment-summary-card:hover {
+  border-color: rgba(var(--rz-token-rgb), 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* TA analysis item hover */
+.rz-pro-ta-item {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.rz-pro-ta-item:hover {
+  border-color: rgba(var(--rz-token-rgb), 0.12);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SECTION COLLAPSE/EXPAND ANIMATION
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.rz-pro-section-body {
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, padding 0.3s ease;
+  overflow: hidden;
+}
+
+.rz-pro-section-body.collapsed {
+  max-height: 0 !important;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.rz-pro-section-body.expanded {
+  max-height: 2500px;
+  opacity: 1;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   STAGGERED ENTRANCE ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.rz-pro-section {
+  animation: rzProFadeIn 0.4s ease backwards;
+  animation-delay: calc(var(--section-index, 0) * 0.08s);
+}
+
+.rz-pro-sidebar-card {
+  animation: rzProFadeIn 0.4s ease backwards;
+  animation-delay: calc(var(--sidebar-index, 0) * 0.1s);
+}
+
+
+/* Shimmer day mode */
+.rz-pro.day-mode .rz-pro-shimmer {
+  background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
+  background-size: 200% 100%;
+  animation: rzProShimmer 1.5s ease-in-out infinite;
+}
+
+/* AI analysis left accent bar in day mode */
+.rz-pro.day-mode .rz-pro-ai-analysis::before {
+  opacity: 0.35;
+}
+
+/* ═══ Task 2: Indicator Enhancements ═══ */
+
+.rz-pro-indicator-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rz-pro-indicator-dot.bullish {
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+}
+.rz-pro-indicator-dot.bearish {
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
+}
+.rz-pro-indicator-dot.neutral {
+  box-shadow: 0 0 6px rgba(234, 179, 8, 0.3);
+}
+
+@keyframes rzProDotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.7; }
+}
+.rz-pro-indicator-dot.bullish,
+.rz-pro-indicator-dot.bearish {
+  animation: rzProDotPulse 2.5s ease-in-out infinite;
+}
+
+/* ═══ Task 3: TA Item Hover ═══ */
+
+.rz-pro-ta-item:hover {
+  border-color: rgba(var(--rz-token-rgb), 0.12);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ═══ Task 4: Chart Toolbar Polish ═══ */
+
+.rz-pro-chart-type-btn {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rz-pro-chart-type-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.rz-pro-chart-type-btn.active {
+  box-shadow: 0 0 12px rgba(var(--rz-token-rgb), 0.15);
+}
+
+.rz-pro-chart-tf-btn {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 8px 14px;
+}
+.rz-pro-chart-tf-btn:hover {
+  transform: scale(1.05);
+}
+.rz-pro-chart-tf-btn.active {
+  box-shadow: 0 0 10px rgba(var(--rz-token-rgb), 0.12);
+}
+
+.rz-pro-chart-range {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* ═══ Task 5: Sentiment Polish ═══ */
+
+.rz-pro-sentiment-header-symbol {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.rz-pro-sentiment-header-price {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.rz-pro-sentiment-mock-text {
+  text-align: center;
+  font-size: 10px;
+  opacity: 0.35;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.rz-pro-sentiment-toggle {
+  font-size: 12px;
+  padding: 6px 14px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rz-pro-sentiment-toggle:hover {
+  transform: scale(1.03);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.rz-pro-sentiment-toggle-dot {
+  width: 8px;
+  height: 8px;
+}
+.rz-pro-sentiment-toggle.active .rz-pro-sentiment-toggle-dot {
+  box-shadow: 0 0 8px currentColor;
+}
+
+.rz-pro-sentiment-score {
+  font-family: var(--font-mono);
+  font-size: 56px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(var(--rz-token-rgb), 0.9) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(var(--rz-token-rgb), 0.15));
+  line-height: 1;
+}
+
+.rz-pro-sentiment-score-label {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  font-style: italic;
+  letter-spacing: 2px;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
+}
+
+.rz-pro-sentiment-score-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rz-pro-ai-key-levels {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.rz-pro-ai-key-levels .support {
+  color: #ef4444;
+  font-weight: 600;
+}
+.rz-pro-ai-key-levels .resistance {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.rz-pro-sentiment-summary-note {
+  font-size: 12px;
+  opacity: 0.5;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.rz-pro-sentiment-summary-card {
+  position: relative;
+  padding-left: 16px;
+}
+.rz-pro-sentiment-summary-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: rgb(var(--rz-token-rgb));
+  opacity: 0.3;
+}
+
+.rz-pro-sentiment-score-suffix {
+  font-size: 20px;
+  opacity: 0.35;
+  font-weight: 400;
+}
+
+/* ═══ Task 6: Sidebar Stat Hover ═══ */
+
+.rz-pro-sidebar-stat:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ═══ Task 7: Pills & Badges ═══ */
+
+.rz-pro-sidebar-market-pill {
+  transition: all 0.25s ease;
+}
+.rz-pro-sidebar-market-pill:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.rz-pro-sidebar-category-pill {
+  background: linear-gradient(135deg, rgba(var(--rz-token-rgb), 0.08), rgba(var(--rz-token-rgb), 0.03));
+  transition: all 0.25s ease;
+}
+.rz-pro-sidebar-category-pill:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(var(--rz-token-rgb), 0.1);
+}
+
+.rz-pro-link-pill {
+  transition: all 0.25s ease;
+}
+.rz-pro-link-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.rz-pro-link-pill.disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ═══ Task 8: Tweet Polish ═══ */
+
+.rz-pro-sidebar-tweet-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rz-pro-sidebar-tweet-avatar {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.rz-pro-tweet-header-subtitle {
+  font-size: 11px;
+  opacity: 0.4;
+}
+
+.rz-pro-sidebar-tweet-empty {
+  font-size: 12px;
+  opacity: 0.4;
+  text-align: center;
+  padding: 16px 0;
+}
+
+.rz-pro-tweet-score-bar {
+  height: 6px;
+  border-radius: 3px;
+}
+.rz-pro-tweet-score-fill {
+  background: linear-gradient(90deg, rgba(var(--rz-token-rgb), 0.6), rgb(var(--rz-token-rgb)));
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══ Task 10: Day-Mode Gap Fixes ═══ */
+
+.rz-pro.day-mode .rz-pro-section-icon {
+  color: rgb(var(--rz-token-rgb));
+}
+
+.rz-pro.day-mode .rz-pro-indicators {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.rz-pro.day-mode .rz-pro-indicator-row:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.rz-pro.day-mode .rz-pro-ta-item {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.rz-pro.day-mode .rz-pro-ta-item:hover {
+  border-color: rgba(var(--rz-token-rgb), 0.15);
+}
+
+.rz-pro.day-mode .rz-pro-ta-item-num {
+  background: rgba(var(--rz-token-rgb), 0.08);
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-tweet-card:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-tweet-avatar {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-stat:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.rz-pro.day-mode .rz-pro-chart-range {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+.rz-pro.day-mode .rz-pro-sentiment-score {
+  background: linear-gradient(135deg, #1e293b 0%, rgba(var(--rz-token-rgb), 0.9) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.rz-pro.day-mode .rz-pro-sentiment-score-label {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.rz-pro.day-mode .rz-pro-sentiment-summary-note {
+  color: #64748b;
+}
+
+.rz-pro.day-mode .rz-pro-sentiment-summary-card::before {
+  opacity: 0.2;
+}
+
+.rz-pro.day-mode .rz-pro-sentiment-mock-text {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-perf-cards {
+  scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
+}
+.rz-pro.day-mode .rz-pro-influencer-tweets {
+  scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
+}
+
+.rz-pro.day-mode .rz-pro-link-pill.disabled {
+  opacity: 0.3;
+}
+
+.rz-pro.day-mode .rz-pro-ai-key-levels .support {
+  color: #dc2626;
+}
+.rz-pro.day-mode .rz-pro-ai-key-levels .resistance {
+  color: #16a34a;
+}
+
+.rz-pro.day-mode .rz-pro-tweet-header-subtitle {
+  color: #94a3b8;
+}
+
+.rz-pro.day-mode .rz-pro-sidebar-tweet-empty {
+  color: #94a3b8;
+}

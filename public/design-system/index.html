@@ -1,0 +1,3323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System - Spectre AI Ecosystem</title>
+  <link rel="icon" type="image/png" href="/round-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================
+       CSS Variables - Spectre AI Design System
+       ========================================= */
+    :root {
+      /* Background Hierarchy */
+      --bg-void: #000000;
+      --bg-base: #030304;
+      --bg-surface: #0a0a0c;
+      --bg-elevated: #101012;
+      --bg-overlay: #161618;
+      --bg-hover: #1c1c20;
+      
+      /* Glass Effects */
+      --glass-bg: rgba(16, 16, 20, 0.75);
+      --glass-bg-light: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border-light: rgba(255, 255, 255, 0.12);
+      --glass-glow: rgba(139, 92, 246, 0.15);
+      
+      /* Text Hierarchy */
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.72);
+      --text-tertiary: rgba(255, 255, 255, 0.48);
+      --text-muted: rgba(255, 255, 255, 0.32);
+      --text-disabled: rgba(255, 255, 255, 0.16);
+      
+      /* Trading Colors */
+      --bull: #10B981;
+      --bull-bright: #34D399;
+      --bull-muted: rgba(16, 185, 129, 0.15);
+      --bull-glow: rgba(16, 185, 129, 0.4);
+      --bear: #EF4444;
+      --bear-bright: #F87171;
+      --bear-muted: rgba(239, 68, 68, 0.15);
+      --bear-glow: rgba(239, 68, 68, 0.4);
+      
+      /* Brand Accent */
+      --accent: #8B5CF6;
+      --accent-secondary: #A78BFA;
+      --accent-hover: #A78BFA;
+      --accent-muted: rgba(139, 92, 246, 0.12);
+      --accent-glow: rgba(139, 92, 246, 0.5);
+      --accent-gradient: linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #4F46E5 100%);
+      
+      /* Secondary Accents */
+      --cyan: #06B6D4;
+      --cyan-glow: rgba(6, 182, 212, 0.4);
+      --amber: #F59E0B;
+      --violet: #A855F7;
+      --pink: #EC4899;
+      --blue: #3B82F6;
+      
+      /* Borders */
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-default: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --border-accent: rgba(139, 92, 246, 0.4);
+      
+      /* Shadows */
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7), 0 8px 16px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 40px var(--accent-glow);
+      --shadow-glow-sm: 0 0 20px var(--accent-glow);
+      --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      
+      /* Typography */
+      --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      
+      /* Spacing */
+      --sp-0: 0;
+      --sp-1: 4px;
+      --sp-2: 8px;
+      --sp-3: 12px;
+      --sp-4: 16px;
+      --sp-5: 20px;
+      --sp-6: 24px;
+      --sp-8: 32px;
+      --sp-10: 40px;
+      --sp-12: 48px;
+      --sp-16: 64px;
+      
+      /* Radius */
+      --radius-xs: 4px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-2xl: 32px;
+      --radius-full: 9999px;
+      
+      /* Transitions */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --duration-instant: 100ms;
+      --duration-fast: 150ms;
+      --duration-base: 250ms;
+      --duration-slow: 400ms;
+      --duration-slower: 600ms;
+    }
+
+    /* =========================================
+       Base Styles
+       ========================================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Ambient background effect */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 100% 80% at 50% -30%, rgba(139, 92, 246, 0.15), transparent 60%),
+        radial-gradient(ellipse 80% 60% at 100% 0%, rgba(99, 102, 241, 0.1), transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* =========================================
+       Layout
+       ========================================= */
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 300px;
+      background: linear-gradient(180deg, rgba(16, 16, 20, 0.95) 0%, rgba(10, 10, 12, 0.98) 100%);
+      border-right: 1px solid var(--border-default);
+      padding: 24px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .sidebar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: var(--shadow-glow-sm);
+    }
+
+    .logo-text h1 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-text span {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .nav-section {
+      margin-bottom: 24px;
+    }
+
+    .nav-title {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      padding-left: 12px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      margin-bottom: 2px;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .nav-link.active {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%);
+      color: var(--text-primary);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-top: 24px;
+      padding: 12px;
+      background: var(--accent-muted);
+      border-radius: var(--radius-md);
+      transition: all 0.2s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(139, 92, 246, 0.2);
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      margin-left: 300px;
+      padding: 48px;
+      min-height: 100vh;
+    }
+
+    .section {
+      display: none;
+      max-width: 1100px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+      max-width: 700px;
+      line-height: 1.7;
+    }
+
+    /* Cards */
+    .card {
+      background: linear-gradient(135deg, rgba(16, 16, 20, 0.9) 0%, rgba(10, 10, 12, 0.95) 100%);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md), var(--shadow-inner);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: var(--border-strong);
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-title-icon {
+      font-size: 1.25rem;
+    }
+
+    .card-desc {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* Grid layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .grid-auto {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    /* Color Swatches */
+    .color-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .color-item:hover {
+      border-color: var(--border-default);
+      transform: translateY(-2px);
+    }
+
+    .color-swatch {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-default);
+      flex-shrink: 0;
+    }
+
+    .color-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .color-name {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .color-value {
+      font-size: 0.6875rem;
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    /* Typography samples */
+    .type-sample {
+      padding: 20px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .type-meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-tertiary);
+      font-size: 0.75rem;
+      margin-top: 8px;
+      font-family: var(--font-mono);
+      flex-wrap: wrap;
+    }
+
+    .type-meta span {
+      background: var(--bg-surface);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    /* Spacing visuals */
+    .spacing-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-md);
+    }
+
+    .spacing-visual {
+      background: var(--accent);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .spacing-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .spacing-info code {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    .spacing-info span {
+      font-size: 0.6875rem;
+      color: var(--text-tertiary);
+    }
+
+    /* Component previews */
+    .preview {
+      padding: 32px;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 16px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preview.dark {
+      background: var(--bg-void);
+    }
+
+    .preview.gradient {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f1a 100%);
+    }
+
+    /* Code blocks */
+    .code-block {
+      position: relative;
+      background: var(--bg-void);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      overflow-x: auto;
+      margin-top: 12px;
+    }
+
+    .code-block pre {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .code-block .comment {
+      color: var(--text-muted);
+    }
+
+    .code-block .property {
+      color: var(--cyan);
+    }
+
+    .code-block .value {
+      color: var(--bull-bright);
+    }
+
+    .code-block .selector {
+      color: var(--amber);
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+    }
+
+    /* Lists */
+    .list {
+      list-style: none;
+    }
+
+    .list li {
+      padding: 10px 0;
+      padding-left: 24px;
+      position: relative;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .list li:last-child {
+      border-bottom: none;
+    }
+
+    .list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .list li strong {
+      color: var(--text-primary);
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table thead {
+      background: var(--bg-surface);
+    }
+
+    table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    table td {
+      padding: 12px 16px;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    table td code {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--accent);
+      background: var(--accent-muted);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--accent-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.45);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-strong);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ghost:hover {
+      background: var(--glass-bg-light);
+      color: var(--text-primary);
+    }
+
+    .btn-buy {
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-buy:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+    }
+
+    .btn-sell {
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-sell:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45);
+    }
+
+    .btn-degen {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(217, 119, 6, 0.1) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: var(--radius-full);
+      color: #fbbf24;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-degen:hover {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.15) 100%);
+      border-color: rgba(245, 158, 11, 0.5);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Icon button */
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(30, 30, 35, 0.9) 0%, rgba(20, 20, 25, 0.95) 100%);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-full);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: linear-gradient(135deg, rgba(40, 40, 50, 0.95) 0%, rgba(30, 30, 35, 0.98) 100%);
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    /* Inputs */
+    .input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-muted);
+    }
+
+    /* Glass cards */
+    .glass-card {
+      padding: 24px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-inner), var(--shadow-md);
+    }
+
+    .glass-card h4 {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .glass-card p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    /* Panel card */
+    .panel-card {
+      background: linear-gradient(135deg, rgba(16, 16, 20, 0.9) 0%, rgba(10, 10, 12, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md), var(--shadow-inner);
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      padding: 8px;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+    }
+
+    .tab {
+      flex: 1;
+      padding: 10px 16px;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab:hover {
+      color: var(--text-secondary);
+      background: var(--bg-elevated);
+    }
+
+    .tab.active {
+      color: var(--text-primary);
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%);
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.1);
+    }
+
+    /* Filter chips */
+    .filter-chip {
+      padding: 8px 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-chip:hover {
+      color: var(--text-secondary);
+      border-color: var(--border-default);
+    }
+
+    .filter-chip.active {
+      background: var(--accent-gradient);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-accent {
+      background: var(--accent-muted);
+      color: var(--accent-secondary);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .badge-success {
+      background: var(--bull-muted);
+      color: var(--bull-bright);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .badge-danger {
+      background: var(--bear-muted);
+      color: var(--bear-bright);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    /* Price change indicator */
+    .price-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 600;
+    }
+
+    .price-change.up {
+      color: var(--bull);
+    }
+
+    .price-change.down {
+      color: var(--bear);
+    }
+
+    /* Status indicator */
+    .status-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--bull);
+    }
+
+    .status-live::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--bull);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+      box-shadow: 0 0 8px var(--bull-glow);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.95); }
+    }
+
+    /* Stat item */
+    .stat-item {
+      padding: 16px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .stat-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Avatar */
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      border: 2px solid var(--border-default);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+      margin: 24px 0;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      background: rgba(16, 24, 20, 0.95);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(52, 211, 153, 0.15);
+      border-radius: var(--radius-lg);
+      color: var(--text-primary);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(52, 211, 153, 0.12);
+      z-index: 1000;
+      display: none;
+    }
+
+    .toast.show {
+      display: flex;
+      animation: toastIn 0.4s ease;
+    }
+
+    .toast-icon {
+      color: var(--bull);
+    }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Animation examples */
+    .anim-box {
+      width: 60px;
+      height: 60px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .anim-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .anim-pulse {
+      animation: pulseBox 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseBox {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .anim-glow {
+      animation: glowBox 3s ease-in-out infinite;
+    }
+
+    @keyframes glowBox {
+      0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+      50% { box-shadow: 0 0 40px var(--accent-glow), 0 0 60px rgba(139, 92, 246, 0.2); }
+    }
+
+    .anim-shimmer {
+      background: linear-gradient(90deg, var(--accent) 0%, var(--cyan) 50%, var(--accent) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 2s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .grid-4 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border-default);
+      }
+      .main {
+        margin-left: 0;
+        padding: 24px;
+      }
+      .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .grid-3, .grid-4, .grid-auto { grid-template-columns: 1fr; }
+    }
+
+    /* =========================================
+       Auth Gate Styles
+       ========================================= */
+    .auth-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-base);
+    }
+
+    .auth-gate::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 100% 80% at 50% -30%, rgba(139, 92, 246, 0.15), transparent 60%),
+        radial-gradient(ellipse 80% 60% at 100% 0%, rgba(99, 102, 241, 0.1), transparent 50%);
+      pointer-events: none;
+    }
+
+    .auth-gate.hidden {
+      display: none;
+    }
+
+    .auth-card {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      padding: 48px;
+      background: linear-gradient(135deg, rgba(16, 16, 20, 0.95) 0%, rgba(10, 10, 12, 0.98) 100%);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl), 0 0 60px rgba(139, 92, 246, 0.1);
+      text-align: center;
+    }
+
+    .auth-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 24px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .auth-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .auth-subtitle {
+      color: var(--text-tertiary);
+      font-size: 0.875rem;
+      margin-bottom: 32px;
+    }
+
+    .auth-input-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .auth-input {
+      width: 100%;
+      padding: 16px 20px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+      text-align: center;
+      letter-spacing: 0.1em;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .auth-input::placeholder {
+      color: var(--text-muted);
+      letter-spacing: 0;
+    }
+
+    .auth-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-muted);
+    }
+
+    .auth-input.error {
+      border-color: var(--bear);
+      animation: shake 0.5s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 16px 24px;
+      background: var(--accent-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.45);
+    }
+
+    .auth-btn:active {
+      transform: translateY(0);
+    }
+
+    .auth-footer {
+      margin-top: 24px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
+
+    /* Hide content when not authenticated */
+    .container.locked {
+      filter: blur(20px);
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Auth Gate -->
+  <div class="auth-gate" id="authGate">
+    <div class="auth-card">
+      <div class="auth-logo">🎨</div>
+      <h1 class="auth-title">Design System</h1>
+      <p class="auth-subtitle">Team Access Only</p>
+      <form id="authForm">
+        <div class="auth-input-wrapper">
+          <input 
+            type="password" 
+            class="auth-input" 
+            id="authPassword" 
+            placeholder="Enter team password"
+            autocomplete="off"
+          >
+        </div>
+        <button type="submit" class="auth-btn">
+          Access Design System
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </form>
+      <p class="auth-footer">Contact your team lead for access credentials</p>
+    </div>
+  </div>
+
+  <div class="container" id="mainContent">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">🎨</div>
+        <div class="logo-text">
+          <h1>Design System</h1>
+          <span>Spectre AI Ecosystem v1.0</span>
+        </div>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-title">Foundation</div>
+          <a href="#overview" class="nav-link active" data-section="overview"><span class="nav-icon">📋</span> Overview</a>
+          <a href="#colors" class="nav-link" data-section="colors"><span class="nav-icon">🎨</span> Colors</a>
+          <a href="#typography" class="nav-link" data-section="typography"><span class="nav-icon">📝</span> Typography</a>
+          <a href="#spacing" class="nav-link" data-section="spacing"><span class="nav-icon">📐</span> Spacing & Layout</a>
+          <a href="#shadows" class="nav-link" data-section="shadows"><span class="nav-icon">🌑</span> Shadows</a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-title">Components</div>
+          <a href="#buttons" class="nav-link" data-section="buttons"><span class="nav-icon">🔘</span> Buttons</a>
+          <a href="#inputs" class="nav-link" data-section="inputs"><span class="nav-icon">📝</span> Inputs & Forms</a>
+          <a href="#cards" class="nav-link" data-section="cards"><span class="nav-icon">🃏</span> Cards & Panels</a>
+          <a href="#badges" class="nav-link" data-section="badges"><span class="nav-icon">🏷️</span> Badges & Tags</a>
+          <a href="#tabs" class="nav-link" data-section="tabs"><span class="nav-icon">📑</span> Tabs & Filters</a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-title">Effects</div>
+          <a href="#glass" class="nav-link" data-section="glass"><span class="nav-icon">💎</span> Glass Morphism</a>
+          <a href="#glow" class="nav-link" data-section="glow"><span class="nav-icon">✨</span> Glow Effects</a>
+          <a href="#animations" class="nav-link" data-section="animations"><span class="nav-icon">🎬</span> Animations</a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-title">Trading</div>
+          <a href="#trading" class="nav-link" data-section="trading"><span class="nav-icon">📈</span> Trading Components</a>
+          <a href="#data" class="nav-link" data-section="data"><span class="nav-icon">📊</span> Data Display</a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-title">Guidelines</div>
+          <a href="#guidelines" class="nav-link" data-section="guidelines"><span class="nav-icon">📖</span> Best Practices</a>
+          <a href="#files" class="nav-link" data-section="files"><span class="nav-icon">📁</span> File Structure</a>
+        </div>
+      </nav>
+
+      <a href="/" class="back-link">← Back to Platform</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Overview Section -->
+      <section id="overview" class="section active">
+        <div class="section-header">
+          <h2 class="section-title">Design System Overview</h2>
+          <p class="section-desc">The Spectre AI Design System provides a comprehensive set of design tokens, components, and patterns for building premium dark-themed trading and fintech applications.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🎯</span> Core Principles</h3>
+          <ul class="list">
+            <li><strong>Premium Dark Theme</strong> — Deep, rich blacks with subtle gradients for a professional aesthetic</li>
+            <li><strong>Glass Morphism</strong> — Frosted glass effects with backdrop blur for depth and modern appeal</li>
+            <li><strong>Smooth Animations</strong> — Apple-like transitions using cubic-bezier easing functions</li>
+            <li><strong>Visual Hierarchy</strong> — Clear information architecture with proper contrast ratios</li>
+            <li><strong>WOW Effects</strong> — Subtle but impressive visual flourishes (glows, shimmers, pulses)</li>
+            <li><strong>Institutional Grade</strong> — Professional polish suitable for serious trading platforms</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🛠️</span> Tech Stack</h3>
+          <div class="grid-3">
+            <div class="stat-item">
+              <div class="stat-label">Framework</div>
+              <div class="stat-value" style="font-size: 1rem;">React 18</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Build Tool</div>
+              <div class="stat-value" style="font-size: 1rem;">Vite 5</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Styling</div>
+              <div class="stat-value" style="font-size: 1rem;">CSS Variables</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📦</span> What's Included</h3>
+          <div class="grid-2">
+            <div>
+              <h4 style="color: var(--text-primary); margin-bottom: 12px; font-size: 0.9375rem;">Design Tokens</h4>
+              <ul class="list">
+                <li>Color palette (60+ colors)</li>
+                <li>Typography scale</li>
+                <li>Spacing system (4px base)</li>
+                <li>Border radius scale</li>
+                <li>Shadow presets</li>
+                <li>Animation timings</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="color: var(--text-primary); margin-bottom: 12px; font-size: 0.9375rem;">Components</h4>
+              <ul class="list">
+                <li>Buttons (6 variants)</li>
+                <li>Inputs & forms</li>
+                <li>Cards & panels</li>
+                <li>Tabs & navigation</li>
+                <li>Badges & indicators</li>
+                <li>Trading-specific UI</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Colors Section -->
+      <section id="colors" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Color System</h2>
+          <p class="section-desc">A comprehensive color palette optimized for dark interfaces with clear hierarchy and accessibility.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🌑</span> Background Hierarchy</h3>
+          <p class="card-desc">Use these colors to create depth and visual hierarchy. From darkest (void) to lightest (hover).</p>
+          <div class="grid-3">
+            <div class="color-item" onclick="copyColor('--bg-void')">
+              <div class="color-swatch" style="background: #000000;"></div>
+              <div class="color-info">
+                <div class="color-name">--bg-void</div>
+                <div class="color-value">#000000</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--bg-base')">
+              <div class="color-swatch" style="background: #030304;"></div>
+              <div class="color-info">
+                <div class="color-name">--bg-base</div>
+                <div class="color-value">#030304</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--bg-surface')">
+              <div class="color-swatch" style="background: #0a0a0c;"></div>
+              <div class="color-info">
+                <div class="color-name">--bg-surface</div>
+                <div class="color-value">#0a0a0c</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--bg-elevated')">
+              <div class="color-swatch" style="background: #101012;"></div>
+              <div class="color-info">
+                <div class="color-name">--bg-elevated</div>
+                <div class="color-value">#101012</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--bg-overlay')">
+              <div class="color-swatch" style="background: #161618;"></div>
+              <div class="color-info">
+                <div class="color-name">--bg-overlay</div>
+                <div class="color-value">#161618</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--bg-hover')">
+              <div class="color-swatch" style="background: #1c1c20;"></div>
+              <div class="color-info">
+                <div class="color-name">--bg-hover</div>
+                <div class="color-value">#1c1c20</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">💜</span> Brand Accent</h3>
+          <p class="card-desc">Primary brand colors using purple gradient. Use for CTAs, highlights, and interactive elements.</p>
+          <div class="grid-3">
+            <div class="color-item" onclick="copyColor('--accent')">
+              <div class="color-swatch" style="background: #8B5CF6;"></div>
+              <div class="color-info">
+                <div class="color-name">--accent</div>
+                <div class="color-value">#8B5CF6</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--accent-secondary')">
+              <div class="color-swatch" style="background: #A78BFA;"></div>
+              <div class="color-info">
+                <div class="color-name">--accent-secondary</div>
+                <div class="color-value">#A78BFA</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--accent-muted')">
+              <div class="color-swatch" style="background: rgba(139, 92, 246, 0.12);"></div>
+              <div class="color-info">
+                <div class="color-name">--accent-muted</div>
+                <div class="color-value">rgba(139, 92, 246, 0.12)</div>
+              </div>
+            </div>
+          </div>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyText('--accent-gradient')">📋 Copy</button>
+            <pre><span class="property">--accent-gradient</span>: <span class="value">linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #4F46E5 100%)</span>;</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📈</span> Trading Colors</h3>
+          <p class="card-desc">Green for gains/buys, red for losses/sells. Include bright and muted variants.</p>
+          <div class="grid-4">
+            <div class="color-item" onclick="copyColor('--bull')">
+              <div class="color-swatch" style="background: #10B981;"></div>
+              <div class="color-info">
+                <div class="color-name">--bull</div>
+                <div class="color-value">#10B981</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--bull-bright')">
+              <div class="color-swatch" style="background: #34D399;"></div>
+              <div class="color-info">
+                <div class="color-name">--bull-bright</div>
+                <div class="color-value">#34D399</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--bear')">
+              <div class="color-swatch" style="background: #EF4444;"></div>
+              <div class="color-info">
+                <div class="color-name">--bear</div>
+                <div class="color-value">#EF4444</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--bear-bright')">
+              <div class="color-swatch" style="background: #F87171;"></div>
+              <div class="color-info">
+                <div class="color-name">--bear-bright</div>
+                <div class="color-value">#F87171</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🌈</span> Secondary Accents</h3>
+          <div class="grid-4">
+            <div class="color-item" onclick="copyColor('--cyan')">
+              <div class="color-swatch" style="background: #06B6D4;"></div>
+              <div class="color-info">
+                <div class="color-name">--cyan</div>
+                <div class="color-value">#06B6D4</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--amber')">
+              <div class="color-swatch" style="background: #F59E0B;"></div>
+              <div class="color-info">
+                <div class="color-name">--amber</div>
+                <div class="color-value">#F59E0B</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--pink')">
+              <div class="color-swatch" style="background: #EC4899;"></div>
+              <div class="color-info">
+                <div class="color-name">--pink</div>
+                <div class="color-value">#EC4899</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--blue')">
+              <div class="color-swatch" style="background: #3B82F6;"></div>
+              <div class="color-info">
+                <div class="color-name">--blue</div>
+                <div class="color-value">#3B82F6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📝</span> Text Hierarchy</h3>
+          <div class="grid-4">
+            <div class="color-item" onclick="copyColor('--text-primary')">
+              <div class="color-swatch" style="background: #ffffff;"></div>
+              <div class="color-info">
+                <div class="color-name">--text-primary</div>
+                <div class="color-value">#ffffff</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--text-secondary')">
+              <div class="color-swatch" style="background: rgba(255,255,255,0.72);"></div>
+              <div class="color-info">
+                <div class="color-name">--text-secondary</div>
+                <div class="color-value">72% white</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--text-tertiary')">
+              <div class="color-swatch" style="background: rgba(255,255,255,0.48);"></div>
+              <div class="color-info">
+                <div class="color-name">--text-tertiary</div>
+                <div class="color-value">48% white</div>
+              </div>
+            </div>
+            <div class="color-item" onclick="copyColor('--text-muted')">
+              <div class="color-swatch" style="background: rgba(255,255,255,0.32);"></div>
+              <div class="color-info">
+                <div class="color-name">--text-muted</div>
+                <div class="color-value">32% white</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Typography Section -->
+      <section id="typography" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Typography</h2>
+          <p class="section-desc">A type system using Space Grotesk for display, Inter for body, and JetBrains Mono for code and numbers.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🔤</span> Font Families</h3>
+          <div class="type-sample">
+            <p style="font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700;">Space Grotesk</p>
+            <div class="type-meta">
+              <span>--font-display</span>
+              <span>Headings & Hero text</span>
+              <span>Weights: 400-700</span>
+            </div>
+          </div>
+          <div class="type-sample">
+            <p style="font-family: 'Inter', sans-serif; font-size: 1.125rem;">Inter — The perfect body font for readable interfaces and UI labels</p>
+            <div class="type-meta">
+              <span>--font-body</span>
+              <span>Body text & UI</span>
+              <span>Weights: 300-700</span>
+            </div>
+          </div>
+          <div class="type-sample">
+            <p style="font-family: 'JetBrains Mono', monospace; font-size: 1rem;">JetBrains Mono — $12,345.67 • 0x1a2b...3c4d</p>
+            <div class="type-meta">
+              <span>--font-mono</span>
+              <span>Prices, addresses, code</span>
+              <span>Weights: 400-600</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📏</span> Type Scale</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Class</th>
+                  <th>Size</th>
+                  <th>Weight</th>
+                  <th>Letter Spacing</th>
+                  <th>Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.display-hero</code></td>
+                  <td>clamp(2.5rem, 5vw, 4.5rem)</td>
+                  <td>700</td>
+                  <td>-0.04em</td>
+                  <td>Hero headlines</td>
+                </tr>
+                <tr>
+                  <td><code>.display-xl</code></td>
+                  <td>3rem (48px)</td>
+                  <td>700</td>
+                  <td>-0.035em</td>
+                  <td>Page titles</td>
+                </tr>
+                <tr>
+                  <td><code>.display-lg</code></td>
+                  <td>2.25rem (36px)</td>
+                  <td>700</td>
+                  <td>-0.03em</td>
+                  <td>Section headings</td>
+                </tr>
+                <tr>
+                  <td><code>.display-md</code></td>
+                  <td>1.75rem (28px)</td>
+                  <td>600</td>
+                  <td>-0.025em</td>
+                  <td>Subsections</td>
+                </tr>
+                <tr>
+                  <td><code>.display-sm</code></td>
+                  <td>1.375rem (22px)</td>
+                  <td>600</td>
+                  <td>-0.02em</td>
+                  <td>Card titles</td>
+                </tr>
+                <tr>
+                  <td><code>.heading</code></td>
+                  <td>1.125rem (18px)</td>
+                  <td>600</td>
+                  <td>-0.01em</td>
+                  <td>Component headings</td>
+                </tr>
+                <tr>
+                  <td><code>.body-lg</code></td>
+                  <td>1.0625rem (17px)</td>
+                  <td>400</td>
+                  <td>0</td>
+                  <td>Large body text</td>
+                </tr>
+                <tr>
+                  <td><code>.body</code></td>
+                  <td>0.9375rem (15px)</td>
+                  <td>400</td>
+                  <td>0</td>
+                  <td>Default body</td>
+                </tr>
+                <tr>
+                  <td><code>.body-sm</code></td>
+                  <td>0.8125rem (13px)</td>
+                  <td>400</td>
+                  <td>0</td>
+                  <td>Small text</td>
+                </tr>
+                <tr>
+                  <td><code>.caption</code></td>
+                  <td>0.75rem (12px)</td>
+                  <td>400</td>
+                  <td>0</td>
+                  <td>Captions, labels</td>
+                </tr>
+                <tr>
+                  <td><code>.subheading</code></td>
+                  <td>0.75rem (12px)</td>
+                  <td>600</td>
+                  <td>0.08em</td>
+                  <td>Section labels (uppercase)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Spacing Section -->
+      <section id="spacing" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Spacing & Layout</h2>
+          <p class="section-desc">A consistent spacing scale based on 4px units, plus border radius and layout grid specifications.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📐</span> Spacing Scale (4px base)</h3>
+          <div class="grid-4">
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 4px; height: 4px;"></div>
+              <div class="spacing-info"><code>--sp-1</code><span>4px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 8px; height: 8px;"></div>
+              <div class="spacing-info"><code>--sp-2</code><span>8px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 12px; height: 12px;"></div>
+              <div class="spacing-info"><code>--sp-3</code><span>12px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 16px; height: 16px;"></div>
+              <div class="spacing-info"><code>--sp-4</code><span>16px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 20px; height: 20px;"></div>
+              <div class="spacing-info"><code>--sp-5</code><span>20px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 24px; height: 24px;"></div>
+              <div class="spacing-info"><code>--sp-6</code><span>24px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 32px; height: 32px;"></div>
+              <div class="spacing-info"><code>--sp-8</code><span>32px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 48px; height: 48px;"></div>
+              <div class="spacing-info"><code>--sp-12</code><span>48px</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">⭕</span> Border Radius</h3>
+          <div class="grid-4">
+            <div class="spacing-item">
+              <div style="width: 48px; height: 48px; background: var(--accent); border-radius: 4px;"></div>
+              <div class="spacing-info"><code>--radius-xs</code><span>4px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div style="width: 48px; height: 48px; background: var(--accent); border-radius: 8px;"></div>
+              <div class="spacing-info"><code>--radius-sm</code><span>8px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div style="width: 48px; height: 48px; background: var(--accent); border-radius: 12px;"></div>
+              <div class="spacing-info"><code>--radius-md</code><span>12px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div style="width: 48px; height: 48px; background: var(--accent); border-radius: 16px;"></div>
+              <div class="spacing-info"><code>--radius-lg</code><span>16px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div style="width: 48px; height: 48px; background: var(--accent); border-radius: 24px;"></div>
+              <div class="spacing-info"><code>--radius-xl</code><span>24px</span></div>
+            </div>
+            <div class="spacing-item">
+              <div style="width: 48px; height: 48px; background: var(--accent); border-radius: 9999px;"></div>
+              <div class="spacing-info"><code>--radius-full</code><span>9999px</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📊</span> Layout Grid</h3>
+          <p class="card-desc">The main trading platform uses a 3-column grid layout with collapsible panels.</p>
+          <div class="code-block">
+            <pre><span class="comment">/* Main 3-Column Layout */</span>
+<span class="selector">.main-layout</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">380px 1fr 380px</span>;
+  <span class="property">gap</span>: <span class="value">var(--sp-4)</span>;
+}
+
+<span class="comment">/* Responsive breakpoints */</span>
+<span class="selector">@media (max-width: 1600px)</span> { <span class="value">340px 1fr 340px</span> }
+<span class="selector">@media (max-width: 1400px)</span> { <span class="value">300px 1fr 300px</span> }
+<span class="selector">@media (max-width: 1200px)</span> { <span class="value">1fr 320px</span> }
+<span class="selector">@media (max-width: 900px)</span>  { <span class="value">1fr</span> }</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shadows Section -->
+      <section id="shadows" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Shadows</h2>
+          <p class="section-desc">Layered shadow presets for creating depth and elevation in dark themes.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🌑</span> Shadow Scale</h3>
+          <div class="grid-3">
+            <div style="padding: 24px; background: var(--bg-elevated); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); text-align: center;">
+              <code style="color: var(--accent); font-size: 0.8125rem;">--shadow-xs</code>
+              <p style="color: var(--text-tertiary); font-size: 0.75rem; margin-top: 8px;">Subtle depth</p>
+            </div>
+            <div style="padding: 24px; background: var(--bg-elevated); border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.4); text-align: center;">
+              <code style="color: var(--accent); font-size: 0.8125rem;">--shadow-sm</code>
+              <p style="color: var(--text-tertiary); font-size: 0.75rem; margin-top: 8px;">Light elevation</p>
+            </div>
+            <div style="padding: 24px; background: var(--bg-elevated); border-radius: var(--radius-md); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3); text-align: center;">
+              <code style="color: var(--accent); font-size: 0.8125rem;">--shadow-md</code>
+              <p style="color: var(--text-tertiary); font-size: 0.75rem; margin-top: 8px;">Medium cards</p>
+            </div>
+            <div style="padding: 24px; background: var(--bg-elevated); border-radius: var(--radius-md); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4); text-align: center;">
+              <code style="color: var(--accent); font-size: 0.8125rem;">--shadow-lg</code>
+              <p style="color: var(--text-tertiary); font-size: 0.75rem; margin-top: 8px;">Elevated panels</p>
+            </div>
+            <div style="padding: 24px; background: var(--bg-elevated); border-radius: var(--radius-md); box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 8px 16px rgba(0, 0, 0, 0.5); text-align: center;">
+              <code style="color: var(--accent); font-size: 0.8125rem;">--shadow-xl</code>
+              <p style="color: var(--text-tertiary); font-size: 0.75rem; margin-top: 8px;">Modals, dropdowns</p>
+            </div>
+            <div style="padding: 24px; background: var(--bg-elevated); border-radius: var(--radius-md); box-shadow: 0 0 40px rgba(139, 92, 246, 0.5); text-align: center;">
+              <code style="color: var(--accent); font-size: 0.8125rem;">--shadow-glow</code>
+              <p style="color: var(--text-tertiary); font-size: 0.75rem; margin-top: 8px;">Accent glow effect</p>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--accent);">
+            <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>shadow-xs/sm</strong> — Subtle buttons, input fields, hover states</li>
+              <li><strong>shadow-md</strong> — Cards, panels, stat items</li>
+              <li><strong>shadow-lg/xl</strong> — Modals, search overlay, dropdowns, AI Assistant</li>
+              <li><strong>shadow-glow</strong> — Primary CTAs, featured tokens, active states</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* Shadow CSS Variables */</span>
+<span class="property">--shadow-xs</span>: <span class="value">0 1px 2px rgba(0, 0, 0, 0.5)</span>;
+<span class="property">--shadow-sm</span>: <span class="value">0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.4)</span>;
+<span class="property">--shadow-md</span>: <span class="value">0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)</span>;
+<span class="property">--shadow-lg</span>: <span class="value">0 8px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4)</span>;
+<span class="property">--shadow-xl</span>: <span class="value">0 16px 48px rgba(0, 0, 0, 0.7), 0 8px 16px rgba(0, 0, 0, 0.5)</span>;
+<span class="property">--shadow-glow</span>: <span class="value">0 0 40px rgba(139, 92, 246, 0.5)</span>;
+<span class="property">--shadow-inner</span>: <span class="value">inset 0 1px 0 rgba(255, 255, 255, 0.06)</span>;
+
+<span class="comment">/* Usage in component */</span>
+<span class="selector">.modal</span> {
+  <span class="property">box-shadow</span>: <span class="value">var(--shadow-xl), 0 0 60px rgba(139, 92, 246, 0.1)</span>;
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Buttons Section -->
+      <section id="buttons" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Buttons</h2>
+          <p class="section-desc">Interactive button components with various styles for different use cases and contexts.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🔘</span> Button Variants</h3>
+          <div class="preview">
+            <button class="btn-primary">Primary Button</button>
+            <button class="btn-secondary">Secondary Button</button>
+            <button class="btn-ghost">Ghost Button</button>
+          </div>
+          
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--accent);">
+            <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>btn-primary</strong> — Header "Deposit" button, modal confirm actions, main CTAs</li>
+              <li><strong>btn-secondary</strong> — Cancel buttons, secondary actions in modals</li>
+              <li><strong>btn-ghost</strong> — Toolbar actions, inline text buttons, "View All" links</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode('btn-code')">📋 Copy</button>
+            <pre id="btn-code"><span class="comment">/* Primary Button - Main CTA actions */</span>
+&lt;button className="btn-primary"&gt;
+  &lt;svg&gt;...icon...&lt;/svg&gt;
+  Deposit
+&lt;/button&gt;
+
+<span class="comment">/* Secondary - Cancel/alternative actions */</span>
+&lt;button className="btn-secondary"&gt;Cancel&lt;/button&gt;
+
+<span class="comment">/* Ghost - Low emphasis actions */</span>
+&lt;button className="btn-ghost"&gt;View All&lt;/button&gt;</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📈</span> Trading Buttons</h3>
+          <div class="preview">
+            <button class="btn-buy">Buy</button>
+            <button class="btn-sell">Sell</button>
+            <a class="btn-degen" href="#">⚡ Degen Mode</a>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--bull);">
+            <h4 style="font-size: 0.8125rem; color: var(--bull); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>btn-buy / btn-sell</strong> — RightPanel.jsx swap widget, trading mode toggle</li>
+              <li><strong>btn-degen</strong> — One-click max buy feature for quick trading</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From RightPanel.jsx - Trading Mode Toggle */</span>
+&lt;div className="mode-toggle"&gt;
+  &lt;button 
+    className={`mode-btn ${mode === 'buy' ? 'active buy' : ''}`}
+    onClick={() =&gt; setMode('buy')}
+  &gt;
+    Buy
+  &lt;/button&gt;
+  &lt;button 
+    className={`mode-btn ${mode === 'sell' ? 'active sell' : ''}`}
+    onClick={() =&gt; setMode('sell')}
+  &gt;
+    Sell
+  &lt;/button&gt;
+&lt;/div&gt;
+
+<span class="comment">/* Execute Trade Button */</span>
+&lt;button 
+  className={`execute-btn ${mode}`}
+  onClick={handleSwap}
+  disabled={isSwapping || !payAmount}
+&gt;
+  {isSwapping ? 'Swapping...' : `${mode === 'buy' ? 'Buy' : 'Sell'} ${token.symbol}`}
+&lt;/button&gt;</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🔵</span> Icon Buttons</h3>
+          <div class="preview">
+            <button class="icon-btn">🔔</button>
+            <button class="icon-btn">⚙️</button>
+            <button class="icon-btn">📊</button>
+            <button class="icon-btn">🔍</button>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--cyan);">
+            <h4 style="font-size: 0.8125rem; color: var(--cyan); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>Header.jsx</strong> — Notifications, Settings, Design System link icons</li>
+              <li><strong>TradingChart.jsx</strong> — Fullscreen toggle, screenshot, share buttons</li>
+              <li><strong>TokenBanner.jsx</strong> — Copy address, share, add to watchlist</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From Header.jsx - Icon Button with SVG */</span>
+&lt;button className="icon-btn" title="Notifications"&gt;
+  &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"&gt;
+    &lt;path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967..." /&gt;
+  &lt;/svg&gt;
+  &lt;span className="notification-dot"&gt;&lt;/span&gt;
+&lt;/button&gt;
+
+<span class="comment">/* With onClick handler */</span>
+&lt;button 
+  className="icon-btn" 
+  onClick={() =&gt; setIsFullscreen(!isFullscreen)}
+  title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+&gt;
+  &lt;svg&gt;...&lt;/svg&gt;
+&lt;/button&gt;</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🎛️</span> Button States</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>CSS</th>
+                  <th>Effect</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Default</td>
+                  <td><code>background: var(--accent-gradient)</code></td>
+                  <td>Normal appearance</td>
+                </tr>
+                <tr>
+                  <td>Hover</td>
+                  <td><code>transform: translateY(-2px)</code></td>
+                  <td>Slight lift + enhanced shadow</td>
+                </tr>
+                <tr>
+                  <td>Active</td>
+                  <td><code>transform: translateY(0)</code></td>
+                  <td>Returns to base position</td>
+                </tr>
+                <tr>
+                  <td>Disabled</td>
+                  <td><code>opacity: 0.6; cursor: not-allowed</code></td>
+                  <td>Grayed out, no pointer</td>
+                </tr>
+                <tr>
+                  <td>Loading</td>
+                  <td><code>cursor: wait</code></td>
+                  <td>Show spinner or text</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inputs Section -->
+      <section id="inputs" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Inputs & Forms</h2>
+          <p class="section-desc">Form controls styled for dark theme with clear focus states.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🔍</span> Search Input</h3>
+          <div class="preview" style="flex-direction: column; align-items: stretch; gap: 16px;">
+            <input type="text" class="input" placeholder="Search tokens, wallets, or paste address...">
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--accent);">
+            <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>Header.jsx</strong> — Global search with Codex API token lookup</li>
+              <li><strong>LeftPanel.jsx</strong> — Watchlist filtering, tweet search</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From Header.jsx - Search with real-time results */</span>
+const [searchQuery, setSearchQuery] = useState('')
+const { searchResults, loading } = useTokenSearch(searchQuery)
+
+&lt;div className="search-input-wrapper"&gt;
+  &lt;svg className="search-icon"&gt;...&lt;/svg&gt;
+  &lt;input
+    type="text"
+    className="search-input"
+    placeholder="Search tokens, wallets, or paste address..."
+    value={searchQuery}
+    onChange={(e) =&gt; setSearchQuery(e.target.value)}
+    autoFocus
+  /&gt;
+  {searchQuery && (
+    &lt;button className="search-clear-btn" onClick={() =&gt; setSearchQuery('')}&gt;
+      &lt;svg&gt;...&lt;/svg&gt;
+    &lt;/button&gt;
+  )}
+&lt;/div&gt;</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">💰</span> Amount Input</h3>
+          <div class="preview" style="flex-direction: column; align-items: stretch; gap: 16px;">
+            <input type="text" class="input" placeholder="0.00" style="font-family: var(--font-mono); text-align: right;">
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--bull);">
+            <h4 style="font-size: 0.8125rem; color: var(--bull); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>RightPanel.jsx</strong> — Swap widget pay/receive amount inputs</li>
+              <li>Uses <code>font-family: var(--font-mono)</code> for aligned numbers</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From RightPanel.jsx - Swap Amount Input */</span>
+&lt;div className="input-field"&gt;
+  &lt;input
+    type="text"
+    className="amount-input"
+    placeholder="0.00"
+    value={payAmount}
+    onChange={(e) =&gt; {
+      const val = e.target.value.replace(/[^0-9.]/g, '')
+      setPayAmount(val)
+      calculateReceiveAmount(val)
+    }}
+  /&gt;
+  &lt;span className="usd-value"&gt;
+    ≈ ${(parseFloat(payAmount || 0) * tokenPrice).toFixed(2)}
+  &lt;/span&gt;
+&lt;/div&gt;
+
+<span class="comment">/* Quick Amount Buttons */</span>
+&lt;div className="quick-amounts"&gt;
+  {['25%', '50%', '75%', 'MAX'].map(pct =&gt; (
+    &lt;button key={pct} onClick={() =&gt; setPercentage(pct)}&gt;{pct}&lt;/button&gt;
+  ))}
+&lt;/div&gt;</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🔐</span> Password Input</h3>
+          <div class="preview" style="flex-direction: column; align-items: stretch; gap: 16px;">
+            <input type="password" class="input" placeholder="Enter team password" style="text-align: center; letter-spacing: 0.1em;">
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--amber);">
+            <h4 style="font-size: 0.8125rem; color: var(--amber); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>AuthGate.jsx</strong> — Main platform team access</li>
+              <li><strong>Design System</strong> — This page's login</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From AuthGate.jsx - Password Verification */</span>
+const [password, setPassword] = useState('')
+const [error, setError] = useState(false)
+
+const handleSubmit = (e) =&gt; {
+  e.preventDefault()
+  if (password === CORRECT_PASSWORD) {
+    localStorage.setItem('spectre-auth', 'true')
+    setIsAuthed(true)
+  } else {
+    setError(true)
+    setTimeout(() =&gt; setError(false), 1500)
+  }
+}
+
+&lt;input
+  type="password"
+  className={`auth-input ${error ? 'error' : ''}`}
+  placeholder="Enter team password"
+  value={password}
+  onChange={(e) =&gt; setPassword(e.target.value)}
+/&gt;</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cards Section -->
+      <section id="cards" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Cards & Panels</h2>
+          <p class="section-desc">Container components for grouping related content.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🃏</span> Panel Card</h3>
+          <div class="preview">
+            <div class="panel-card" style="padding: 20px; max-width: 300px;">
+              <h4 style="font-size: 0.9375rem; font-weight: 600; margin-bottom: 8px;">Panel Card</h4>
+              <p style="color: var(--text-secondary); font-size: 0.8125rem;">Used for side panels with gradient background.</p>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--accent);">
+            <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>LeftPanel.jsx</strong> — X Feed section, Watchlist, Trending tokens</li>
+              <li><strong>RightPanel.jsx</strong> — Token stats, Trading widget</li>
+              <li><strong>DataTabs.jsx</strong> — Transaction tables, holder lists</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* Panel Card CSS Pattern */</span>
+<span class="selector">.panel-card</span> {
+  <span class="property">background</span>: <span class="value">linear-gradient(135deg, rgba(16, 16, 20, 0.9) 0%, rgba(10, 10, 12, 0.95) 100%)</span>;
+  <span class="property">border</span>: <span class="value">1px solid rgba(255, 255, 255, 0.06)</span>;
+  <span class="property">border-radius</span>: <span class="value">var(--radius-lg)</span>;
+  <span class="property">overflow</span>: <span class="value">hidden</span>;
+  <span class="property">box-shadow</span>: <span class="value">0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04)</span>;
+}</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">💎</span> Glass Card</h3>
+          <div class="preview gradient">
+            <div class="glass-card" style="max-width: 300px;">
+              <h4>Glass Card</h4>
+              <p>Frosted glass effect with backdrop blur.</p>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--cyan);">
+            <h4 style="font-size: 0.8125rem; color: var(--cyan); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>Header.jsx</strong> — Search modal overlay</li>
+              <li><strong>AIAssistant.jsx</strong> — Floating AI chat widget</li>
+              <li><strong>TradingChart.jsx</strong> — Chart controls, share menu overlay</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* Glass Card CSS Pattern */</span>
+<span class="selector">.glass-card</span> {
+  <span class="property">background</span>: <span class="value">var(--glass-bg)</span>;
+  <span class="property">backdrop-filter</span>: <span class="value">blur(24px) saturate(180%)</span>;
+  <span class="property">-webkit-backdrop-filter</span>: <span class="value">blur(24px) saturate(180%)</span>;
+  <span class="property">border</span>: <span class="value">1px solid var(--glass-border)</span>;
+  <span class="property">border-radius</span>: <span class="value">var(--radius-lg)</span>;
+  <span class="property">box-shadow</span>: <span class="value">var(--shadow-inner), var(--shadow-lg)</span>;
+}</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📊</span> Stat Cards</h3>
+          <div class="grid-4">
+            <div class="stat-item">
+              <div class="stat-label">Market Cap</div>
+              <div class="stat-value">$12.76M</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">24h Volume</div>
+              <div class="stat-value">$27.84K</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Liquidity</div>
+              <div class="stat-value">$237.16K</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Holders</div>
+              <div class="stat-value">8,925</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--bull);">
+            <h4 style="font-size: 0.8125rem; color: var(--bull); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>RightPanel.jsx</strong> — Token stats grid (Market Cap, Volume, Liquidity, Holders)</li>
+              <li><strong>TokenBanner.jsx</strong> — Price and change indicators</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From RightPanel.jsx - Stats Grid */</span>
+&lt;div className="stats-grid"&gt;
+  &lt;div className="stat-item"&gt;
+    &lt;span className="stat-label"&gt;Market Cap&lt;/span&gt;
+    &lt;span className="stat-value"&gt;
+      {formatLargeNumber(liveTokenData?.marketCap || 0)}
+    &lt;/span&gt;
+  &lt;/div&gt;
+  ...
+&lt;/div&gt;
+
+<span class="comment">/* Helper: Format Large Numbers */</span>
+const formatLargeNumber = (num) =&gt; {
+  if (num &gt;= 1e9) return `$${(num / 1e9).toFixed(2)}B`
+  if (num &gt;= 1e6) return `$${(num / 1e6).toFixed(2)}M`
+  if (num &gt;= 1e3) return `$${(num / 1e3).toFixed(2)}K`
+  return `$${num.toFixed(2)}`
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Badges Section -->
+      <section id="badges" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Badges & Tags</h2>
+          <p class="section-desc">Status indicators and labels for categorization.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🏷️</span> Badge Variants</h3>
+          <div class="preview">
+            <span class="badge badge-accent">Featured</span>
+            <span class="badge badge-success">Verified</span>
+            <span class="badge badge-danger">High Risk</span>
+            <span class="badge badge-warning">Trending</span>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--accent);">
+            <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>badge-accent</strong> — Featured tokens, premium features</li>
+              <li><strong>badge-success</strong> — Verified contracts, safe tokens</li>
+              <li><strong>badge-danger</strong> — High risk warnings, honeypots</li>
+              <li><strong>badge-warning</strong> — Trending, new listings, caution alerts</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* Badge HTML */</span>
+&lt;span class="badge badge-accent"&gt;Featured&lt;/span&gt;
+&lt;span class="badge badge-success"&gt;Verified&lt;/span&gt;
+&lt;span class="badge badge-danger"&gt;High Risk&lt;/span&gt;
+&lt;span class="badge badge-warning"&gt;Trending&lt;/span&gt;
+
+<span class="comment">/* Badge CSS */</span>
+<span class="selector">.badge</span> {
+  <span class="property">display</span>: <span class="value">inline-flex</span>;
+  <span class="property">padding</span>: <span class="value">4px 10px</span>;
+  <span class="property">font-size</span>: <span class="value">0.6875rem</span>;
+  <span class="property">font-weight</span>: <span class="value">600</span>;
+  <span class="property">border-radius</span>: <span class="value">var(--radius-full)</span>;
+  <span class="property">text-transform</span>: <span class="value">uppercase</span>;
+}
+
+<span class="selector">.badge-success</span> {
+  <span class="property">background</span>: <span class="value">var(--bull-muted)</span>;
+  <span class="property">color</span>: <span class="value">var(--bull-bright)</span>;
+  <span class="property">border</span>: <span class="value">1px solid rgba(16, 185, 129, 0.2)</span>;
+}</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📈</span> Price Changes</h3>
+          <div class="preview">
+            <span class="price-change up">↑ +12.45%</span>
+            <span class="price-change down">↓ -5.32%</span>
+            <span class="status-live">LIVE</span>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--bull);">
+            <h4 style="font-size: 0.8125rem; color: var(--bull); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>price-change</strong> — TokenBanner, TokenTicker, RightPanel stats</li>
+              <li><strong>status-live</strong> — Real-time data indicators, chart headers</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* Price Change Component */</span>
+&lt;span className={`price-change ${change &gt;= 0 ? 'up' : 'down'}`}&gt;
+  {change &gt;= 0 ? '↑' : '↓'} {change &gt;= 0 ? '+' : ''}{change.toFixed(2)}%
+&lt;/span&gt;
+
+<span class="comment">/* CSS */</span>
+<span class="selector">.price-change</span> {
+  <span class="property">font-family</span>: <span class="value">var(--font-mono)</span>;
+  <span class="property">font-weight</span>: <span class="value">600</span>;
+}
+<span class="selector">.price-change.up</span> { <span class="property">color</span>: <span class="value">var(--bull)</span>; }
+<span class="selector">.price-change.down</span> { <span class="property">color</span>: <span class="value">var(--bear)</span>; }
+
+<span class="comment">/* Live Status with Pulse Animation */</span>
+<span class="selector">.status-live::before</span> {
+  <span class="property">content</span>: <span class="value">''</span>;
+  <span class="property">width</span>: <span class="value">8px</span>;
+  <span class="property">height</span>: <span class="value">8px</span>;
+  <span class="property">background</span>: <span class="value">var(--bull)</span>;
+  <span class="property">border-radius</span>: <span class="value">50%</span>;
+  <span class="property">animation</span>: <span class="value">pulse 2s infinite</span>;
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Section -->
+      <section id="tabs" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Tabs & Filters</h2>
+          <p class="section-desc">Navigation and filtering components.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📑</span> Tab Navigation</h3>
+          <div class="preview" style="flex-direction: column; align-items: stretch;">
+            <div class="tabs">
+              <button class="tab active">Feed</button>
+              <button class="tab">Watchlist</button>
+              <button class="tab">Trending</button>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--accent);">
+            <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>LeftPanel.jsx</strong> — Feed / Watchlist / Trending section toggle</li>
+              <li><strong>DataTabs.jsx</strong> — Transactions / Holders / Info tabs</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From LeftPanel.jsx - Tab Component */</span>
+const [activeTab, setActiveTab] = useState('feed')
+
+&lt;div className="panel-tabs"&gt;
+  {['feed', 'watchlist', 'trending'].map(tab =&gt; (
+    &lt;button 
+      key={tab}
+      className={`tab ${activeTab === tab ? 'active' : ''}`}
+      onClick={() =&gt; setActiveTab(tab)}
+    &gt;
+      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+    &lt;/button&gt;
+  ))}
+&lt;/div&gt;
+
+<span class="comment">/* Tab CSS */</span>
+<span class="selector">.tabs</span> {
+  <span class="property">display</span>: <span class="value">flex</span>;
+  <span class="property">gap</span>: <span class="value">4px</span>;
+  <span class="property">padding</span>: <span class="value">8px</span>;
+  <span class="property">background</span>: <span class="value">var(--bg-surface)</span>;
+  <span class="property">border-radius</span>: <span class="value">var(--radius-md)</span>;
+}
+
+<span class="selector">.tab.active</span> {
+  <span class="property">background</span>: <span class="value">linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(99, 102, 241, 0.1))</span>;
+  <span class="property">color</span>: <span class="value">var(--text-primary)</span>;
+  <span class="property">box-shadow</span>: <span class="value">0 0 12px rgba(139, 92, 246, 0.1)</span>;
+}</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🔽</span> Filter Chips</h3>
+          <div class="preview">
+            <span class="filter-chip active">All</span>
+            <span class="filter-chip">News</span>
+            <span class="filter-chip">Alpha</span>
+            <span class="filter-chip">Signals</span>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--cyan);">
+            <h4 style="font-size: 0.8125rem; color: var(--cyan); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>LeftPanel.jsx</strong> — Tweet/news type filtering (All, News, Alpha, Signals)</li>
+              <li><strong>DataTabs.jsx</strong> — Transaction type filtering (All, Buys, Sells)</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* Filter Chips with State */</span>
+const [activeFilter, setActiveFilter] = useState('all')
+const filters = ['All', 'News', 'Alpha', 'Signals']
+
+&lt;div className="filter-chips"&gt;
+  {filters.map(filter =&gt; (
+    &lt;button 
+      key={filter}
+      className={`filter-chip ${activeFilter === filter.toLowerCase() ? 'active' : ''}`}
+      onClick={() =&gt; setActiveFilter(filter.toLowerCase())}
+    &gt;
+      {filter}
+    &lt;/button&gt;
+  ))}
+&lt;/div&gt;
+
+<span class="comment">/* Filter Chip CSS */</span>
+<span class="selector">.filter-chip</span> {
+  <span class="property">padding</span>: <span class="value">8px 14px</span>;
+  <span class="property">background</span>: <span class="value">var(--bg-elevated)</span>;
+  <span class="property">border</span>: <span class="value">1px solid var(--border-subtle)</span>;
+  <span class="property">border-radius</span>: <span class="value">var(--radius-full)</span>;
+  <span class="property">cursor</span>: <span class="value">pointer</span>;
+}
+
+<span class="selector">.filter-chip.active</span> {
+  <span class="property">background</span>: <span class="value">var(--accent-gradient)</span>;
+  <span class="property">border-color</span>: <span class="value">transparent</span>;
+  <span class="property">color</span>: <span class="value">white</span>;
+  <span class="property">box-shadow</span>: <span class="value">0 4px 12px rgba(139, 92, 246, 0.3)</span>;
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Glass Section -->
+      <section id="glass" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Glass Morphism</h2>
+          <p class="section-desc">Frosted glass effects that create depth and modern visual appeal.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">💎</span> Glass Effects</h3>
+          <div class="preview gradient">
+            <div class="glass-card" style="max-width: 280px;">
+              <h4>Token Stats</h4>
+              <p>Market cap and volume data displayed in a glass card.</p>
+            </div>
+          </div>
+          <div class="code-block">
+            <pre><span class="selector">.glass</span> {
+  <span class="property">background</span>: <span class="value">var(--glass-bg)</span>;
+  <span class="property">backdrop-filter</span>: <span class="value">blur(24px) saturate(180%)</span>;
+  <span class="property">-webkit-backdrop-filter</span>: <span class="value">blur(24px) saturate(180%)</span>;
+  <span class="property">border</span>: <span class="value">1px solid var(--glass-border)</span>;
+  <span class="property">box-shadow</span>: <span class="value">var(--shadow-inner), var(--shadow-lg)</span>;
+}</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🎨</span> Glass Variables</h3>
+          <div class="grid-2">
+            <div class="color-item">
+              <div class="color-swatch" style="background: rgba(16, 16, 20, 0.75);"></div>
+              <div class="color-info">
+                <div class="color-name">--glass-bg</div>
+                <div class="color-value">rgba(16, 16, 20, 0.75)</div>
+              </div>
+            </div>
+            <div class="color-item">
+              <div class="color-swatch" style="background: rgba(255, 255, 255, 0.08); border: 2px solid rgba(255, 255, 255, 0.08);"></div>
+              <div class="color-info">
+                <div class="color-name">--glass-border</div>
+                <div class="color-value">rgba(255, 255, 255, 0.08)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Glow Section -->
+      <section id="glow" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Glow Effects</h2>
+          <p class="section-desc">Accent glows for highlighting important elements and creating focus.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">✨</span> Glow Classes</h3>
+          <div class="code-block">
+            <pre><span class="selector">.glow</span> {
+  <span class="property">box-shadow</span>: <span class="value">0 0 40px var(--accent-glow)</span>;
+}
+
+<span class="selector">.glow-sm</span> {
+  <span class="property">box-shadow</span>: <span class="value">0 0 20px var(--accent-glow)</span>;
+}
+
+<span class="selector">.glow-text</span> {
+  <span class="property">text-shadow</span>: <span class="value">0 0 20px var(--accent-glow)</span>;
+}
+
+<span class="selector">.glow-border</span> {
+  <span class="property">border</span>: <span class="value">1px solid var(--border-accent)</span>;
+  <span class="property">box-shadow</span>: <span class="value">0 0 20px rgba(139, 92, 246, 0.15)</span>;
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Animations Section -->
+      <section id="animations" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Animations</h2>
+          <p class="section-desc">Smooth, Apple-like transitions and animation presets.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">⏱️</span> Easing Functions</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                  <th>Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>--ease-out</code></td>
+                  <td>cubic-bezier(0.16, 1, 0.3, 1)</td>
+                  <td>Most UI transitions (decelerate)</td>
+                </tr>
+                <tr>
+                  <td><code>--ease-in-out</code></td>
+                  <td>cubic-bezier(0.4, 0, 0.2, 1)</td>
+                  <td>Standard animations</td>
+                </tr>
+                <tr>
+                  <td><code>--ease-spring</code></td>
+                  <td>cubic-bezier(0.34, 1.56, 0.64, 1)</td>
+                  <td>Bouncy, playful effects</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">⏳</span> Duration Scale</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                  <th>Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>--duration-instant</code></td>
+                  <td>100ms</td>
+                  <td>Instant feedback</td>
+                </tr>
+                <tr>
+                  <td><code>--duration-fast</code></td>
+                  <td>150ms</td>
+                  <td>Quick transitions</td>
+                </tr>
+                <tr>
+                  <td><code>--duration-base</code></td>
+                  <td>250ms</td>
+                  <td>Standard transitions</td>
+                </tr>
+                <tr>
+                  <td><code>--duration-slow</code></td>
+                  <td>400ms</td>
+                  <td>Deliberate animations</td>
+                </tr>
+                <tr>
+                  <td><code>--duration-slower</code></td>
+                  <td>600ms</td>
+                  <td>Complex animations</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🎬</span> Animation Examples</h3>
+          <div class="preview">
+            <div class="anim-box anim-float">Float</div>
+            <div class="anim-box anim-pulse">Pulse</div>
+            <div class="anim-box anim-glow">Glow</div>
+            <div class="anim-box anim-shimmer">Shimmer</div>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--accent);">
+            <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 8px; font-weight: 600;">📍 Where Each Is Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>Float</strong> — TokenTicker.jsx: Top gainer tokens float upward</li>
+              <li><strong>Pulse</strong> — Status indicators, live data dots, notification badges</li>
+              <li><strong>Glow</strong> — Featured tokens, active buttons, CTAs with accent color</li>
+              <li><strong>Shimmer</strong> — TokenTicker.jsx: Holographic hover effect on items</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* Animation Keyframes */</span>
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.98); }
+}
+
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+  50% { box-shadow: 0 0 40px var(--accent-glow); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+<span class="comment">/* Apply to elements */</span>
+.animate-float { animation: float 4s var(--ease-in-out) infinite; }
+.animate-pulse { animation: pulse 2s var(--ease-in-out) infinite; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📺</span> Token Ticker Animation</h3>
+          <p class="card-desc">The scrolling token ticker uses JavaScript-controlled animation for background tab support.</p>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--cyan);">
+            <h4 style="font-size: 0.8125rem; color: var(--cyan); margin-bottom: 8px; font-weight: 600;">📍 TokenTicker.jsx Features</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>Sentiment Background</strong> — Gradient changes based on market mood (bullish/bearish)</li>
+              <li><strong>Holographic Shimmer</strong> — Hover effect on each token item</li>
+              <li><strong>Top Gainer Glow</strong> — Pulsing green glow + float animation</li>
+              <li><strong>Live Indicator</strong> — Pulsing green dot for real-time data</li>
+              <li><strong>Mini Sparklines</strong> — 7-day price chart in each ticker item</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From TokenTicker.css - Sentiment Background */</span>
+<span class="selector">.token-ticker.sentiment-bullish .ticker-sentiment-bg</span> {
+  <span class="property">background</span>: <span class="value">linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.08) 25%,
+    rgba(16, 185, 129, 0.12) 50%,
+    rgba(16, 185, 129, 0.08) 75%,
+    transparent 100%
+  )</span>;
+  <span class="property">animation</span>: <span class="value">sentimentWave 8s ease-in-out infinite</span>;
+}
+
+<span class="comment">/* Holographic Shimmer on Hover */</span>
+<span class="selector">.holographic-shimmer</span> {
+  <span class="property">background</span>: <span class="value">linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.03) 30%,
+    rgba(139, 92, 246, 0.08) 40%,
+    rgba(6, 182, 212, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 60%,
+    transparent 70%
+  )</span>;
+}
+
+<span class="selector">.ticker-item-inner:hover .holographic-shimmer</span> {
+  <span class="property">opacity</span>: <span class="value">1</span>;
+  <span class="property">animation</span>: <span class="value">shimmerSlide 1.5s ease-in-out infinite</span>;
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trading Section -->
+      <section id="trading" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Trading Components</h2>
+          <p class="section-desc">Specialized components for trading interfaces and financial data.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">💱</span> Swap Widget</h3>
+          <div class="preview" style="flex-direction: column; gap: 16px; max-width: 400px; margin: 0 auto;">
+            <div style="background: var(--bg-elevated); border-radius: var(--radius-md); padding: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 0.75rem; color: var(--text-tertiary);">You Pay</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Balance: 2.45 ETH</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <input type="text" class="input" value="0.5" style="flex: 1; font-family: var(--font-mono); font-size: 1.25rem; text-align: right; background: transparent; border: none; padding: 0;">
+                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--bg-surface); border-radius: var(--radius-sm);">
+                  <span style="font-weight: 600;">ETH</span>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-buy" style="flex: 1;">Buy SPECTRE</button>
+              <button class="btn-sell" style="flex: 1;">Sell SPECTRE</button>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--accent);">
+            <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <p style="font-size: 0.8125rem; color: var(--text-secondary);">
+              <strong>RightPanel.jsx</strong> — Complete swap widget with token selector, amount inputs, price calculations, slippage settings.
+            </p>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From RightPanel.jsx - Swap Widget Structure */</span>
+&lt;div className="swap-widget"&gt;
+  {/* Mode Toggle */}
+  &lt;div className="mode-toggle"&gt;
+    &lt;button className={`mode-btn ${mode === 'buy' ? 'active buy' : ''}`}&gt;Buy&lt;/button&gt;
+    &lt;button className={`mode-btn ${mode === 'sell' ? 'active sell' : ''}`}&gt;Sell&lt;/button&gt;
+  &lt;/div&gt;
+
+  {/* Pay Section */}
+  &lt;div className="swap-section pay"&gt;
+    &lt;div className="section-header"&gt;
+      &lt;span&gt;You Pay&lt;/span&gt;
+      &lt;span className="balance"&gt;Balance: {balance}&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div className="input-row"&gt;
+      &lt;input type="text" value={payAmount} onChange={...} /&gt;
+      &lt;TokenSelector token={selectedPayToken} /&gt;
+    &lt;/div&gt;
+    &lt;div className="quick-amounts"&gt;
+      {['25%', '50%', '75%', 'MAX'].map(pct =&gt; ...)}
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  {/* Execute Button */}
+  &lt;button className={`execute-btn ${mode}`} onClick={handleSwap}&gt;
+    {mode === 'buy' ? 'Buy' : 'Sell'} {token.symbol}
+  &lt;/button&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📊</span> Price Display Patterns</h3>
+          <div class="preview" style="flex-direction: column; align-items: flex-start; gap: 20px;">
+            <div>
+              <div style="font-size: 0.6875rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Current Price</div>
+              <span style="font-family: var(--font-mono); font-size: 1.75rem; font-weight: 600;">$0.001276</span>
+              <span class="price-change up" style="margin-left: 12px; font-size: 0.875rem;">↑ +12.45%</span>
+            </div>
+            <div>
+              <div style="font-size: 0.6875rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Bitcoin</div>
+              <span style="font-family: var(--font-mono); font-size: 1.75rem; font-weight: 600;">$98,234.56</span>
+              <span class="price-change down" style="margin-left: 12px; font-size: 0.875rem;">↓ -2.18%</span>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--bull);">
+            <h4 style="font-size: 0.8125rem; color: var(--bull); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>TokenBanner.jsx</strong> — Main price display with 24h change</li>
+              <li><strong>Header.jsx</strong> — BTC/ETH/SOL price indicators</li>
+              <li><strong>TokenTicker.jsx</strong> — Scrolling ticker prices</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* Price Formatting Helper */</span>
+const formatTokenPrice = (price) =&gt; {
+  const numPrice = parseFloat(price)
+  if (numPrice &gt;= 1000) return numPrice.toLocaleString('en-US', { maximumFractionDigits: 2 })
+  if (numPrice &gt;= 1) return numPrice.toFixed(2)
+  if (numPrice &gt;= 0.01) return numPrice.toFixed(4)
+  if (numPrice &gt;= 0.0001) return numPrice.toFixed(6)
+  return numPrice.toFixed(8)
+}
+
+<span class="comment">/* Price Change Component */</span>
+&lt;span className={`price-change ${change &gt;= 0 ? 'up' : 'down'}`}&gt;
+  {change &gt;= 0 ? '↑' : '↓'} {change &gt;= 0 ? '+' : ''}{change.toFixed(2)}%
+&lt;/span&gt;</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🏷️</span> Trade Type Badges</h3>
+          <div class="preview" style="flex-wrap: wrap; gap: 8px;">
+            <span style="padding: 4px 10px; font-size: 0.6875rem; font-weight: 600; border-radius: 4px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.2);">NEW</span>
+            <span style="padding: 4px 10px; font-size: 0.6875rem; font-weight: 600; border-radius: 4px; background: rgba(6, 182, 212, 0.15); color: #06B6D4; border: 1px solid rgba(6, 182, 212, 0.2);">DCA</span>
+            <span style="padding: 4px 10px; font-size: 0.6875rem; font-weight: 600; border-radius: 4px; background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.2);">FOMO</span>
+            <span style="padding: 4px 10px; font-size: 0.6875rem; font-weight: 600; border-radius: 4px; background: rgba(139, 92, 246, 0.15); color: #8B5CF6; border: 1px solid rgba(139, 92, 246, 0.2);">BTD</span>
+            <span style="padding: 4px 10px; font-size: 0.6875rem; font-weight: 600; border-radius: 4px; background: rgba(244, 63, 94, 0.15); color: #F43F5E; border: 1px solid rgba(244, 63, 94, 0.2);">SNIPER</span>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--amber);">
+            <h4 style="font-size: 0.8125rem; color: var(--amber); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <ul class="list" style="font-size: 0.8125rem;">
+              <li><strong>DataTabs.jsx</strong> — Transaction history showing trade behavior</li>
+              <li><strong>NEW</strong> = First buy, <strong>DCA</strong> = Dollar-Cost Average, <strong>FOMO</strong> = Buy After Pump, <strong>BTD</strong> = Buy The Dip, <strong>SNIPER</strong> = Early buyer</li>
+            </ul>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From DataTabs.jsx - Trade Type Definitions */</span>
+const BUY_TYPES = [
+  { label: 'NEW', name: 'New Holder', color: '#10B981' },
+  { label: 'DCA', name: 'Dollar-Cost Average', color: '#06B6D4' },
+  { label: 'FOMO', name: 'Buy After Pump', color: '#F59E0B' },
+  { label: 'BTD', name: 'Buy the Dip', color: '#8B5CF6' },
+  { label: 'SNIPER', name: 'Sniper Buy', color: '#F43F5E' },
+]
+
+<span class="comment">/* Render Trade Type Badge */</span>
+&lt;span 
+  className="trade-type-badge"
+  style={{ 
+    background: `${type.color}15`, 
+    color: type.color,
+    borderColor: `${type.color}30` 
+  }}
+  title={type.name}
+&gt;
+  {type.label}
+&lt;/span&gt;</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Data Display Section -->
+      <section id="data" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Data Display</h2>
+          <p class="section-desc">Components for displaying financial and token data.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🔢</span> Number Formatting</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Format</th>
+                  <th>Example</th>
+                  <th>Function</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Large Price</td>
+                  <td>Locale string</td>
+                  <td style="font-family: var(--font-mono);">$98,234.56</td>
+                  <td><code>toLocaleString()</code></td>
+                </tr>
+                <tr>
+                  <td>Small Price</td>
+                  <td>Up to 8 decimals</td>
+                  <td style="font-family: var(--font-mono);">$0.001276</td>
+                  <td><code>formatTokenPrice()</code></td>
+                </tr>
+                <tr>
+                  <td>Market Cap</td>
+                  <td>Abbreviated (K/M/B)</td>
+                  <td style="font-family: var(--font-mono);">$12.76M</td>
+                  <td><code>formatLargeNumber()</code></td>
+                </tr>
+                <tr>
+                  <td>Percentage</td>
+                  <td>2 decimals + sign</td>
+                  <td style="font-family: var(--font-mono); color: var(--bull);">+12.45%</td>
+                  <td><code>toFixed(2)</code></td>
+                </tr>
+                <tr>
+                  <td>Token Amount</td>
+                  <td>Abbreviated (K/M/B)</td>
+                  <td style="font-family: var(--font-mono);">1.23M</td>
+                  <td><code>formatAmount()</code></td>
+                </tr>
+                <tr>
+                  <td>Contract Address</td>
+                  <td>6...4 chars</td>
+                  <td style="font-family: var(--font-mono);">0x9cf0...dad6</td>
+                  <td><code>truncateAddress()</code></td>
+                </tr>
+                <tr>
+                  <td>Time Ago</td>
+                  <td>Relative</td>
+                  <td style="font-family: var(--font-mono);">2h ago</td>
+                  <td><code>formatAge()</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* Number Formatting Helpers */</span>
+
+<span class="comment">// Format large numbers with K/M/B suffix</span>
+export const formatLargeNumber = (num) =&gt; {
+  if (!num || isNaN(num)) return '$0'
+  if (num &gt;= 1e9) return `$${(num / 1e9).toFixed(2)}B`
+  if (num &gt;= 1e6) return `$${(num / 1e6).toFixed(2)}M`
+  if (num &gt;= 1e3) return `$${(num / 1e3).toFixed(2)}K`
+  return `$${num.toFixed(2)}`
+}
+
+<span class="comment">// Truncate address for display</span>
+const truncateAddress = (address) =&gt; {
+  if (!address || address.length &lt; 10) return address
+  return `${address.slice(0, 6)}...${address.slice(-4)}`
+}
+
+<span class="comment">// Format relative time</span>
+const formatAge = (date) =&gt; {
+  const diffSecs = Math.floor((new Date() - date) / 1000)
+  if (diffSecs &lt; 60) return `${diffSecs}s ago`
+  if (diffSecs &lt; 3600) return `${Math.floor(diffSecs / 60)}m ago`
+  if (diffSecs &lt; 86400) return `${Math.floor(diffSecs / 3600)}h ago`
+  return `${Math.floor(diffSecs / 86400)}d ago`
+}</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📋</span> Transaction Table</h3>
+          <div style="overflow-x: auto; margin-bottom: 16px;">
+            <table style="min-width: 600px;">
+              <thead>
+                <tr>
+                  <th>Age</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Price</th>
+                  <th>Maker</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-family: var(--font-mono); font-size: 0.8125rem;">2m ago</td>
+                  <td><span style="padding: 2px 8px; font-size: 0.6875rem; font-weight: 600; border-radius: 4px; background: rgba(16, 185, 129, 0.15); color: #10B981;">BUY</span></td>
+                  <td style="font-family: var(--font-mono); font-size: 0.8125rem;">125.4K</td>
+                  <td style="font-family: var(--font-mono); font-size: 0.8125rem;">$0.001276</td>
+                  <td style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--accent);">0x9cf0...dad6</td>
+                </tr>
+                <tr>
+                  <td style="font-family: var(--font-mono); font-size: 0.8125rem;">5m ago</td>
+                  <td><span style="padding: 2px 8px; font-size: 0.6875rem; font-weight: 600; border-radius: 4px; background: rgba(239, 68, 68, 0.15); color: #EF4444;">SELL</span></td>
+                  <td style="font-family: var(--font-mono); font-size: 0.8125rem;">89.2K</td>
+                  <td style="font-family: var(--font-mono); font-size: 0.8125rem;">$0.001284</td>
+                  <td style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--accent);">0x4a2b...7c8d</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 16px; margin: 16px 0; border-left: 3px solid var(--accent);">
+            <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 8px; font-weight: 600;">📍 Where It's Used</h4>
+            <p style="font-size: 0.8125rem; color: var(--text-secondary);">
+              <strong>DataTabs.jsx</strong> — Real-time transaction history from Codex API with trade types, maker analysis, and clickable addresses.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🎨</span> Dynamic Token Colors</h3>
+          <p class="card-desc">Tokens get consistent colors from their symbol. Known tokens have preset colors, others are generated.</p>
+
+          <div class="grid-4" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: center; gap: 8px; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #8B5CF6;"></div>
+              <span style="font-weight: 600;">SPECTRE</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #627EEA;"></div>
+              <span style="font-weight: 600;">ETH</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #F7931A;"></div>
+              <span style="font-weight: 600;">BTC</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #9945FF;"></div>
+              <span style="font-weight: 600;">SOL</span>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <pre><span class="comment">/* From RightPanel.jsx - Token Color Generation */</span>
+
+const KNOWN_TOKEN_COLORS = {
+  'SPECTRE': '#8B5CF6', 'ETH': '#627EEA', 'BTC': '#F7931A',
+  'SOL': '#9945FF', 'USDT': '#26A17B', 'USDC': '#2775CA',
+  'PEPE': '#3D9E41', 'UNI': '#FF007A', 'LINK': '#2A5ADA',
+}
+
+<span class="comment">// Generate color from string for unknown tokens</span>
+const generateColorFromString = (str) =&gt; {
+  let hash = 0
+  for (let i = 0; i &lt; str.length; i++) {
+    hash = ((hash &lt;&lt; 5) - hash) + str.charCodeAt(i)
+    hash = hash & hash
+  }
+  const hue = Math.abs(hash % 360)
+  const saturation = 65 + (Math.abs(hash &gt;&gt; 8) % 20)
+  const lightness = 50 + (Math.abs(hash &gt;&gt; 16) % 15)
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`
+}
+
+<span class="comment">// Get token color (known or generated)</span>
+const getTokenColor = (symbol) =&gt; {
+  return KNOWN_TOKEN_COLORS[symbol?.toUpperCase()] 
+    || generateColorFromString(symbol || 'default')
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Guidelines Section -->
+      <section id="guidelines" class="section">
+        <div class="section-header">
+          <h2 class="section-title">Best Practices</h2>
+          <p class="section-desc">Guidelines for using the design system effectively.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="color: var(--bull);">✅ Do's</h3>
+          <ul class="list">
+            <li><strong>Use CSS Variables</strong> — Always use design tokens, never hardcode values</li>
+            <li><strong>Consistent Spacing</strong> — Use the spacing scale (--sp-*) for margins and padding</li>
+            <li><strong>Proper Typography</strong> — Use the type scale classes for text styling</li>
+            <li><strong>Smooth Animations</strong> — Apply transitions to all interactive elements</li>
+            <li><strong>Glass Effects</strong> — Use backdrop-filter for overlays and cards</li>
+            <li><strong>Color Hierarchy</strong> — Use proper text opacity levels for hierarchy</li>
+            <li><strong>Responsive Design</strong> — Test on multiple screen sizes</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="color: var(--bear);">❌ Don'ts</h3>
+          <ul class="list">
+            <li><strong>Don't hardcode colors</strong> — Always use CSS variables</li>
+            <li><strong>Don't skip transitions</strong> — All interactive elements should animate</li>
+            <li><strong>Don't overuse glow</strong> — Use glow effects sparingly for emphasis</li>
+            <li><strong>Don't mix fonts</strong> — Stick to the defined font families</li>
+            <li><strong>Don't ignore contrast</strong> — Ensure text is readable</li>
+            <li><strong>Don't use light backgrounds</strong> — This is a dark-first design system</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Files Section -->
+      <section id="files" class="section">
+        <div class="section-header">
+          <h2 class="section-title">File Structure</h2>
+          <p class="section-desc">Organization of design system files in the codebase.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">📁</span> Source Files</h3>
+          <div class="code-block">
+            <pre>src/
+├── index.css              <span class="comment"># Global styles, CSS variables, utilities</span>
+├── App.css                <span class="comment"># Main layout, grid system</span>
+├── components/
+│   ├── Header.css         <span class="comment"># Header, search, navigation</span>
+│   ├── LeftPanel.css      <span class="comment"># Feed, watchlist, tweets</span>
+│   ├── RightPanel.css     <span class="comment"># Stats, trading panel</span>
+│   ├── TradingChart.css   <span class="comment"># Chart controls, fullscreen</span>
+│   ├── TokenTicker.css    <span class="comment"># Scrolling ticker strip</span>
+│   ├── TokenBanner.css    <span class="comment"># Token hero banners</span>
+│   ├── DataTabs.css       <span class="comment"># Data tables, tabs</span>
+│   ├── AIAssistant.css    <span class="comment"># AI chat interface</span>
+│   └── AuthGate.css       <span class="comment"># Login/auth screens</span></pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><span class="card-title-icon">🔗</span> Importing Styles</h3>
+          <div class="code-block">
+            <pre><span class="comment">// In your React component:</span>
+<span class="property">import</span> <span class="value">'./ComponentName.css'</span>
+
+<span class="comment">// Global styles are imported in main.jsx:</span>
+<span class="property">import</span> <span class="value">'./index.css'</span></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toast-message">Copied to clipboard!</span>
+  </div>
+
+  <script>
+    // =========================================
+    // Authentication
+    // =========================================
+    const CORRECT_PASSWORD = 'KasAS53D@DH6H4';
+    const AUTH_KEY = 'spectre-ds-auth';
+
+    function checkAuth() {
+      const isAuthed = localStorage.getItem(AUTH_KEY) === 'true';
+      const authGate = document.getElementById('authGate');
+      const mainContent = document.getElementById('mainContent');
+      
+      if (isAuthed) {
+        authGate.classList.add('hidden');
+        mainContent.classList.remove('locked');
+      } else {
+        authGate.classList.remove('hidden');
+        mainContent.classList.add('locked');
+      }
+    }
+
+    // Check auth on load
+    checkAuth();
+
+    // Handle form submission
+    document.getElementById('authForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('authPassword');
+      const password = input.value;
+      
+      if (password === CORRECT_PASSWORD) {
+        localStorage.setItem(AUTH_KEY, 'true');
+        checkAuth();
+      } else {
+        input.classList.add('error');
+        input.value = '';
+        input.placeholder = 'Incorrect password';
+        setTimeout(() => {
+          input.classList.remove('error');
+          input.placeholder = 'Enter team password';
+        }, 1500);
+      }
+    });
+
+    // =========================================
+    // Navigation
+    // =========================================
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sectionId = link.getAttribute('data-section');
+        
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        
+        history.pushState(null, '', '#' + sectionId);
+        
+        // Scroll to top of main content
+        document.querySelector('.main').scrollTo(0, 0);
+      });
+    });
+
+    // Handle direct hash links
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      const link = document.querySelector(`[data-section="${hash}"]`);
+      if (link) link.click();
+    }
+
+    // Copy functions
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function copyColor(varName) {
+      navigator.clipboard.writeText(`var(${varName})`);
+      showToast(`Copied var(${varName})`);
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(`var(${text})`);
+      showToast(`Copied var(${text})`);
+    }
+
+    function copyCode(id) {
+      const code = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(code);
+      showToast('Code copied to clipboard!');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+/* ============================================================
+   EggExplainerModal — Dark glassmorphic explainer popup
+   ============================================================ */
+
+.egg-explainer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: eggOverlayIn 0.3s ease-out;
+}
+@keyframes eggOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.egg-explainer-modal {
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: rgba(10, 10, 24, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  padding: 40px 32px 32px;
+  box-shadow:
+    0 0 60px rgba(0, 0, 0, 0.5),
+    0 0 1px rgba(255, 255, 255, 0.1);
+  animation: eggModalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  color: rgba(255, 255, 255, 0.85);
+}
+@keyframes eggModalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Close button */
+.egg-explainer-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.2s;
+}
+.egg-explainer-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+.egg-explainer-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Title */
+.egg-explainer-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
+}
+
+/* Body text */
+.egg-explainer-body {
+  margin-bottom: 28px;
+}
+.egg-explainer-body p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 12px;
+}
+.egg-explainer-body p:last-child {
+  margin-bottom: 0;
+}
+.egg-explainer-emphasis {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500;
+}
+
+/* 3 Steps */
+.egg-explainer-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.egg-explainer-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.egg-explainer-step-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s;
+}
+.egg-explainer-step-icon--cracking {
+  color: #00f0ff;
+  border-color: rgba(0, 240, 255, 0.15);
+  background: rgba(0, 240, 255, 0.03);
+}
+.egg-explainer-step-icon--born {
+  color: #c084fc;
+  border-color: rgba(192, 132, 252, 0.15);
+  background: rgba(192, 132, 252, 0.03);
+}
+
+.egg-explainer-step-label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.egg-explainer-step-arrow {
+  color: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+
+/* CTA Button */
+.egg-explainer-cta {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(192, 132, 252, 0.15));
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.01em;
+}
+.egg-explainer-cta:hover {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.25), rgba(192, 132, 252, 0.25));
+  border-color: rgba(0, 240, 255, 0.35);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+/* Footnote */
+.egg-explainer-footnote {
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 12px 0 0;
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  .egg-explainer-modal {
+    padding: 32px 20px 24px;
+    border-radius: 16px;
+  }
+  .egg-explainer-title {
+    font-size: 1.25rem;
+  }
+  .egg-explainer-steps {
+    gap: 6px;
+  }
+  .egg-explainer-step-icon {
+    width: 44px;
+    height: 44px;
+  }
+}
