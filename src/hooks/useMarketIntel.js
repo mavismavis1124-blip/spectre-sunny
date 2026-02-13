@@ -394,12 +394,22 @@ export function useMarketIntel(refreshInterval = 60000) {
     }
   }, [computeDerived])
 
+  // ── Visibility-aware polling ───────────────────────────────────────
+  const [isVisible, setIsVisible] = useState(!document.hidden)
+  useEffect(() => {
+    const onVis = () => setIsVisible(!document.hidden)
+    document.addEventListener('visibilitychange', onVis)
+    return () => document.removeEventListener('visibilitychange', onVis)
+  }, [])
+
   // ── Effects ────────────────────────────────────────────────────────
   useEffect(() => {
     fetchAll()
-    const interval = setInterval(fetchAll, refreshInterval)
+    // Longer interval when hidden (60s active, 5min hidden)
+    const effectiveInterval = isVisible ? refreshInterval : 300000
+    const interval = setInterval(fetchAll, effectiveInterval)
     return () => clearInterval(interval)
-  }, [fetchAll, refreshInterval])
+  }, [fetchAll, refreshInterval, isVisible])
 
   useEffect(() => {
     fetchAlpha()

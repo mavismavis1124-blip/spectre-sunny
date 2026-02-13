@@ -1684,4 +1684,11 @@ const DataTabs = ({ token, isExpanded = false, setIsExpanded }) => {
   )
 }
 
-export default DataTabs
+export default React.memo(DataTabs, (prevProps, nextProps) => {
+  // Custom comparison - only re-render if token actually changes
+  return (
+    prevProps.token?.address === nextProps.token?.address &&
+    prevProps.token?.networkId === nextProps.token?.networkId &&
+    prevProps.chartViewMode === nextProps.chartViewMode
+  )
+})

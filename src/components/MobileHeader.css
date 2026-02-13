@@ -19,8 +19,8 @@
     z-index: 150;
     padding-top: env(safe-area-inset-top, 0px);
     background: rgba(7, 6, 10, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-bottom: none;
   }
 
@@ -189,8 +189,8 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     background: rgba(15, 14, 22, 0.97);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),

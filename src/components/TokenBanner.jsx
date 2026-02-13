@@ -663,4 +663,7 @@ const TokenBanner = ({ token: propToken, isInWatchlist, addToWatchlist, removeFr
   )
 }
 
-export default TokenBanner
+export default React.memo(TokenBanner, (prevProps, nextProps) => {
+  // Only re-render if token address changes
+  return prevProps.token?.address === nextProps.token?.address
+})

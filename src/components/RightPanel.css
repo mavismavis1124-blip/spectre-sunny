@@ -727,7 +727,7 @@
   width: calc(200% + 12px);
   margin-top: 8px;
   background: linear-gradient(145deg, rgba(18, 18, 26, 0.98) 0%, rgba(12, 12, 16, 0.99) 100%);
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(8px);
   border: 1px solid rgba(139, 92, 246, 0.15);
   border-radius: var(--radius-xl);
   padding: 14px;

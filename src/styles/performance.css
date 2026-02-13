@@ -1,0 +1,64 @@
+/**
+ * Performance Optimizations - Animation Throttling
+ * Reduces CPU/GPU load while maintaining visual polish
+ */
+
+/* Reduce animation frequencies for better performance */
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.02); opacity: 0.5; }
+}
+
+@keyframes glow {
+  0%, 100% { filter: drop-shadow(0 0 5px currentColor); }
+  50% { filter: drop-shadow(0 0 15px currentColor); }
+}
+
+/* Slower, more performant animation speeds */
+.pulse-slow {
+  animation: pulse 4s ease-in-out infinite;
+}
+
+.breathe-slow {
+  animation: breathe 6s ease-in-out infinite;
+}
+
+.glow-slow {
+  animation: glow 5s ease-in-out infinite;
+}
+
+/* Pause animations when document is hidden (background tab) */
+body[data-document-hidden="true"] .pulse-slow,
+body[data-document-hidden="true"] .breathe-slow,
+body[data-document-hidden="true"] .glow-slow,
+body[data-document-hidden="true"] [class*="pulse"],
+body[data-document-hidden="true"] [class*="breathe"],
+body[data-document-hidden="true"] [class*="glow"] {
+  animation-play-state: paused !important;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* GPU acceleration hints for heavy elements */
+.gpu-accelerated {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Contain layout for complex components */
+.layout-contained {
+  contain: layout style paint;
+}

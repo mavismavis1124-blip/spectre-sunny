@@ -3694,4 +3694,14 @@ const TradingChart = ({ chartViewMode = 'trading', setChartViewMode, token, stat
   )
 }
 
-export default TradingChart
+export default React.memo(TradingChart, (prevProps, nextProps) => {
+  // Custom comparison for performance - only re-render if critical props change
+  return (
+    prevProps.token?.address === nextProps.token?.address &&
+    prevProps.token?.networkId === nextProps.token?.networkId &&
+    prevProps.chartViewMode === nextProps.chartViewMode &&
+    prevProps.isCollapsed === nextProps.isCollapsed &&
+    prevProps.dayMode === nextProps.dayMode &&
+    prevProps.livePrice === nextProps.livePrice
+  )
+})

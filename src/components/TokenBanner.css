@@ -41,7 +41,7 @@
   pointer-events: none;
   z-index: 0;
   animation: glowDrift 5s ease-in-out infinite alternate;
-  filter: blur(20px);
+  filter: blur(8px);
 }
 
 .token-banner-glow-secondary {
@@ -710,7 +710,7 @@
   position: fixed;
   min-width: 200px;
   background: rgba(12, 12, 16, 0.98);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
   border: 1px solid rgba(var(--token-rgb), 0.15);
   border-radius: var(--radius-lg);
   padding: var(--sp-2);

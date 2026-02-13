@@ -9,6 +9,7 @@ import './i18n'
 import './index.css'
 import './styles/app-store-ready.css'
 import './styles/mobile-2026.css'
+import './styles/performance.css'
 
 class AppErrorBoundary extends React.Component {
   state = { hasError: false, error: null }
@@ -66,6 +67,13 @@ class AppErrorBoundary extends React.Component {
     return this.props.children
   }
 }
+
+// Document visibility tracking for animation control
+document.addEventListener('visibilitychange', () => {
+  document.body.setAttribute('data-document-hidden', String(document.hidden))
+})
+// Initialize state
+document.body.setAttribute('data-document-hidden', 'false')
 
 const rootEl = document.getElementById('root')
 if (!rootEl) {

@@ -533,4 +533,7 @@ const ChainVolumeBar = () => {
   )
 }
 
-export default ChainVolumeBar
+export default React.memo(ChainVolumeBar, (prevProps, nextProps) => {
+  // Only re-render if timeframe changes
+  return prevProps.timeframe === nextProps.timeframe
+})
