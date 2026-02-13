@@ -259,8 +259,7 @@ const generateTraderInsight = (hourlyData, chainTotals, dominantChain) => {
   }
 }
 
-// ChainVolumeBar doesn't need custom comparison - it has no props that change frequently
-const ChainVolumeBar = React.memo(() => {
+const ChainVolumeBar = () => {
   const { t } = useTranslation()
   const { fmtLarge } = useCurrency()
   const [timeframe, setTimeframe] = useState(24)
@@ -320,7 +319,7 @@ const ChainVolumeBar = React.memo(() => {
     return calculateNarrativeRankings(chainTotals, hourlyData)
   }, [chainTotals, hourlyData])
   
-  // Handle hover with useCallback
+  // Handle hover
   const handleHover = useCallback((hourData, event) => {
     setHoveredHour(hourData)
     const rect = event.currentTarget.getBoundingClientRect()
@@ -330,10 +329,6 @@ const ChainVolumeBar = React.memo(() => {
       y: rect.top - containerRect.top
     })
   }, [])
-  
-  // Memoized handlers
-  const handleSetTimeframe = useCallback((tf) => setTimeframe(tf), [])
-  const handleToggleRankings = useCallback(() => setShowRankings(prev => !prev), [])
   
   // Get intensity (0-1) based on volume relative to chain average
   const getIntensity = (chainId, volume) => {
@@ -368,7 +363,7 @@ const ChainVolumeBar = React.memo(() => {
             <button
               key={tf.value}
               className={`cvb-tf-btn ${timeframe === tf.value ? 'active' : ''}`}
-              onClick={() => handleSetTimeframe(tf.value)}
+              onClick={() => setTimeframe(tf.value)}
             >
               {tf.label}
             </button>
@@ -481,7 +476,7 @@ const ChainVolumeBar = React.memo(() => {
       <div className={`cvb-narrative-rankings ${showRankings ? 'expanded' : 'collapsed'}`}>
         <button 
           className="rankings-toggle"
-          onClick={handleToggleRankings}
+          onClick={() => setShowRankings(!showRankings)}
         >
           <span className="rankings-toggle-icon">🤖</span>
           <span className="rankings-toggle-label">{t('chainVolume.aiAnalysis')}</span>
@@ -536,6 +531,6 @@ const ChainVolumeBar = React.memo(() => {
       </div>
     </div>
   )
-})
+}
 
 export default ChainVolumeBar

@@ -319,7 +319,7 @@ body:has(.storybook-overlay) header.header {
   gap: 20px;
   padding: 10px 24px;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 50px;
   animation: tickerSlideIn 0.6s ease 0.3s backwards;
@@ -442,7 +442,7 @@ body:has(.storybook-overlay) header.header {
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  filter: blur(12px);
+  filter: blur(60px);
   opacity: 0.4;
   animation: glowPulse 3s ease-in-out infinite;
   z-index: 0;
@@ -742,7 +742,7 @@ body:has(.storybook-overlay) header.header {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(var(--brand-rgb), 0.2);
   border-radius: 12px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
   position: relative;
   overflow: hidden;
 }
@@ -1035,7 +1035,7 @@ body:has(.storybook-overlay) header.header {
   /* Glassmorphic background for readability */
   padding: 48px;
   background: rgba(10, 10, 15, 0.7);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -1105,7 +1105,7 @@ body:has(.storybook-overlay) header.header {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid;
   border-radius: 8px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
 }
 
 .storybook-stat-label {
@@ -1480,7 +1480,7 @@ body:has(.storybook-overlay) header.header {
 
 .storybook-overlay.day-mode .storybook-chapter-content {
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
   border-color: rgba(0, 0, 0, 0.08);
 }
 

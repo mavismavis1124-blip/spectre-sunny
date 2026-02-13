@@ -887,7 +887,7 @@ body:has(.fullscreen-bubbles) .ai-fab {
   background: rgba(15, 15, 20, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-lg);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   min-width: 240px;
   padding: 8px 0;

@@ -457,8 +457,8 @@ html, body {
 .glass-card,
 [class*="glass-"] {
   background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(8px) saturate(150%);
-  -webkit-backdrop-filter: blur(8px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   border-radius: 16px;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08) inset,

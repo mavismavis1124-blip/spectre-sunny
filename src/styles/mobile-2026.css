@@ -652,7 +652,7 @@
   .cinema-hero-logo-glow {
     width: 70px !important;
     height: 70px !important;
-    filter: blur(8px) !important;
+    filter: blur(24px) !important;
   }
 
   .cinema-hero-logo-wrap {
@@ -1114,7 +1114,7 @@
   .cinematic-hero-logo-glow {
     width: 70px !important;
     height: 70px !important;
-    filter: blur(8px) !important;
+    filter: blur(24px) !important;
   }
 
   .cinematic-hero-logo {
@@ -4079,8 +4079,8 @@
     padding: 3px 4px !important;
     height: 40px;
     background: rgba(18, 18, 22, 0.95);
-    backdrop-filter: blur(8px) saturate(150%);
-    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
     border-radius: 20px;
     box-shadow:
       0 0 0 1px rgba(255, 255, 255, 0.06) inset,
@@ -4969,8 +4969,8 @@
      50px blur + saturate(200%) + brightness(1.1) is GPU murder.
      Replace with lightweight translucent solid background. */
   .mobile-bottom-nav-inner {
-    backdrop-filter: blur(6px) saturate(130%) !important;
-    -webkit-backdrop-filter: blur(6px) saturate(130%) !important;
+    backdrop-filter: blur(16px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(130%) !important;
   }
 
   /* ── 3. GLASS SELECT DROPDOWN — kill blur on popup ── */

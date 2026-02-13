@@ -5,7 +5,7 @@
  * 
  * NOW WITH REAL-TIME TRADES FROM CODEX API
  */
-import React, { useState, useMemo, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
+import React, { useState, useMemo, useEffect, useLayoutEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLatestTrades, useTokenDetails } from '../hooks/useCodexData'
 import { getTokenPriceBySymbol } from '../services/codexApi'
@@ -148,54 +148,9 @@ const getMakerType = (address, txType) => {
   return types[hash % types.length]
 }
 
-// Memoized formatter functions to prevent recreating on each render
-const useFormatters = () => {
-  const formatAge = useCallback((date) => {
-    if (!date || !(date instanceof Date) || isNaN(date)) return '-'
-    
-    const now = new Date()
-    const diffMs = now - date
-    const diffSecs = Math.floor(diffMs / 1000)
-    const diffMins = Math.floor(diffSecs / 60)
-    const diffHours = Math.floor(diffMins / 60)
-    const diffDays = Math.floor(diffHours / 24)
-    
-    if (diffSecs < 60) return `${diffSecs}s ago`
-    if (diffMins < 60) return `${diffMins}m ago`
-    if (diffHours < 24) return `${diffHours}h ago`
-    if (diffDays < 30) return `${diffDays}d ago`
-    
-    return `${Math.floor(diffDays / 30)}mo ago`
-  }, [])
-
-  const formatDate = useCallback((date) => {
-    if (!date || !(date instanceof Date) || isNaN(date)) return '-'
-    
-    const day = date.getDate()
-    const month = date.toLocaleString('en-US', { month: 'short' })
-    const hours = date.getHours().toString().padStart(2, '0')
-    const minutes = date.getMinutes().toString().padStart(2, '0')
-    const seconds = date.getSeconds().toString().padStart(2, '0')
-    
-    return `${day} ${month} ${hours}:${minutes}:${seconds}`
-  }, [])
-
-  return { formatAge, formatDate }
-}
 
 
-
-// Custom comparison for DataTabs - only re-render when token identity changes
-const areDataTabsPropsEqual = (prevProps, nextProps) => {
-  if (prevProps.isExpanded !== nextProps.isExpanded) return false
-  // Deep compare token - only address and networkId matter for data
-  if (prevProps.token?.address !== nextProps.token?.address) return false
-  if (prevProps.token?.networkId !== nextProps.token?.networkId) return false
-  // setIsExpanded is a stable callback from parent
-  return true
-}
-
-const DataTabs = React.memo(({ token, isExpanded = false, setIsExpanded }) => {
+const DataTabs = ({ token, isExpanded = false, setIsExpanded }) => {
   const { t } = useTranslation()
   const { fmtPrice, fmtLarge } = useCurrency()
   const [activeTab, setActiveTab] = useState('transactions')
@@ -304,21 +259,6 @@ const DataTabs = React.memo(({ token, isExpanded = false, setIsExpanded }) => {
   const ethMenuRef = useRef(null)
   const makerMenuRef = useRef(null)
   const { triggerCopyToast } = useCopyToast()
-
-  // Memoized event handlers to prevent unnecessary re-renders
-  const handleToggleExpand = useCallback(() => setIsExpanded(!isExpanded), [isExpanded, setIsExpanded])
-  const handleRefreshTrades = useCallback(() => refresh(), [refresh])
-  const handleTabChange = useCallback((tabId, e) => {
-    if (e) {
-      e.preventDefault()
-      e.stopPropagation()
-    }
-    scrollPositionRef.current = window.scrollY
-    setActiveTab(tabId)
-  }, [])
-  const handleToggleDateMode = useCallback(() => setShowDateMode(prev => !prev), [])
-  const handleToggleAmountMode = useCallback(() => setShowAmountMode(prev => !prev), [])
-  const handleTogglePriceMode = useCallback(() => setShowPriceMode(prev => !prev), [])
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -1742,6 +1682,6 @@ const DataTabs = React.memo(({ token, isExpanded = false, setIsExpanded }) => {
       
     </div>
   )
-}, areDataTabsPropsEqual)
+}
 
 export default DataTabs

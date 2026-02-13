@@ -71,7 +71,6 @@ body:has(.app.app-day-mode)::after {
   overflow: hidden;
   position: relative;
   z-index: 1;
-  contain: layout style; /* GPU optimization for main content area */
 }
 
 .app-main-content > * {
@@ -224,8 +223,6 @@ body:has(.app.app-day-mode)::after {
   overflow: visible;
   /* Gradient behind left column so glassmorphism blur is visible */
   background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-surface) 50%, var(--bg-base) 100%);
-  contain: layout style paint; /* GPU containment for better scroll performance */
-  will-change: transform; /* Optimize for scrolling */
 }
 
 .panel-left .panel-content {
@@ -298,8 +295,6 @@ body:has(.app.app-day-mode)::after {
   top: calc(74px + 56px + var(--sp-3)); /* Header + Ticker + spacing */
   transition: all 0.2s ease;
   overflow: visible;
-  contain: layout style paint; /* GPU containment for better performance */
-  will-change: transform; /* Optimize for stickiness */
 }
 
 .panel-right .panel-content {
@@ -454,9 +449,8 @@ body:has(.app.app-day-mode)::after {
   gap: 10px;
   padding: 14px 24px;
   background: rgba(16, 24, 20, 0.9);
-  /* PERFORMANCE: Reduced from 24px to 8px for GPU efficiency */
-  backdrop-filter: blur(8px) saturate(180%);
-  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   color: rgba(255, 255, 255, 0.95);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -468,7 +462,6 @@ body:has(.app.app-day-mode)::after {
     0 20px 50px rgba(0, 0, 0, 0.5),
     0 0 40px rgba(52, 211, 153, 0.12);
   animation: toastIn 0.2s ease-out;
-  will-change: transform;
   z-index: 10001;
 }
 

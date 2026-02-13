@@ -61,7 +61,7 @@
   width: 650px;
   height: 650px;
   background: rgba(var(--sentiment-orb1), 0.10);
-  filter: blur(20px);
+  filter: blur(120px);
   transition: background 4s ease;
 }
 
@@ -69,7 +69,7 @@
   width: 650px;
   height: 650px;
   background: rgba(var(--sentiment-orb2), 0.08);
-  filter: blur(20px);
+  filter: blur(120px);
   transition: background 4s ease;
 }
 
@@ -443,7 +443,7 @@
 }
 .welcome-page.day-mode .welcome-widget-fear-greed-compact::before {
   opacity: 0.28;
-  filter: blur(10px);
+  filter: blur(28px);
 }
 .welcome-page.day-mode .welcome-widget-fng-compact-label {
   color: var(--wp-day-muted);
@@ -546,7 +546,7 @@
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid var(--wp-day-border);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
 }
 .welcome-page.day-mode .welcome-widget-us-market:hover {
   border-color: rgba(0, 0, 0, 0.12);
@@ -605,7 +605,7 @@
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid var(--wp-day-border);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
 }
 .welcome-page.day-mode .welcome-widget-cme-gap:hover {
   border-color: rgba(0, 0, 0, 0.12);

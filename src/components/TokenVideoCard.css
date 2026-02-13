@@ -38,7 +38,7 @@
     rgba(12, 10, 18, 0.98) 100%);
   border: 1px solid rgba(var(--card-brand-rgb), 0.15);
   border-radius: 20px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
 }
 
 /* Glow effect */

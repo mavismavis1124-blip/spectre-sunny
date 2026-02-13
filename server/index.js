@@ -77,23 +77,18 @@ app.use(express.json());
 /**
  * In-memory cache for Codex API responses to reduce API usage.
  * TTL in ms; entries are pruned on read when expired.
- * Optimized for lower API load and better performance.
  */
-// Token cache TTLs - increased for less volatile data
-const CACHE_TTL_PRICES_MS = 60 * 1000;        // 60s for batch prices (was 30s)
-const CACHE_TTL_DETAILS_MS = 60 * 1000;       // 60s for token details (was 15s)
-const CACHE_TTL_TRENDING_MS = 5 * 60 * 1000;  // 5 min for trending (was 2min)
-// Stock cache TTLs - increased to reduce API load
-const CACHE_TTL_STOCK_QUOTES_MS = 60 * 1000;  // 60s for quotes (was 30s)
-const CACHE_TTL_STOCK_SEARCH_MS = 5 * 60 * 1000;  // 5 min for search (was 1min)
-const CACHE_TTL_STOCK_CANDLES_MS = 10 * 60 * 1000;  // 10 min for candles (was 5min)
-const CACHE_TTL_STOCK_MOVERS_MS = 5 * 60 * 1000;  // 5 min for movers (was 2min)
-const CACHE_TTL_STOCK_NEWS_MS = 10 * 60 * 1000;  // 10 min for news (was 5min)
-const CACHE_TTL_STOCK_SECTORS_MS = 15 * 60 * 1000;  // 15 min for sectors (was 5min)
-const CACHE_TTL_WHISPER_MS = 10 * 60 * 1000;       // 10 min for whisper search (was 5min)
-// Market data cache TTLs
-const CACHE_TTL_MARKET_DATA_MS = 60 * 1000;  // 60s for funding/oi/ls/global data
-const CACHE_TTL_TICKERS_MS = 60 * 1000;      // 60s for ticker data
+const CACHE_TTL_PRICES_MS = 30 * 1000;        // 30s for batch prices (real-time feel)
+const CACHE_TTL_DETAILS_MS = 15 * 1000;       // 15s for token details (near real-time)
+const CACHE_TTL_TRENDING_MS = 2 * 60 * 1000;  // 2 min for trending
+// Stock cache TTLs
+const CACHE_TTL_STOCK_QUOTES_MS = 30 * 1000;
+const CACHE_TTL_STOCK_SEARCH_MS = 60 * 1000;
+const CACHE_TTL_STOCK_CANDLES_MS = 5 * 60 * 1000;
+const CACHE_TTL_STOCK_MOVERS_MS = 2 * 60 * 1000;
+const CACHE_TTL_STOCK_NEWS_MS = 5 * 60 * 1000;
+const CACHE_TTL_STOCK_SECTORS_MS = 5 * 60 * 1000;
+const CACHE_TTL_WHISPER_MS = 5 * 60 * 1000;       // 5 min for whisper search LLM parse
 
 const cache = {
   prices: new Map(),   // key: sorted symbols string -> { data, expires }
@@ -3562,10 +3557,11 @@ app.get('/api/token/trades', async (req, res) => {
 // ═══════════════════════════════════════════════════════════
 
 const marketCache = new Map();
+const MARKET_CACHE_TTL = 60000; // 60 seconds
 
 function getMarketCache(key) {
   const entry = marketCache.get(key);
-  if (entry && Date.now() - entry.ts < CACHE_TTL_MARKET_DATA_MS) return entry.data;
+  if (entry && Date.now() - entry.ts < MARKET_CACHE_TTL) return entry.data;
   return null;
 }
 function setMarketCache(key, data) {
@@ -3576,10 +3572,7 @@ function setMarketCache(key, data) {
 app.get('/api/market/funding', async (req, res) => {
   try {
     const cached = getMarketCache('funding');
-    if (cached) {
-      res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
-      return res.json(cached);
-    }
+    if (cached) return res.json(cached);
     const [btcRes, ethRes] = await Promise.all([
       fetch('https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&limit=1'),
       fetch('https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&limit=1'),
@@ -3592,12 +3585,10 @@ app.get('/api/market/funding', async (req, res) => {
       ethTime: ethData[0]?.fundingTime,
     };
     setMarketCache('funding', result);
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
     res.json(result);
   } catch (err) {
     console.error('Funding rate error:', err.message);
     const cached = getMarketCache('funding');
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
     res.json(cached || { btc: 0, eth: 0 });
   }
 });
@@ -3606,10 +3597,7 @@ app.get('/api/market/funding', async (req, res) => {
 app.get('/api/market/oi', async (req, res) => {
   try {
     const cached = getMarketCache('oi');
-    if (cached) {
-      res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
-      return res.json(cached);
-    }
+    if (cached) return res.json(cached);
     const [btcRes, ethRes] = await Promise.all([
       fetch('https://fapi.binance.com/fapi/v1/openInterest?symbol=BTCUSDT'),
       fetch('https://fapi.binance.com/fapi/v1/openInterest?symbol=ETHUSDT'),
@@ -3620,11 +3608,9 @@ app.get('/api/market/oi', async (req, res) => {
       eth: ethData.openInterest ? parseFloat(ethData.openInterest) : 0,
     };
     setMarketCache('oi', result);
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
     res.json(result);
   } catch (err) {
     console.error('OI error:', err.message);
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
     res.json(getMarketCache('oi') || { btc: 0, eth: 0 });
   }
 });
@@ -3633,10 +3619,7 @@ app.get('/api/market/oi', async (req, res) => {
 app.get('/api/market/ls-ratio', async (req, res) => {
   try {
     const cached = getMarketCache('lsRatio');
-    if (cached) {
-      res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
-      return res.json(cached);
-    }
+    if (cached) return res.json(cached);
     const response = await fetch('https://fapi.binance.com/futures/data/globalLongShortAccountRatio?symbol=BTCUSDT&period=5m&limit=1');
     const data = await response.json();
     const entry = data[0];
@@ -3647,11 +3630,9 @@ app.get('/api/market/ls-ratio', async (req, res) => {
       timestamp: entry?.timestamp,
     };
     setMarketCache('lsRatio', result);
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
     res.json(result);
   } catch (err) {
     console.error('L/S ratio error:', err.message);
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
     res.json(getMarketCache('lsRatio') || { ratio: 1, longs: 50, shorts: 50 });
   }
 });
@@ -3660,10 +3641,7 @@ app.get('/api/market/ls-ratio', async (req, res) => {
 app.get('/api/market/global', async (req, res) => {
   try {
     const cached = getMarketCache('global');
-    if (cached) {
-      res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
-      return res.json(cached);
-    }
+    if (cached) return res.json(cached);
     const url = `${COINGECKO_BASE}/global`;
     const opts = { headers: {} };
     if (COINGECKO_API_KEY) opts.headers[COINGECKO_HEADER_KEY] = COINGECKO_API_KEY;
@@ -3680,11 +3658,9 @@ app.get('/api/market/global', async (req, res) => {
       updatedAt: d?.updated_at || 0,
     };
     setMarketCache('global', result);
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
     res.json(result);
   } catch (err) {
     console.error('Global market error:', err.message);
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_MARKET_DATA_MS / 1000)}`);
     res.json(getMarketCache('global') || { totalMarketCap: 0, btcDominance: 56, ethDominance: 10 });
   }
 });
@@ -3693,10 +3669,7 @@ app.get('/api/market/global', async (req, res) => {
 app.get('/api/market/tickers', async (req, res) => {
   try {
     const cached = getMarketCache('tickers');
-    if (cached) {
-      res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_TICKERS_MS / 1000)}`);
-      return res.json(cached);
-    }
+    if (cached) return res.json(cached);
     const response = await fetch('https://api.binance.com/api/v3/ticker/24hr');
     const data = await response.json();
     // Filter for USDT pairs, sort by absolute price change
@@ -3724,11 +3697,9 @@ app.get('/api/market/tickers', async (req, res) => {
       totalPairs: usdtPairs.length,
     };
     setMarketCache('tickers', result);
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_TICKERS_MS / 1000)}`);
     res.json(result);
   } catch (err) {
     console.error('Tickers error:', err.message);
-    res.setHeader('Cache-Control', `public, max-age=${Math.floor(CACHE_TTL_TICKERS_MS / 1000)}`);
     res.json(getMarketCache('tickers') || { topGainers: [], topLosers: [], totalPairs: 0 });
   }
 });

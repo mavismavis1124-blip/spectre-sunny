@@ -12,34 +12,7 @@ import { useChartData, useTokenDetails } from '../hooks/useCodexData'
 import { resolveTradingViewSymbol, resolveDexTradingViewSymbol, searchTradingViewSymbol } from '../lib/tradingViewSymbols'
 import './TradingChart.css'
 
-// Custom comparison function for TradingChart props
-const areChartPropsEqual = (prevProps, nextProps) => {
-  // Always re-render if view mode changes
-  if (prevProps.chartViewMode !== nextProps.chartViewMode) return false
-  if (prevProps.isCollapsed !== nextProps.isCollapsed) return false
-  if (prevProps.dayMode !== nextProps.dayMode) return false
-  if (prevProps.embedMode !== nextProps.embedMode) return false
-  if (prevProps.embedHeight !== nextProps.embedHeight) return false
-  if (prevProps.initialChartType !== nextProps.initialChartType) return false
-  
-  // Deep compare token - only re-render if address or network changes
-  if (prevProps.token?.address !== nextProps.token?.address) return false
-  if (prevProps.token?.networkId !== nextProps.token?.networkId) return false
-  if (prevProps.token?.symbol !== nextProps.token?.symbol) return false
-  
-  // Live price changes should NOT trigger full re-render (handled internally)
-  // Stats comparison - only if mcap/volume/athPrice changed
-  const prevStats = prevProps.stats || {}
-  const nextStats = nextProps.stats || {}
-  if (prevStats.mcap !== nextStats.mcap) return false
-  if (prevStats.volume !== nextStats.volume) return false
-  if (prevStats.athPrice !== nextStats.athPrice) return false
-  
-  // Function refs - always treat as equal (useCallback in parent)
-  return true
-}
-
-const TradingChart = React.memo(({ chartViewMode = 'trading', setChartViewMode, token, stats, isCollapsed = false, embedHeight, dayMode, livePrice, initialChartType, embedMode = false }) => {
+const TradingChart = ({ chartViewMode = 'trading', setChartViewMode, token, stats, isCollapsed = false, embedHeight, dayMode, livePrice, initialChartType, embedMode = false }) => {
   const { t } = useTranslation()
   const { fmtPrice: hookFmtPrice, fmtLarge: hookFmtLarge, currencySymbol } = useCurrency()
   // Fetch real token data including circulating supply
@@ -3719,6 +3692,6 @@ const TradingChart = React.memo(({ chartViewMode = 'trading', setChartViewMode, 
       )}
     </div>
   )
-}, areChartPropsEqual)
+}
 
 export default TradingChart

@@ -15,9 +15,8 @@
   border-radius: 20px;
   padding: 32px 36px;
   position: relative;
-  /* PERFORMANCE: Reduced from 60px to 16px for GPU efficiency */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(60px);
+  -webkit-backdrop-filter: blur(60px);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -339,8 +338,8 @@
   pointer-events: auto;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   font-family: inherit;
   box-shadow: 
     0 2px 8px rgba(0, 0, 0, 0.2),
@@ -491,8 +490,8 @@
     0 4px 6px rgba(0, 0, 0, 0.15),
     0 16px 40px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
   animation: tooltipAppear 0.15s ease-out;
   pointer-events: none;
 }

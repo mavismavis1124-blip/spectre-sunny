@@ -3,7 +3,7 @@
  * Figma Reference: Frame 2085654846
  * Professional institutional investor platform
  */
-import React, { useState, useEffect, useCallback, useMemo, createContext, useContext, lazy, Suspense } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, createContext, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import i18n from './i18n'
@@ -17,41 +17,28 @@ import DataTabs from './components/DataTabs'
 import RightPanel from './components/RightPanel'
 // AIAssistant removed — Spectre Egg agent replaces Monarch
 import ParticleBackground from './components/ParticleBackground'
-// Core layout components (eager loaded for fast initial render)
+import WelcomePage from './components/WelcomePage'
 import NavigationSidebar from './components/NavigationSidebar'
-import LoadingSpinner from './components/LoadingSpinner'
-import ErrorBoundary from './components/ErrorBoundary'
-
-// Page components - lazy loaded to reduce initial bundle size
-const WelcomePage = lazy(() => import('./components/WelcomePage'))
-const StructureGuidePage = lazy(() => import('./components/StructureGuidePage'))
-const GlossaryPage = lazy(() => import('./components/GlossaryPage'))
-const FearGreedPage = lazy(() => import('./components/FearGreedPage'))
-const SocialZonePage = lazy(() => import('./components/SocialZonePage'))
-const MediaCenterPage = lazy(() => import('./components/MediaCenterPage'))
-const XBubblesPage = lazy(() => import('./components/XBubblesPage'))
-const XDashPage = lazy(() => import('./components/XDashPage'))
-const WatchlistsPage = lazy(() => import('./components/WatchlistsPage'))
-const ROICalculatorPage = lazy(() => import('./components/ROICalculatorPage'))
-const LogsPage = lazy(() => import('./components/LogsPage'))
-const ResearchZoneLite = lazy(() => import('./components/ResearchZoneLite'))
-const GMDashboard = lazy(() => import('./components/GMDashboard'))
-const MarketAnalyticsPage = lazy(() => import('./components/MarketAnalyticsPage'))
-const AIMarketAnalysisPage = lazy(() => import('./components/AIMarketAnalysisPage'))
-const CategoriesPage = lazy(() => import('./components/CategoriesPage'))
-const HeatmapsPage = lazy(() => import('./components/HeatmapsPage'))
-const BubblesPage = lazy(() => import('./components/BubblesPage'))
-const AIChartsPage = lazy(() => import('./components/AIChartsPage'))
-const AIChartsLabPage = lazy(() => import('./components/AIChartsLabPage'))
-const DiscoverPage = lazy(() => import('./components/DiscoverPage'))
-
-// Preload critical pages on idle
-if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-  requestIdleCallback(() => {
-    import('./components/WelcomePage')
-    import('./components/DiscoverPage')
-  }, { timeout: 2000 })
-}
+import StructureGuidePage from './components/StructureGuidePage'
+import GlossaryPage from './components/GlossaryPage'
+import FearGreedPage from './components/FearGreedPage'
+import SocialZonePage from './components/SocialZonePage'
+import MediaCenterPage from './components/MediaCenterPage'
+import XBubblesPage from './components/XBubblesPage'
+import XDashPage from './components/XDashPage'
+import WatchlistsPage from './components/WatchlistsPage'
+import ROICalculatorPage from './components/ROICalculatorPage'
+import LogsPage from './components/LogsPage'
+import ResearchZoneLite from './components/ResearchZoneLite'
+import GMDashboard from './components/GMDashboard'
+import MarketAnalyticsPage from './components/MarketAnalyticsPage'
+import AIMarketAnalysisPage from './components/AIMarketAnalysisPage'
+import CategoriesPage from './components/CategoriesPage'
+import HeatmapsPage from './components/HeatmapsPage'
+import BubblesPage from './components/BubblesPage'
+import AIChartsPage from './components/AIChartsPage'
+import AIChartsLabPage from './components/AIChartsLabPage'
+import DiscoverPage from './components/DiscoverPage'
 // Spectre Egg & AI Agent system
 import useEggState, { EGG_STATES } from './components/egg/useEggState'
 import SpectreEgg from './components/egg/SpectreEgg'
@@ -576,9 +563,7 @@ function App() {
           <ParticleBackground />
           {showGMDashboard && (
             <GMErrorBoundary onClose={() => navigateByPageId('research-platform')}>
-              <Suspense fallback={<LoadingSpinner />}>
-                <GMDashboard profile={profile} onClose={() => navigateByPageId('research-platform')} />
-              </Suspense>
+              <GMDashboard profile={profile} onClose={() => navigateByPageId('research-platform')} />
             </GMErrorBoundary>
           )}
           <NavigationSidebar
@@ -658,116 +643,82 @@ function App() {
           {/* Main Content – fills remaining space when nav opens/closes */}
           <div className="app-main-content">
           {currentPage === 'research-zone' ? (
-            <ErrorBoundary onClose={() => navigateByPageId('research-platform')}>
-              <Suspense fallback={<LoadingSpinner />}>
-                <ResearchZoneLite
-                  initialSymbol={researchZoneToken?.symbol}
-                  initialToken={researchZoneToken}
-                  dayMode={researchZoneDayMode}
-                  onDayModeChange={setResearchZoneDayMode}
-                  cinemaMode={appDisplayMode === 'cinema'}
-                  marketMode={marketMode}
-                />
-              </Suspense>
-            </ErrorBoundary>
+            <ResearchZoneLite
+              initialSymbol={researchZoneToken?.symbol}
+              initialToken={researchZoneToken}
+              dayMode={researchZoneDayMode}
+              onDayModeChange={setResearchZoneDayMode}
+              cinemaMode={appDisplayMode === 'cinema'}
+              marketMode={marketMode}
+            />
           ) : currentPage === 'structure-guide' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <StructureGuidePage />
-            </Suspense>
+            <StructureGuidePage />
           ) : currentPage === 'glossary' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <GlossaryPage
-                dayMode={welcomeDayMode}
-                onBack={() => handlePageChange('research-platform')}
-              />
-            </Suspense>
+            <GlossaryPage
+              dayMode={welcomeDayMode}
+              onBack={() => handlePageChange('research-platform')}
+            />
           ) : currentPage === 'fear-greed' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <FearGreedPage
-                dayMode={welcomeDayMode}
-                onBack={() => handlePageChange('research-platform')}
-                marketMode={marketMode}
-              />
-            </Suspense>
+            <FearGreedPage
+              dayMode={welcomeDayMode}
+              onBack={() => handlePageChange('research-platform')}
+              marketMode={marketMode}
+            />
           ) : currentPage === 'discover' ? (
-            <ErrorBoundary onClose={() => navigateByPageId('research-platform')}>
-              <Suspense fallback={<LoadingSpinner />}>
-                <DiscoverPage
-                  dayMode={welcomeDayMode}
-                  marketMode={marketMode}
-                  selectToken={(tokenData) => {
-                    selectToken(tokenData)
-                    navigateTo('token')
-                  }}
-                  onOpenResearchZone={(tokenData) => {
-                    selectToken(tokenData)
-                    setResearchZoneToken(tokenData)
-                    handlePageChange('research-zone')
-                  }}
-                  addToWatchlist={addToWatchlist}
-                  isInWatchlist={isInWatchlist}
-                />
-              </Suspense>
-            </ErrorBoundary>
+            <DiscoverPage
+              dayMode={welcomeDayMode}
+              marketMode={marketMode}
+              selectToken={(tokenData) => {
+                selectToken(tokenData)
+                navigateTo('token')
+              }}
+              onOpenResearchZone={(tokenData) => {
+                selectToken(tokenData)
+                setResearchZoneToken(tokenData)
+                handlePageChange('research-zone')
+              }}
+              addToWatchlist={addToWatchlist}
+              isInWatchlist={isInWatchlist}
+            />
           ) : currentPage === 'categories' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <CategoriesPage
-                dayMode={welcomeDayMode}
-                onBack={() => handlePageChange('research-platform')}
-                marketMode={marketMode}
-              />
-            </Suspense>
+            <CategoriesPage
+              dayMode={welcomeDayMode}
+              onBack={() => handlePageChange('research-platform')}
+              marketMode={marketMode}
+            />
           ) : currentPage === 'heatmaps' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <HeatmapsPage
-                dayMode={welcomeDayMode}
-                onBack={() => handlePageChange('research-platform')}
-                marketMode={marketMode}
-              />
-            </Suspense>
+            <HeatmapsPage
+              dayMode={welcomeDayMode}
+              onBack={() => handlePageChange('research-platform')}
+              marketMode={marketMode}
+            />
           ) : currentPage === 'bubbles' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <BubblesPage
-                dayMode={welcomeDayMode}
-                marketMode={marketMode}
-                onBack={() => handlePageChange('research-platform')}
-              />
-            </Suspense>
+            <BubblesPage
+              dayMode={welcomeDayMode}
+              marketMode={marketMode}
+              onBack={() => handlePageChange('research-platform')}
+            />
           ) : currentPage === 'ai-charts' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <AIChartsPage
-                dayMode={welcomeDayMode}
-                onBack={() => handlePageChange('research-platform')}
-                marketMode={marketMode}
-              />
-            </Suspense>
+            <AIChartsPage
+              dayMode={welcomeDayMode}
+              onBack={() => handlePageChange('research-platform')}
+              marketMode={marketMode}
+            />
           ) : currentPage === 'ai-charts-lab' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <AIChartsLabPage
-                dayMode={welcomeDayMode}
-                onBack={() => handlePageChange('research-platform')}
-              />
-            </Suspense>
+            <AIChartsLabPage
+              dayMode={welcomeDayMode}
+              onBack={() => handlePageChange('research-platform')}
+            />
           ) : currentPage === 'logs' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <LogsPage onBack={() => handlePageChange('research-platform')} />
-            </Suspense>
+            <LogsPage onBack={() => handlePageChange('research-platform')} />
           ) : currentPage === 'social-zone' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <SocialZonePage />
-            </Suspense>
+            <SocialZonePage />
           ) : currentPage === 'ai-media-center' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <MediaCenterPage />
-            </Suspense>
+            <MediaCenterPage />
           ) : currentPage === 'x-dash' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <XDashPage />
-            </Suspense>
+            <XDashPage />
           ) : currentPage === 'x-bubbles' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <XBubblesPage />
-            </Suspense>
+            <XBubblesPage />
           ) : currentPage === 'search-engine' ? (
             <div className="search-engine-page">
               <div className="search-engine-container">
@@ -876,107 +827,95 @@ function App() {
               </div>
             </div>
           ) : currentPage === 'roi-calculator' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <ROICalculatorPage
-                dayMode={welcomeDayMode}
-                onBack={() => handlePageChange('research-platform')}
-              />
-            </Suspense>
+            <ROICalculatorPage
+              dayMode={welcomeDayMode}
+              onBack={() => handlePageChange('research-platform')}
+            />
           ) : currentPage === 'market-analytics' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <MarketAnalyticsPage
-                dayMode={welcomeDayMode}
-                onBack={() => handlePageChange('research-platform')}
-                marketMode={marketMode}
-              />
-            </Suspense>
+            <MarketAnalyticsPage
+              dayMode={welcomeDayMode}
+              onBack={() => handlePageChange('research-platform')}
+              marketMode={marketMode}
+            />
           ) : currentPage === 'ai-market-analysis' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <AIMarketAnalysisPage
-                dayMode={welcomeDayMode}
-                onBack={() => handlePageChange('research-platform')}
-              />
-            </Suspense>
+            <AIMarketAnalysisPage
+              dayMode={welcomeDayMode}
+              onBack={() => handlePageChange('research-platform')}
+            />
           ) : currentPage === 'watchlists' ? (
-            <Suspense fallback={<LoadingSpinner />}>
-              <WatchlistsPage
-                dayMode={welcomeDayMode}
-                marketMode={marketMode}
-                watchlist={watchlist}
-                watchlistName={activeWatchlist?.name ?? 'My Watchlist'}
-                watchlists={watchlists.map(w => ({ id: w.id, name: w.name, tokenCount: w.tokens?.length ?? 0, updatedAt: w.updatedAt ?? Date.now() }))}
-                activeWatchlistId={activeWatchlistId}
-                onRenameWatchlist={renameWatchlist}
-                onAddWatchlist={addWatchlist}
-                onRemoveWatchlist={removeWatchlist}
-                onSwitchWatchlist={setActiveWatchlist}
-                addToWatchlist={addToWatchlist}
-                removeFromWatchlist={removeFromWatchlist}
-                togglePinWatchlist={togglePinWatchlist}
-                reorderWatchlist={reorderWatchlist}
-                onTokenClick={(tokenData, viewMode) => {
-                  // Select the token
-                  selectToken(tokenData)
-                  // Navigate based on view mode: majors → Research Zone, on-chain → AI Screener
-                  if (viewMode === 'major') {
-                    setResearchZoneToken(tokenData)
-                    handlePageChange('research-zone')
-                  } else {
-                    // On-chain mode: go to AI Screener (token view)
-                    handlePageChange('ai-screener')
-                  }
-                }}
-              />
-            </Suspense>
+            <WatchlistsPage
+              dayMode={welcomeDayMode}
+              marketMode={marketMode}
+              watchlist={watchlist}
+              watchlistName={activeWatchlist?.name ?? 'My Watchlist'}
+              watchlists={watchlists.map(w => ({ id: w.id, name: w.name, tokenCount: w.tokens?.length ?? 0, updatedAt: w.updatedAt ?? Date.now() }))}
+              activeWatchlistId={activeWatchlistId}
+              onRenameWatchlist={renameWatchlist}
+              onAddWatchlist={addWatchlist}
+              onRemoveWatchlist={removeWatchlist}
+              onSwitchWatchlist={setActiveWatchlist}
+              addToWatchlist={addToWatchlist}
+              removeFromWatchlist={removeFromWatchlist}
+              togglePinWatchlist={togglePinWatchlist}
+              reorderWatchlist={reorderWatchlist}
+              onTokenClick={(tokenData, viewMode) => {
+                // Select the token
+                selectToken(tokenData)
+                // Navigate based on view mode: majors → Research Zone, on-chain → AI Screener
+                if (viewMode === 'major') {
+                  setResearchZoneToken(tokenData)
+                  handlePageChange('research-zone')
+                } else {
+                  // On-chain mode: go to AI Screener (token view)
+                  handlePageChange('ai-screener')
+                }
+              }}
+            />
           ) : currentView === 'welcome' ? (
-            <ErrorBoundary onClose={() => navigateByPageId('ai-screener')}>
-              <Suspense fallback={<LoadingSpinner />}>
-                <WelcomePage
-                  cinemaMode={appDisplayMode === 'cinema'}
-                  profile={profile}
-                  onProfileChange={handleProfileChange}
-                  dayMode={welcomeDayMode}
-                  marketMode={marketMode}
-                  selectToken={(tokenData) => {
-                    selectToken(tokenData)
-                    navigateTo('token')
-                  }}
-                  onOpenResearchZone={(tokenData) => {
-                    selectToken(tokenData)
-                    setResearchZoneToken(tokenData)
-                    handlePageChange('research-zone')
-                  }}
-                  onOpenAIScreener={(tokenData) => {
-                    selectToken(tokenData)
-                    navigateTo('token')
-                  }}
-                  discoverOnly={discoverOnly}
-                  watchlist={watchlist}
-                  watchlists={watchlistsSummary}
-                  activeWatchlistId={activeWatchlistId}
-                  onSwitchWatchlist={setActiveWatchlist}
-                  addToWatchlist={addToWatchlist}
-                  removeFromWatchlist={removeFromWatchlist}
-                  isInWatchlist={isInWatchlist}
-                  togglePinWatchlist={togglePinWatchlist}
-                  reorderWatchlist={reorderWatchlist}
-                  onPageChange={handlePageChange}
-                  setAssistantActions={setAssistantActions}
-                  setAssistantContext={setAssistantContext}
-                  pendingChartToken={pendingChartToken}
-                  setPendingChartToken={setPendingChartToken}
-                  pendingCommandCenterTab={pendingCommandCenterTab}
-                  setPendingCommandCenterTab={setPendingCommandCenterTab}
-                  eggStage={eggStage}
-                  eggStarted={eggStarted}
-                  eggProgress={eggProgress}
-                  agentIsBorn={agentIsBorn}
-                  agentProfile={agentProfile}
-                  onEggClick={handleEggClick}
-                  onOpenAgentChat={() => { setAgentBirthFlow(false); setAgentChatOpen(true) }}
-                />
-              </Suspense>
-            </ErrorBoundary>
+            <WelcomePage
+              cinemaMode={appDisplayMode === 'cinema'}
+              profile={profile}
+              onProfileChange={handleProfileChange}
+              dayMode={welcomeDayMode}
+              marketMode={marketMode}
+              selectToken={(tokenData) => {
+                selectToken(tokenData)
+                navigateTo('token')
+              }}
+              onOpenResearchZone={(tokenData) => {
+                selectToken(tokenData)
+                setResearchZoneToken(tokenData)
+                handlePageChange('research-zone')
+              }}
+              onOpenAIScreener={(tokenData) => {
+                selectToken(tokenData)
+                navigateTo('token')
+              }}
+              discoverOnly={discoverOnly}
+              watchlist={watchlist}
+              watchlists={watchlistsSummary}
+              activeWatchlistId={activeWatchlistId}
+              onSwitchWatchlist={setActiveWatchlist}
+              addToWatchlist={addToWatchlist}
+              removeFromWatchlist={removeFromWatchlist}
+              isInWatchlist={isInWatchlist}
+              togglePinWatchlist={togglePinWatchlist}
+              reorderWatchlist={reorderWatchlist}
+              onPageChange={handlePageChange}
+              setAssistantActions={setAssistantActions}
+              setAssistantContext={setAssistantContext}
+              pendingChartToken={pendingChartToken}
+              setPendingChartToken={setPendingChartToken}
+              pendingCommandCenterTab={pendingCommandCenterTab}
+              setPendingCommandCenterTab={setPendingCommandCenterTab}
+              eggStage={eggStage}
+              eggStarted={eggStarted}
+              eggProgress={eggProgress}
+              agentIsBorn={agentIsBorn}
+              agentProfile={agentProfile}
+              onEggClick={handleEggClick}
+              onOpenAgentChat={() => { setAgentBirthFlow(false); setAgentChatOpen(true) }}
+            />
           ) : (
             <>
               <main className={`main-layout ${isLeftPanelCollapsed ? 'left-collapsed' : ''} ${isRightPanelCollapsed ? 'right-collapsed' : ''}`}>
