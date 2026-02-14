@@ -222,6 +222,7 @@ const NavigationSidebar = ({ currentPage, onPageChange, onCollapsedChange }) => 
     { id: 'watchlists', label: t('nav.watchlists') },
     { id: 'glossary', label: t('nav.glossary') },
     { id: 'fear-greed', label: t('nav.fearGreed') },
+    { id: 'token-unlocks', label: t('nav.tokenUnlocks', 'Token Unlocks') },
     { id: 'social-zone', label: t('nav.socialZone') },
     { id: 'ai-media-center', label: t('nav.aiMediaCenter') },
     { id: 'x-dash', label: t('nav.xDash') },
