@@ -1,0 +1,142 @@
+.funding-heatmap {
+  width: 100%;
+  padding: 16px;
+}
+
+.funding-heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.funding-heatmap-cell {
+  border-radius: 12px;
+  padding: 16px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 100px;
+}
+
+.funding-heatmap-cell:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.funding-heatmap-symbol {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.funding-heatmap-rate {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.funding-heatmap-projections {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.funding-heatmap-8h,
+.funding-heatmap-annual {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.funding-heatmap-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+}
+
+.funding-heatmap-legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.funding-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.funding-legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .funding-heatmap-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+  }
+
+  .funding-heatmap-cell {
+    padding: 12px 8px;
+    min-height: 90px;
+  }
+
+  .funding-heatmap-symbol {
+    font-size: 14px;
+  }
+
+  .funding-heatmap-rate {
+    font-size: 16px;
+  }
+
+  .funding-heatmap-projections {
+    font-size: 10px;
+  }
+
+  .funding-heatmap-legend {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+}
+
+/* Day mode adjustments */
+.welcome-day-mode .funding-heatmap-cell {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.welcome-day-mode .funding-heatmap-cell:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.welcome-day-mode .funding-heatmap-empty {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.welcome-day-mode .funding-legend-item {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.welcome-day-mode .funding-heatmap-legend {
+  border-top-color: rgba(0, 0, 0, 0.1);
+}

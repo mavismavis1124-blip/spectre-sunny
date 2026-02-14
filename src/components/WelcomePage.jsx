@@ -15,6 +15,8 @@ import { useIsMobile } from '../hooks/useMediaQuery'
 import { useCuratedTokenPrices, useTrendingTokens, useTokenSearch, useBinanceTopCoinPrices } from '../hooks/useCodexData'
 import useWatchlistPrices from '../hooks/useWatchlistPrices'
 import { useMarketIntel } from '../hooks/useMarketIntel'
+import { useFearGreed } from '../hooks/useFearGreed'
+import { useMarketRegime } from '../hooks/useMarketRegime'
 // Stock market hooks and data
 import { useStockPrices, useStockTrending, useStockSearch, useMarketStatus, useMarketIndices } from '../hooks/useStockData'
 import { TOP_STOCKS, WELCOME_STOCKS as WELCOME_STOCK_SYMBOLS, STOCK_LOGOS, STOCK_DESCRIPTIONS, STOCK_SECTORS, getStockLogo } from '../constants/stockData'
@@ -35,6 +37,8 @@ import spectreIcons from '../icons/spectreIcons'
 import { CinemaWelcomeWrapper } from './cinema'
 import BriefAudioPlayer from './cinema/BriefAudioPlayer'
 import TokenStorybook from './TokenStorybook'
+import FearGreedWidget from './FearGreedWidget'
+import MarketRegimeBadge from './MarketRegimeBadge'
 import './WelcomePage.css'
 import './WelcomePage.day-mode.css'
 import './WelcomePage.cinema-mode.css'
@@ -5075,6 +5079,13 @@ const WelcomePage = ({ cinemaMode = false, profile: profileProp, onProfileChange
             />
           </div>
         </div>
+
+        {/* Fear & Greed Widget with Market Regime Badge */}
+        {!isStocks && (
+          <div className="welcome-widget-row welcome-widget-fear-greed-row">
+            <FearGreedWidget />
+          </div>
+        )}
           </div>
           <button
             type="button"

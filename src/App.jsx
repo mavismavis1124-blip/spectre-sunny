@@ -39,6 +39,8 @@ import BubblesPage from './components/BubblesPage'
 import AIChartsPage from './components/AIChartsPage'
 import AIChartsLabPage from './components/AIChartsLabPage'
 import DiscoverPage from './components/DiscoverPage'
+import FundingRatesPage from './components/FundingRatesPage'
+import DeFiYieldsPage from './components/DeFiYieldsPage'
 // Spectre Egg & AI Agent system
 import useEggState, { EGG_STATES } from './components/egg/useEggState'
 import SpectreEgg from './components/egg/SpectreEgg'
@@ -696,6 +698,17 @@ function App() {
             <BubblesPage
               dayMode={welcomeDayMode}
               marketMode={marketMode}
+              onBack={() => handlePageChange('research-platform')}
+            />
+          ) : currentPage === 'funding-rates' ? (
+            <FundingRatesPage
+              dayMode={welcomeDayMode}
+              marketMode={marketMode}
+              onBack={() => handlePageChange('research-platform')}
+            />
+          ) : currentPage === 'defi-yields' ? (
+            <DeFiYieldsPage
+              dayMode={welcomeDayMode}
               onBack={() => handlePageChange('research-platform')}
             />
           ) : currentPage === 'ai-charts' ? (

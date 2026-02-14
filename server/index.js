@@ -103,6 +103,8 @@ const cache = {
   stockNews: new Map(),
   stockSectors: new Map(),
   whisper: new Map(),        // Whisper Search LLM parse cache (5 min TTL)
+  defiYields: new Map(),     // DeFi yields cache (5 min TTL)
+  fundingRates: new Map(),   // Funding rates cache (60s TTL)
 };
 
 function getCached(map, key, ttlMs) {
@@ -1390,6 +1392,102 @@ app.get('/api/token-exchanges', async (req, res) => {
   } catch (err) {
     console.error('Token exchanges error:', err.message);
     res.status(500).json({ error: 'Failed to fetch exchanges' });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DEFI YIELDS — DeFiLlama yields API aggregator (no API key needed)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const CACHE_TTL_DEFI_YIELDS_MS = 5 * 60 * 1000; // 5 minutes
+
+/**
+ * GET /api/defi/yields
+ * Fetch yield opportunities from DeFiLlama, with filtering and sorting.
+ * Query params:
+ *   - chain: filter by chain name (e.g., ethereum, solana, arbitrum)
+ *   - minTvl: minimum TVL in USD (e.g., 1000000)
+ *   - sort: 'apy' (default, high to low) | 'tvl' (high to low)
+ *   - stablecoin: 'true' to only show stablecoin pools
+ *   - limit: max results (default 50, max 100)
+ */
+app.get('/api/defi/yields', async (req, res) => {
+  try {
+    const chain = (req.query.chain || '').toLowerCase().trim();
+    const minTvl = parseFloat(req.query.minTvl) || 0;
+    const sort = (req.query.sort || 'apy').toLowerCase();
+    const stablecoinOnly = req.query.stablecoin === 'true';
+    const limit = Math.min(parseInt(req.query.limit, 10) || 50, 100);
+
+    const cacheKey = `yields-${chain || 'all'}-${minTvl}-${sort}-${stablecoinOnly}-${limit}`;
+    const cached = getCached(cache.defiYields, cacheKey, CACHE_TTL_DEFI_YIELDS_MS);
+    if (cached) {
+      res.setHeader('Cache-Control', 'public, max-age=300');
+      return res.json(cached);
+    }
+
+    // Fetch from DeFiLlama yields API (public, no key)
+    const response = await fetch('https://yields.llama.fi/pools', {
+      headers: { Accept: 'application/json' },
+      signal: AbortSignal.timeout(15000),
+    });
+
+    if (!response.ok) {
+      console.error('DeFiLlama yields API error:', response.status);
+      return res.status(502).json({ error: 'DeFiLlama API unavailable' });
+    }
+
+    const data = await response.json();
+    let pools = Array.isArray(data.data) ? data.data : [];
+
+    // Apply filters
+    if (chain) {
+      pools = pools.filter(p => (p.chain || '').toLowerCase() === chain);
+    }
+    if (minTvl > 0) {
+      pools = pools.filter(p => (p.tvlUsd || 0) >= minTvl);
+    }
+    if (stablecoinOnly) {
+      pools = pools.filter(p => p.stablecoin === true);
+    }
+
+    // Sort
+    if (sort === 'tvl') {
+      pools.sort((a, b) => (b.tvlUsd || 0) - (a.tvlUsd || 0));
+    } else {
+      // Default: APY high to low
+      pools.sort((a, b) => (b.apy || 0) - (a.apy || 0));
+    }
+
+    // Format response
+    const formatted = pools.slice(0, limit).map(p => ({
+      protocol: p.project || 'Unknown',
+      chain: p.chain || 'Unknown',
+      symbol: p.symbol || 'Unknown',
+      apy: p.apy || 0,
+      apyBase: p.apyBase || null,
+      apyReward: p.apyReward || null,
+      tvlUsd: p.tvlUsd || 0,
+      stablecoin: p.stablecoin || false,
+      poolId: p.pool || null,
+      url: p.url || null,
+    }));
+
+    const result = {
+      count: formatted.length,
+      filters: { chain: chain || null, minTvl, sort, stablecoin: stablecoinOnly },
+      data: formatted,
+      timestamp: new Date().toISOString(),
+    };
+
+    // Cache result
+    setCached(cache.defiYields, cacheKey, result, CACHE_TTL_DEFI_YIELDS_MS);
+
+    res.setHeader('Cache-Control', 'public, max-age=300');
+    res.json(result);
+  } catch (err) {
+    console.error('DeFi yields error:', err.message);
+    res.status(500).json({ error: 'Failed to fetch DeFi yields: ' + err.message });
   }
 });
 
@@ -5200,6 +5298,632 @@ app.post('/api/brief/audio', async (req, res) => {
   }
 });
 
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TOKEN UNLOCKS API — Upcoming token unlocks calendar data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const TOKENUNLOCKS_API_KEY = process.env.TOKENUNLOCKS_API_KEY || '';
+const TOKENUNLOCKS_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+// Mock data structure for token unlocks (ready for API key injection)
+const MOCK_UNLOCKS_DATA = [
+  { token: 'OP', unlockDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(), amount: 12500000, valueUsd: 28400000, percentOfSupply: 1.2, type: 'cliff' },
+  { token: 'ARB', unlockDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(), amount: 92000000, valueUsd: 98500000, percentOfSupply: 2.8, type: 'linear' },
+  { token: 'APE', unlockDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), amount: 15600000, valueUsd: 12400000, percentOfSupply: 1.5, type: 'cliff' },
+  { token: 'DYDX', unlockDate: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000).toISOString(), amount: 45000000, valueUsd: 87500000, percentOfSupply: 4.5, type: 'linear' },
+  { token: 'IMX', unlockDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(), amount: 28000000, valueUsd: 45200000, percentOfSupply: 1.9, type: 'cliff' },
+  { token: 'STRK', unlockDate: new Date(Date.now() + 18 * 24 * 60 * 60 * 1000).toISOString(), amount: 75000000, valueUsd: 67200000, percentOfSupply: 3.7, type: 'linear' },
+  { token: 'SUI', unlockDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(), amount: 82000000, valueUsd: 98400000, percentOfSupply: 2.1, type: 'cliff' },
+  { token: 'APT', unlockDate: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString(), amount: 38000000, valueUsd: 296000000, percentOfSupply: 5.2, type: 'linear' },
+  { token: 'SEI', unlockDate: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(), amount: 125000000, valueUsd: 75000000, percentOfSupply: 6.8, type: 'cliff' },
+  { token: 'TIA', unlockDate: new Date(Date.now() + 32 * 24 * 60 * 60 * 1000).toISOString(), amount: 45000000, valueUsd: 189000000, percentOfSupply: 2.3, type: 'linear' },
+];
+
+/**
+ * GET /api/unlocks/upcoming — Fetch upcoming token unlocks
+ * Query params: days=30 (default), limit=50 (default)
+ * Returns: { unlocks: [{ token, unlockDate, amount, valueUsd, percentOfSupply, type }] }
+ */
+app.get('/api/unlocks/upcoming', async (req, res) => {
+  try {
+    const days = Math.min(parseInt(req.query.days, 10) || 30, 90);
+    const limit = Math.min(parseInt(req.query.limit, 10) || 50, 100);
+    
+    // Check cache
+    const cacheKey = `unlocks_${days}_${limit}`;
+    const cached = getCached(cache, cacheKey, TOKENUNLOCKS_CACHE_TTL);
+    if (cached) {
+      return res.json({ unlocks: cached, source: 'cache' });
+    }
+
+    let unlocks = [];
+    let source = 'mock';
+
+    // Try to fetch from TokenUnlocks API if key is available
+    if (TOKENUNLOCKS_API_KEY) {
+      try {
+        const response = await fetch(`https://api.tokenunlocks.com/v1/unlocks/upcoming?days=${days}&limit=${limit}`, {
+          headers: {
+            'Authorization': `Bearer ${TOKENUNLOCKS_API_KEY}`,
+            'Accept': 'application/json',
+          },
+          signal: AbortSignal.timeout(10000),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data && Array.isArray(data.unlocks)) {
+            unlocks = data.unlocks.map(u => ({
+              token: u.token_symbol || u.token || 'UNKNOWN',
+              unlockDate: u.unlock_date || u.date,
+              amount: parseFloat(u.amount) || 0,
+              valueUsd: parseFloat(u.value_usd) || 0,
+              percentOfSupply: parseFloat(u.percent_supply) || 0,
+              type: u.type === 'linear' ? 'linear' : 'cliff',
+            }));
+            source = 'tokenunlocks';
+          }
+        }
+      } catch (e) {
+        console.warn('TokenUnlocks API fetch failed:', e.message);
+      }
+    }
+
+    // Fallback to CoinGecko if TokenUnlocks failed and key available
+    if (unlocks.length === 0 && COINGECKO_API_KEY) {
+      try {
+        // CoinGecko doesn't have a direct token unlocks endpoint, but we can try their events endpoint
+        const url = `${COINGECKO_BASE}/events?upcoming_events_only=true&limit=${limit}`;
+        const opts = { headers: { Accept: 'application/json' } };
+        opts.headers[COINGECKO_HEADER_KEY] = COINGECKO_API_KEY;
+        const response = await fetch(url, opts);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && Array.isArray(data.data)) {
+            unlocks = data.data
+              .filter(e => e.type === 'token_unlock' || e.type === 'unlock')
+              .map(e => ({
+                token: e.coin_id || 'UNKNOWN',
+                unlockDate: e.date,
+                amount: parseFloat(e.amount) || 0,
+                valueUsd: parseFloat(e.value_usd) || 0,
+                percentOfSupply: parseFloat(e.percent_supply) || 0,
+                type: e.unlock_type === 'linear' ? 'linear' : 'cliff',
+              }));
+            if (unlocks.length > 0) source = 'coingecko';
+          }
+        }
+      } catch (e) {
+        console.warn('CoinGecko unlocks fetch failed:', e.message);
+      }
+    }
+
+    // Final fallback: use mock data
+    if (unlocks.length === 0) {
+      // Filter mock data by days
+      const cutoffDate = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
+      unlocks = MOCK_UNLOCKS_DATA
+        .filter(u => new Date(u.unlockDate) <= cutoffDate)
+        .slice(0, limit)
+        .map(u => ({ ...u })); // Clone to avoid mutations
+    }
+
+    // Sort by unlock date
+    unlocks.sort((a, b) => new Date(a.unlockDate) - new Date(b.unlockDate));
+
+    // Cache the results
+    setCached(cache, cacheKey, unlocks, TOKENUNLOCKS_CACHE_TTL);
+
+    res.json({ unlocks, source, count: unlocks.length });
+  } catch (err) {
+    console.error('Token unlocks error:', err.message);
+    res.status(500).json({ error: 'Failed to fetch token unlocks', unlocks: MOCK_UNLOCKS_DATA.slice(0, 10) });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// GITHUB DEV ACTIVITY API — Repository commit activity
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const GITHUB_CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+
+/**
+ * GET /api/github/activity?repo=owner/name — Fetch GitHub commit activity
+ * Returns: { 
+ *   repo: string,
+ *   weeklyCommits: [{ week: timestamp, commits: number, add: number, del: number }],
+ *   contributors: { total: number, active: number, new: number },
+ *   trend: 'up' | 'down' | 'stable'
+ * }
+ */
+app.get('/api/github/activity', async (req, res) => {
+  try {
+    const repo = (req.query.repo || '').trim();
+    if (!repo || !repo.includes('/')) {
+      return res.status(400).json({ error: 'repo parameter required (format: owner/name)' });
+    }
+
+    // Validate repo format
+    const [owner, name] = repo.split('/');
+    if (!owner || !name) {
+      return res.status(400).json({ error: 'Invalid repo format. Use: owner/name' });
+    }
+
+    // Check cache
+    const cacheKey = `github_${repo}`;
+    const cached = getCached(cache, cacheKey, GITHUB_CACHE_TTL);
+    if (cached) {
+      return res.json({ ...cached, source: 'cache' });
+    }
+
+    // Fetch from GitHub API (public repos, no auth needed but rate limited)
+    const commitActivityUrl = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(name)}/stats/commit_activity`;
+    const contributorsUrl = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(name)}/stats/contributors`;
+    const repoUrl = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(name)}`;
+
+    try {
+      // Fetch commit activity (last 52 weeks)
+      const [commitRes, contributorsRes, repoRes] = await Promise.all([
+        fetch(commitActivityUrl, { 
+          headers: { Accept: 'application/vnd.github.v3+json' },
+          signal: AbortSignal.timeout(15000),
+        }),
+        fetch(contributorsUrl, { 
+          headers: { Accept: 'application/vnd.github.v3+json' },
+          signal: AbortSignal.timeout(15000),
+        }),
+        fetch(repoUrl, { 
+          headers: { Accept: 'application/vnd.github.v3+json' },
+          signal: AbortSignal.timeout(10000),
+        }),
+      ]);
+
+      let weeklyCommits = [];
+      let contributorsData = { total: 0, active: 0, new: 0 };
+      let repoInfo = {};
+
+      // Parse commit activity
+      if (commitRes.ok) {
+        const commitData = await commitRes.json();
+        if (Array.isArray(commitData)) {
+          // Get last 12 weeks only
+          weeklyCommits = commitData.slice(-12).map(week => ({
+            week: week.week * 1000, // Convert to milliseconds
+            commits: week.total || 0,
+            days: week.days || [],
+          }));
+        }
+      }
+
+      // Parse contributors
+      if (contributorsRes.ok) {
+        const contribData = await contributorsRes.json();
+        if (Array.isArray(contribData)) {
+          contributorsData.total = contribData.length;
+          contributorsData.active = contribData.filter(c => {
+            const recentWeeks = c.weeks?.slice(-4) || [];
+            const recentCommits = recentWeeks.reduce((sum, w) => sum + (w.c || 0), 0);
+            return recentCommits > 0;
+          }).length;
+          contributorsData.new = contribData.filter(c => {
+            const weeks = c.weeks || [];
+            const firstCommit = weeks.find(w => (w.c || 0) > 0);
+            if (!firstCommit) return false;
+            const firstCommitDate = firstCommit.w * 1000;
+            const fourWeeksAgo = Date.now() - 28 * 24 * 60 * 60 * 1000;
+            return firstCommitDate > fourWeeksAgo;
+          }).length;
+        }
+      }
+
+      // Parse repo info
+      if (repoRes.ok) {
+        repoInfo = await repoRes.json();
+      }
+
+      // Calculate trend
+      const recentCommits = weeklyCommits.slice(-4).reduce((sum, w) => sum + w.commits, 0);
+      const previousCommits = weeklyCommits.slice(-8, -4).reduce((sum, w) => sum + w.commits, 0);
+      let trend = 'stable';
+      if (recentCommits > previousCommits * 1.1) trend = 'up';
+      else if (recentCommits < previousCommits * 0.9) trend = 'down';
+
+      const result = {
+        repo,
+        name: repoInfo.name || name,
+        description: repoInfo.description || '',
+        stars: repoInfo.stargazers_count || 0,
+        forks: repoInfo.forks_count || 0,
+        language: repoInfo.language || 'Unknown',
+        weeklyCommits,
+        contributors: contributorsData,
+        trend,
+        updatedAt: new Date().toISOString(),
+      };
+
+      // Cache results
+      setCached(cache, cacheKey, result, GITHUB_CACHE_TTL);
+
+      res.json({ ...result, source: 'github' });
+    } catch (e) {
+      console.error('GitHub API error:', e.message);
+      
+      // Return mock data on failure
+      const mockResult = {
+        repo,
+        name,
+        description: 'Mock data - GitHub API rate limited or unavailable',
+        stars: 0,
+        forks: 0,
+        language: 'Unknown',
+        weeklyCommits: Array.from({ length: 12 }, (_, i) => ({
+          week: Date.now() - (11 - i) * 7 * 24 * 60 * 60 * 1000,
+          commits: Math.floor(Math.random() * 50) + 10,
+          days: [],
+        })),
+        contributors: { total: 15, active: 8, new: 2 },
+        trend: 'stable',
+        updatedAt: new Date().toISOString(),
+        source: 'mock',
+      };
+      res.json(mockResult);
+    }
+  } catch (err) {
+    console.error('GitHub activity error:', err.message);
+    res.status(500).json({ error: 'Failed to fetch GitHub activity' });
+  }
+});
+
+/**
+ * GET /api/github/activity/batch — Fetch activity for multiple repos
+ * Query: repos=owner/name,owner/name2
+ */
+app.get('/api/github/activity/batch', async (req, res) => {
+  try {
+    const reposParam = (req.query.repos || '').trim();
+    if (!reposParam) {
+      return res.status(400).json({ error: 'repos parameter required (comma-separated owner/name pairs)' });
+    }
+
+    const repos = reposParam.split(',').map(r => r.trim()).filter(Boolean);
+    if (repos.length === 0) {
+      return res.status(400).json({ error: 'No valid repos provided' });
+    }
+
+    const results = await Promise.all(
+      repos.map(async (repo) => {
+        try {
+          // Reuse single endpoint logic
+          const [owner, name] = repo.split('/');
+          if (!owner || !name) return { repo, error: 'Invalid format' };
+
+          // Check cache
+          const cacheKey = `github_${repo}`;
+          const cached = getCached(cache, cacheKey, GITHUB_CACHE_TTL);
+          if (cached) return { ...cached, source: 'cache' };
+
+          const commitActivityUrl = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(name)}/stats/commit_activity`;
+          const commitRes = await fetch(commitActivityUrl, { 
+            headers: { Accept: 'application/vnd.github.v3+json' },
+            signal: AbortSignal.timeout(15000),
+          });
+
+          let weeklyCommits = [];
+          if (commitRes.ok) {
+            const commitData = await commitRes.json();
+            if (Array.isArray(commitData)) {
+              weeklyCommits = commitData.slice(-12).map(week => ({
+                week: week.week * 1000,
+                commits: week.total || 0,
+              }));
+            }
+          }
+
+          const totalCommits = weeklyCommits.reduce((sum, w) => sum + w.commits, 0);
+          const recentCommits = weeklyCommits.slice(-4).reduce((sum, w) => sum + w.commits, 0);
+          const previousCommits = weeklyCommits.slice(-8, -4).reduce((sum, w) => sum + w.commits, 0);
+          let trend = 'stable';
+          if (recentCommits > previousCommits * 1.1) trend = 'up';
+          else if (recentCommits < previousCommits * 0.9) trend = 'down';
+
+          const result = {
+            repo,
+            weeklyCommits: weeklyCommits.slice(-4), // Only last 4 weeks for batch
+            totalCommits,
+            trend,
+            updatedAt: new Date().toISOString(),
+          };
+
+          setCached(cache, cacheKey, result, GITHUB_CACHE_TTL);
+          return { ...result, source: 'github' };
+        } catch (e) {
+          return { repo, error: e.message, trend: 'unknown' };
+        }
+      })
+    );
+
+    res.json({ results, count: results.length });
+  } catch (err) {
+    console.error('GitHub batch error:', err.message);
+    res.status(500).json({ error: 'Failed to fetch batch GitHub activity' });
+  }
+});
+
+/**
+ * GET /api/funding-rates
+ * Fetch funding rates from Binance Futures API
+ * Returns: symbol, lastFundingRate (as %), markPrice, indexPrice
+ * With calculated projections: 8-hour, 24-hour, annualized
+ * Sorted by absolute funding rate (most extreme first)
+ */
+const CACHE_TTL_FUNDING_RATES_MS = 60 * 1000; // 60 seconds
+
+app.get('/api/funding-rates', async (req, res) => {
+  try {
+    // Check cache
+    const cacheKey = 'funding_rates';
+    const cached = getCached(cache.fundingRates, cacheKey, CACHE_TTL_FUNDING_RATES_MS);
+    if (cached) {
+      res.setHeader('Cache-Control', 'public, max-age=30');
+      return res.json(cached);
+    }
+
+    // Fetch from Binance Futures API (no API key required)
+    const response = await fetch('https://fapi.binance.com/fapi/v1/premiumIndex', {
+      signal: AbortSignal.timeout(15000),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Binance API returned ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      throw new Error('Invalid response format from Binance');
+    }
+
+    // Parse and calculate projections
+    const fundingRates = data
+      .filter(item => item.symbol && item.symbol.endsWith('USDT')) // Filter USDT pairs
+      .map(item => {
+        const lastFundingRate = parseFloat(item.lastFundingRate) * 100; // Convert to percentage
+        const markPrice = parseFloat(item.markPrice) || 0;
+        const indexPrice = parseFloat(item.indexPrice) || 0;
+
+        // Binance funding happens every 8 hours (3 times per day)
+        // Calculate projections
+        const projection8h = lastFundingRate; // Next 8h period
+        const projection24h = lastFundingRate * 3; // 3 periods per day
+        const annualizedRate = lastFundingRate * 3 * 365; // 3 periods per day * 365 days
+
+        return {
+          symbol: item.symbol,
+          lastFundingRate,
+          markPrice,
+          indexPrice,
+          projection8h,
+          projection24h,
+          annualizedRate,
+          nextFundingTime: item.nextFundingTime,
+          interestRate: parseFloat(item.interestRate) * 100 || 0,
+        };
+      })
+      .filter(item => !isNaN(item.lastFundingRate))
+      // Sort by absolute rate descending (most extreme first)
+      .sort((a, b) => Math.abs(b.lastFundingRate) - Math.abs(a.lastFundingRate));
+
+    // Cache the results
+    setCached(cache.fundingRates, cacheKey, fundingRates, CACHE_TTL_FUNDING_RATES_MS);
+
+    res.setHeader('Cache-Control', 'public, max-age=30');
+    res.json(fundingRates);
+  } catch (err) {
+    console.error('Funding rates fetch error:', err.message);
+    res.status(502).json({ error: 'Failed to fetch funding rates', message: err.message });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// FEAR & GREED INDEX — Proxy to alternative.me API
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const FEAR_GREED_CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+const fearGreedCache = new Map();
+
+app.get('/api/fear-greed', async (req, res) => {
+  try {
+    const limit = Math.min(parseInt(req.query.limit, 10) || 30, 100);
+    const cacheKey = `fng_${limit}`;
+    
+    // Check cache
+    const cached = getCached(fearGreedCache, cacheKey, FEAR_GREED_CACHE_TTL);
+    if (cached) {
+      return res.json(cached);
+    }
+    
+    const response = await fetch(`https://api.alternative.me/fng/?limit=${limit}`, {
+      signal: AbortSignal.timeout(15000),
+      headers: { Accept: 'application/json' },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`alternative.me API returned ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data || !Array.isArray(data.data)) {
+      throw new Error('Invalid response from Fear & Greed API');
+    }
+    
+    // Format and cache the response
+    const result = {
+      data: data.data.map(item => ({
+        value: parseInt(item.value, 10),
+        value_classification: item.value_classification,
+        timestamp: parseInt(item.timestamp, 10),
+        time_until_update: item.time_until_update,
+      })),
+      lastUpdated: new Date().toISOString(),
+    };
+    
+    setCached(fearGreedCache, cacheKey, result, FEAR_GREED_CACHE_TTL);
+    
+    res.setHeader('Cache-Control', 'public, max-age=600');
+    res.json(result);
+  } catch (err) {
+    console.error('Fear & Greed API error:', err.message);
+    res.status(502).json({ 
+      error: 'Failed to fetch Fear & Greed Index',
+      message: err.message,
+    });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MARKET REGIME DETECTION — Calculate from in-memory token prices
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const REGIME_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const marketRegimeCache = new Map();
+
+/**
+ * Calculate market regime from token price data
+ * Regimes: 'trending', 'ranging', 'volatile', 'accumulation'
+ */
+function calculateMarketRegime(priceData) {
+  if (!priceData || Object.keys(priceData).length === 0) {
+    return {
+      regime: 'unknown',
+      confidence: 0,
+      volatility: 0,
+      trendStrength: 0,
+      direction: 'neutral',
+    };
+  }
+
+  const changes = Object.values(priceData)
+    .map(p => p.change || p.change24 || 0)
+    .filter(c => typeof c === 'number');
+  
+  if (changes.length === 0) {
+    return {
+      regime: 'unknown',
+      confidence: 0,
+      volatility: 0,
+      trendStrength: 0,
+      direction: 'neutral',
+    };
+  }
+
+  // Calculate mean change
+  const meanChange = changes.reduce((a, b) => a + b, 0) / changes.length;
+  
+  // Calculate volatility (standard deviation)
+  const squaredDiffs = changes.map(c => Math.pow(c - meanChange, 2));
+  const variance = squaredDiffs.reduce((a, b) => a + b, 0) / changes.length;
+  const volatility = Math.sqrt(variance);
+  
+  // Calculate trend strength (absolute average change)
+  const trendStrength = Math.abs(meanChange);
+  
+  // Direction of trend
+  const direction = meanChange >= 0 ? 'up' : 'down';
+  
+  // Determine regime based on thresholds
+  let regime;
+  let confidence;
+  
+  // High volatility (> 8%) = Volatile market
+  if (volatility > 8) {
+    regime = 'volatile';
+    confidence = Math.min(100, (volatility / 15) * 100);
+  }
+  // Very low volatility (< 2%) and low trend strength = Accumulation
+  else if (volatility < 2 && trendStrength < 1) {
+    regime = 'accumulation';
+    confidence = Math.min(100, (2 - volatility) * 30 + (1 - trendStrength) * 20);
+  }
+  // Moderate trend strength with moderate volatility = Trending
+  else if (trendStrength > 2 && volatility < 6) {
+    regime = 'trending';
+    confidence = Math.min(100, trendStrength * 15 + (6 - volatility) * 5);
+  }
+  // Everything else = Ranging
+  else {
+    regime = 'ranging';
+    confidence = Math.min(100, 50 + volatility * 2);
+  }
+  
+  return {
+    regime,
+    direction,
+    confidence: Math.round(confidence),
+    volatility: Math.round(volatility * 100) / 100,
+    trendStrength: Math.round(trendStrength * 100) / 100,
+    meanChange: Math.round(meanChange * 100) / 100,
+    sampleSize: changes.length,
+  };
+}
+
+app.get('/api/market-regime', async (req, res) => {
+  try {
+    const cacheKey = 'current_regime';
+    
+    // Check cache
+    const cached = getCached(marketRegimeCache, cacheKey, REGIME_CACHE_TTL);
+    if (cached) {
+      return res.json(cached);
+    }
+    
+    // Use existing price cache or fetch fresh data
+    // We'll use the prices cache from our existing endpoints
+    let priceData = {};
+    
+    // Try to get data from cache first
+    const priceCacheKeys = Array.from(cache.prices.keys());
+    if (priceCacheKeys.length > 0) {
+      // Use the most recent price cache entry
+      const latestKey = priceCacheKeys[priceCacheKeys.length - 1];
+      const cachedPrices = cache.prices.get(latestKey);
+      if (cachedPrices && Date.now() < cachedPrices.expires) {
+        priceData = cachedPrices.data || {};
+      }
+    }
+    
+    // If no cached data, fetch major token prices
+    if (Object.keys(priceData).length === 0) {
+      const majorSymbols = ['BTC', 'ETH', 'SOL', 'BNB', 'XRP', 'DOGE', 'ADA', 'AVAX', 'LINK', 'DOT'];
+      const prices = await Promise.all(
+        majorSymbols.map(async (symbol) => {
+          const price = await getPriceForSymbol(symbol);
+          return price ? { [symbol]: price } : null;
+        })
+      );
+      priceData = Object.assign({}, ...prices.filter(Boolean));
+    }
+    
+    const regime = calculateMarketRegime(priceData);
+    
+    const result = {
+      ...regime,
+      timestamp: new Date().toISOString(),
+      pricesSample: Object.keys(priceData).slice(0, 5),
+    };
+    
+    setCached(marketRegimeCache, cacheKey, result, REGIME_CACHE_TTL);
+    
+    res.setHeader('Cache-Control', 'public, max-age=300');
+    res.json(result);
+  } catch (err) {
+    console.error('Market regime error:', err.message);
+    res.status(500).json({ 
+      error: 'Failed to calculate market regime',
+      message: err.message,
+    });
+  }
+});
 
 // Start server (use httpServer for both HTTP + WebSocket)
 httpServer.listen(PORT, () => {

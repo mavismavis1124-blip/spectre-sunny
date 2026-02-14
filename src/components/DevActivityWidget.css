@@ -1,0 +1,289 @@
+/* DevActivityWidget Styles */
+.dev-activity-widget {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  color: #f1f5f9;
+  min-width: 280px;
+}
+
+.dev-activity-widget.compact {
+  padding: 16px;
+  min-width: 200px;
+}
+
+/* Header */
+.dev-activity-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dev-activity-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.dev-activity-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.dev-activity-title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.dev-activity-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #f8fafc;
+  letter-spacing: -0.01em;
+}
+
+.dev-activity-subtitle {
+  font-size: 12px;
+  color: #94a3b8;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Compact Stats */
+.dev-activity-compact-stats {
+  display: flex;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.compact-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.compact-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.compact-stat-label {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.dev-activity-top-repo {
+  margin: 12px 0;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+.top-repo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-repo-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+/* Activity List */
+.dev-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dev-activity-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.dev-activity-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.activity-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.activity-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.activity-category {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.activity-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.activity-commits {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.activity-trend {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.activity-trend.up {
+  color: #10b981;
+}
+
+.activity-trend.down {
+  color: #ef4444;
+}
+
+.activity-trend.stable {
+  color: #64748b;
+}
+
+.activity-chart {
+  flex-shrink: 0;
+}
+
+/* Sparkline */
+.dev-activity-sparkline {
+  opacity: 0.8;
+}
+
+/* Footer */
+.dev-activity-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.activity-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.activity-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.activity-legend .legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dev-activity-view-all {
+  background: transparent;
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #34d399;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dev-activity-view-all:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+  color: #6ee7b7;
+}
+
+/* Loading State */
+.dev-activity-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  gap: 12px;
+  color: #94a3b8;
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #10b981;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .dev-activity-widget {
+    padding: 16px;
+  }
+  
+  .dev-activity-item {
+    padding: 10px;
+  }
+  
+  .activity-legend {
+    gap: 8px;
+  }
+  
+  .activity-legend .legend-item {
+    font-size: 10px;
+  }
+  
+  .dev-activity-footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+}

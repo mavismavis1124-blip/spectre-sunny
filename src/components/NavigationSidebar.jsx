@@ -63,6 +63,13 @@ const NavigationSidebar = ({ currentPage, onPageChange, onCollapsedChange }) => 
           <path d="M3 9h18M9 21V9" />
         </svg>
       ),
+      'defi-yields': (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+          <circle cx="12" cy="12" r="3" fill="currentColor" />
+        </svg>
+      ),
       'search-engine': (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="11" cy="11" r="8" />
@@ -120,6 +127,12 @@ const NavigationSidebar = ({ currentPage, onPageChange, onCollapsedChange }) => 
           <rect x="2" y="15" width="9" height="7" rx="1" />
         </svg>
       ),
+      'funding-rates': (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+          <circle cx="12" cy="12" r="2" />
+        </svg>
+      ),
       'bubbles': (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="10" cy="10" r="7" />
@@ -165,6 +178,12 @@ const NavigationSidebar = ({ currentPage, onPageChange, onCollapsedChange }) => 
           <circle cx="12" cy="12" r="2" />
         </svg>
       ),
+      'token-unlocks': (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+      ),
       'social-zone': (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -197,6 +216,7 @@ const NavigationSidebar = ({ currentPage, onPageChange, onCollapsedChange }) => 
     { id: 'research-platform', label: t('nav.researchPlatform'), isActive: true },
     { id: 'discover', label: t('nav.discover') },
     { id: 'research-zone', label: t('nav.researchZone') },
+    { id: 'defi-yields', label: t('nav.defiYields', 'DeFi Yields') },
     { id: 'search-engine', label: t('nav.searchEngine') },
     { id: 'ai-screener', label: t('nav.aiScreener') },
     { id: 'watchlists', label: t('nav.watchlists') },
@@ -209,6 +229,7 @@ const NavigationSidebar = ({ currentPage, onPageChange, onCollapsedChange }) => 
     { id: 'ai-charts', label: t('nav.aiCharts') },
     { id: 'ai-charts-lab', label: t('nav.aiChartsLab') },
     { id: 'heatmaps', label: t('nav.heatmaps') },
+    { id: 'funding-rates', label: t('nav.fundingRates') },
     { id: 'bubbles', label: t('nav.bubbles') },
     { id: 'categories', label: t('nav.categories') },
     { id: 'ai-market-analysis', label: t('nav.aiMarketAnalysis') },

@@ -20,6 +20,7 @@ export const PAGE_PATHS = {
   'ai-charts-lab': '/ai-charts-lab',
   heatmaps: '/heatmaps',
   bubbles: '/bubbles',
+  'funding-rates': '/funding-rates',
   categories: '/categories',
   'ai-market-analysis': '/ai-market-analysis',
   'market-analytics': '/market-analytics',
@@ -28,6 +29,7 @@ export const PAGE_PATHS = {
   logs: '/logs',
   'roi-calculator': '/roi-calculator',
   'gm-dashboard': '/gm-dashboard',
+  'defi-yields': '/defi-yields',
 }
 
 const PAGE_ID_BY_PATH = Object.entries(PAGE_PATHS).reduce((acc, [pageId, path]) => {
